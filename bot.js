@@ -1,8 +1,16 @@
 const Commando = require("discord.js-commando");
-const config = require("./config.js");
+const config = require("./config/config.js");
 const server = require("./utils/server.js");
 const dateHelper = require("./utils/helpers/dateGenerator");
 const statusActivities = require("./utils/statusActivities.js");
+const mysql = require("mysql");
+
+const dbconn = mysql.createConnection({
+    host: config.database.host,
+    user: config.database.user,
+    password: config.database.password,
+    database: config.database.db
+});
 
 const bot = new Commando.Client();
 
@@ -13,14 +21,36 @@ Array.prototype.randomElement = function () {
 }
 
 function updateBotActivity(firstActivityChange=false) {
-    let jogo = statusActivities.randomElement();
-    message = `Jogo alterado para ${jogo}.`;
-    if (firstActivityChange) {
-        message = `Agora jogando ${jogo}.`;
-    }
-    
-    console.log(message);
-    bot.user.setActivity(jogo);
+    statusActivities.activitiesList(dbconn).then(result => {
+        let possibleActivities = [];
+        let currentActivity;
+        for (let i = 0; i < result.length; i++) {
+            currentActivity = result[i];
+            if (currentActivity.UTILIZADO == 0) {
+                possibleActivities.push(currentActivity);
+            }
+        }
+
+        if (possibleActivities.length === 0) {
+            for (let i = 0; i < result.length; i++) {
+                currentActivity = result[i];
+                statusActivities.updateUsedActivity(dbconn, currentActivity.CODIGOATIV, 0);
+            }
+            updateBotActivity(firstActivityChange);
+            return;
+        }
+
+        let activity = possibleActivities.randomElement();
+        message = `Jogo alterado para ${activity.DESCRICAO}.`;
+        if (firstActivityChange) {
+            message = `Agora jogando ${activity.DESCRICAO}.`;
+        }
+
+        statusActivities.updateUsedActivity(dbconn, activity.CODIGOATIV, 1);
+
+        console.log(message);
+        bot.user.setActivity(activity.DESCRICAO);
+    });
 }
 
 setInterval(() => {

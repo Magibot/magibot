@@ -1,19 +1,18 @@
-module.exports = [
-    "NEKOPARA Vol. 1",
-    "Disc Jam",
-    "Fortnite - Modo 50v50",
-    "Hentai Girl",
-    "Supersonic Acrobatic Rocket-Powered Battle-Cars",
-    "Realm Royale",
-    "PID",
-    "Sudden Attack",
-    "CrossFire by Z8Games",
-    "Combat Arms",
-    "Maple Story",
-    "Sakura Clicker",
-    "Cuck Clicker",
-    "Giovanni me deu",
-    "Modo Cabeção dos RPGs",
-    "Sudden Attack - Modo Cabeção",
-    "Overwatch by HiRez"
-]
+module.exports = {
+    _queryPromise: function(conn, query, queryParam=null) {
+        return new Promise((resolve, reject) => {
+            conn.query(query, queryParam, (err, result, field) => {
+                if (err) {
+                    return reject(err);    
+                }
+                resolve(result);
+            });
+        });
+    },
+    activitiesList: function(conn) {
+        return this._queryPromise(conn, "SELECT * FROM STATUSATIVIDADE");
+    },
+    updateUsedActivity: function(conn, activityCode, used) {
+        conn.query("UPDATE STATUSATIVIDADE SET UTILIZADO = ? WHERE CODIGOATIV = ?", [used, activityCode]);
+    }
+}
