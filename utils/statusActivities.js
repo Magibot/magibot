@@ -12,5 +12,8 @@ module.exports = [
     "Maple Story",
     "Sakura Clicker",
     "Cuck Clicker",
-    "Giovanni me deu"
+    "Giovanni me deu",
+    "Modo Cabeção dos RPGs",
+    "Sudden Attack - Modo Cabeção",
+    "Overwatch by HiRez"
 ]
