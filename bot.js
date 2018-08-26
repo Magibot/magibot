@@ -6,6 +6,8 @@ const statusActivities = require("./utils/statusActivities.js");
 
 const bot = new Commando.Client();
 
+const port = 3030;
+
 Array.prototype.randomElement = function () {
     return this[Math.floor(Math.random() * this.length)];
 }
@@ -26,13 +28,14 @@ setInterval(() => {
 }, 600000);
 
 bot.registry.registerGroup("simple", "Simple");
+bot.registry.registerGroup("music", "Music");
 bot.registry.registerDefaults();
 bot.registry.registerCommandsIn(__dirname + "/commands");
 
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
-    server.start(3030);
-    console.log(`Aberto na porta ${3030}.`);
+    server.start(port);
+    console.log(`Aberto na porta ${port}.`);
     console.log(`Startado em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
     updateBotActivity(firstActivityChange=true);
 });
