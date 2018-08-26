@@ -29,6 +29,7 @@ setInterval(() => {
 
 bot.registry.registerGroup("simple", "Simple");
 bot.registry.registerGroup("music", "Music");
+bot.registry.registerGroup("transparency", "Transparency");
 bot.registry.registerDefaults();
 bot.registry.registerCommandsIn(__dirname + "/commands");
 

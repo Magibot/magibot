@@ -8,7 +8,7 @@ class BolsaFamiliaCommand extends Commando.Command {
     constructor(client) {
         super(client, {
             name: "bolsafamilia",
-            group: "simple",
+            group: "transparency",
             memberName: "bolsafamilia",
             description: "Descreve os valores gastos no programa Bolsa Familia de um municipio"
         });
