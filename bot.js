@@ -19,20 +19,25 @@ Array.prototype.randomElement = function () {
 
 const commands = ["ping", "bolsafamilia", "purge"];
 
-function updateBotActivity() {
+function updateBotActivity(firstActivityChange=false) {
     let jogo = statusActivities.randomElement();
-    console.log("Agora jogando: " + jogo);
+    message = `Jogo alterado para ${jogo}.`;
+    if (firstActivityChange) {
+        message = `Agora jogando ${jogo}.`;
+    }
+    
+    console.log(message);
     Bot.user.setActivity(jogo);
 }
 
-setInterval(function(){ updateBotActivity(); }, 600000);
+setInterval(function(){ updateBotActivity(firstActivityChange=false); }, 600000);
 
 Bot.on("ready", () => {
     console.log(`${Bot.user.username} startando.`);
     server.start(3030);
     console.log(`Aberto na porta ${3030}.`);
     console.log(`Startado em ${Bot.guilds.size} servidor, com total de ${Bot.channels.size} canais e ${Bot.users.size} membros.`);
-    updateBotActivity();
+    updateBotActivity(firstActivityChange=true);
 });
 
 Bot.on("guildCreate", guild => {
@@ -77,11 +82,6 @@ Bot.on("message", async msg => {
 
     if (cmd === "ping") {
         let m = await msg.channel.send("Ping?");
-        m.edit(`Pong! Latencia de ${m.createdTimestamp - msg.createdTimestamp}ms. Latencia da API de ${Math.round(Bot.ping)}ms`);
-    }
-});
-
-Bot.login(config.token);g.channel.send("Ping?");
         m.edit(`Pong! Latencia de ${m.createdTimestamp - msg.createdTimestamp}ms. Latencia da API de ${Math.round(Bot.ping)}ms`);
     }
 });
