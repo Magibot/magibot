@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
 const config = require("./config.js");
-const alive = require("./utils/alive.js");
+const server = require("./utils/server.js");
 const HttpService = require("./utils/services/HttpService");
 const GovernInterfaceApi = require("./utils/models/GovernInterfaceApi");
 const dateHelper = require("./utils/helpers/dateGenerator");
 const municipios = require("./utils/helpers/municipiosIBGE");
-const statusActivities = require("./utils/playingGames.js");
+const statusActivities = require("./utils/statusActivities.js");
 
 const Bot = new Discord.Client();
 const httpService = new HttpService();
@@ -28,10 +28,10 @@ function updateBotActivity() {
 setInterval(function(){ updateBotActivity(); }, 600000);
 
 Bot.on("ready", () => {
-    console.log(`${Bot.user.username} startando`);
-    alive.start(3030);
+    console.log(`${Bot.user.username} startando.`);
+    server.start(3030);
     console.log(`Aberto na porta ${3030}.`);
-    console.log(`Startado em ${Bot.guilds.size}, com total de ${Bot.channels.size} canais e ${Bot.users.size} membros.`);
+    console.log(`Startado em ${Bot.guilds.size} servidor, com total de ${Bot.channels.size} canais e ${Bot.users.size} membros.`);
     updateBotActivity();
 });
 
@@ -77,6 +77,11 @@ Bot.on("message", async msg => {
 
     if (cmd === "ping") {
         let m = await msg.channel.send("Ping?");
+        m.edit(`Pong! Latencia de ${m.createdTimestamp - msg.createdTimestamp}ms. Latencia da API de ${Math.round(Bot.ping)}ms`);
+    }
+});
+
+Bot.login(config.token);g.channel.send("Ping?");
         m.edit(`Pong! Latencia de ${m.createdTimestamp - msg.createdTimestamp}ms. Latencia da API de ${Math.round(Bot.ping)}ms`);
     }
 });

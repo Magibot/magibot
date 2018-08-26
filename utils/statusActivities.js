@@ -1,6 +1,6 @@
 module.exports = [
     "NEKOPARA Vol. 1",
-    "DiscJam",
+    "Disc Jam",
     "Fortnite - Modo 50v50",
     "Hentai Girl",
     "Supersonic Acrobatic Rocket-Powered Battle-Cars",
