@@ -14,7 +14,8 @@ class InfoCommand extends Commando.Command {
 
     async run(msg, args) {
         var info = new Discord.RichEmbed()
-            .setDescription("Bot oficial da Gaguinho Games!");
+            .addField("Descrição", "Bot oficial da Gaguinho Games!", true)
+            .setColor(0x99e6ff);
 
         msg.channel.send(info);
     }
