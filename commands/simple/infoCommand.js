@@ -13,7 +13,8 @@ class InfoCommand extends Commando.Command {
     }
 
     async run(msg, args) {
-        var info = new Discord.RichEmbed().setDescription("Bot oficial da Gaguinho Games!");
+        var info = new Discord.RichEmbed()
+            .setDescription("Bot oficial da Gaguinho Games!");
 
         msg.channel.send(info);
     }

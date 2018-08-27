@@ -23,8 +23,8 @@ class BolsaFamiliaCommand extends Commando.Command {
     async run(msg, args) {
         let answer = new Discord.RichEmbed()
             .setTitle("Resultado da Pesquisa")
-            .setColor(0x99e6ff)
-            .setFooter("Este serviço utiliza a API de Dados do Portal de Transparência do Governo Federal localizado em: http://www.transparencia.gov.br");
+            .setColor(0x99e6ff);
+
         let arrayArgs = args.trim().split(/ +/g);
         if (arrayArgs.length <= 1) {
             answer.addField("Error", "Faltam parametros para pesquisa");
@@ -46,6 +46,7 @@ class BolsaFamiliaCommand extends Commando.Command {
             answer.addField("Valor", res.valor);
             answer.addField("Quantidade de beneficiados", res.quantidadeBeneficiados);
             answer.addField("URL do Serviço", this.bolsaFamiliaApi.url);
+            answer.setFooter("Este comando utiliza a API de Dados do Portal de Transparência do Governo Federal localizado em: http://www.transparencia.gov.br");
             // answer.setDescription(`Programa do Bolsa Família\nData de Referência: ${res.dataReferencia}.\nMunicípio: ${res.municipio.nomeIBGE}.\nValor: ${res.valor}.\nQuantidade de beneficiados: ${res.quantidadeBeneficiados}.\nURL do Serviço: ${this.bolsaFamiliaApi.url}`);
             msg.channel.send(answer);
         }).catch(err => {
