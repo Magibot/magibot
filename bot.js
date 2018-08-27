@@ -3,19 +3,10 @@ const Discord = require("discord.js");
 const config = require("./config/config.js");
 const server = require("./utils/server.js");
 const dateHelper = require("./utils/helpers/dateGenerator");
-const statusActivities = require("./utils/statusActivities.js");
-const mysql = require("mysql");
-
-const dbconn = mysql.createConnection({
-    host: config.database.host,
-    user: config.database.user,
-    password: config.database.password,
-    database: config.database.db
-});
+const statusActivities = require("./utils/helpers/statusActivities.js");
+const dbconn = require("./dbconn.js");
 
 const bot = new Commando.Client();
-
-const port = 3030;
 
 Array.prototype.randomElement = function () {
     return this[Math.floor(Math.random() * this.length)];
@@ -66,8 +57,9 @@ bot.registry.registerCommandsIn(__dirname + "/commands");
 
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
-    server.start(port);
-    console.log(`Aberto na porta ${port}.`);
+    server.start(config.port);
+    console.log(`Aberto na porta ${config.port}.`);
+    console.log(`Conectado ao Banco de Dados: ${config.database.db}@${config.database.host}`);
     console.log(`Startado em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
     updateBotActivity(firstActivityChange=true);
 });
