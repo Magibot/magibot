@@ -1,4 +1,5 @@
 const Commando = require("discord.js-commando");
+const Discord = require("discord.js");
 const config = require("./config/config.js");
 const server = require("./utils/server.js");
 const dateHelper = require("./utils/helpers/dateGenerator");
@@ -79,6 +80,20 @@ bot.on("guildCreate", guild => {
 bot.on("guildDelete", guild => {
     console.log(`Bot foi removido do server: ${guild.name} (${guild.id}).`);
     updateBotActivity();
+});
+
+bot.on("guildMemberAdd", member => {
+    let answer = new Discord.RichEmbed()
+        .setColor(0x99e6ff)
+        .setTitle(`${member.user.username}. Seja bem vindo(a) ao servidor ${member.guild.name}.`)
+        .addField("Regra 1", "The first rule of Fight Club is: You do not talk about Fight Club.", false)
+        .addField("Regra 2", "The second rule of Fight Club is: You do not talk about Fight Club.");
+
+    answer.setFooter("Se alguma das regras acima for quebrada não se surprenda com um ban.");
+
+    member.send(answer);
+    let memberRole = member.guild.roles.find("name", "Membro");
+    member.addRole(memberRole).then().catch(console.error);
 });
 
 bot.login(config.token);
