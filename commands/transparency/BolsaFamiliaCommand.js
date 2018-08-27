@@ -67,7 +67,6 @@ class BolsaFamiliaCommand extends Commando.Command {
     
             this.httpService.get(this.bolsaFamiliaApi.url).then(response => {
                 let res = response[0];
-                console.log(res);
                 answer.addField("Data de Referência", res.dataReferencia);
                 answer.addField("Município", `${res.municipio.nomeIBGE} (${res.municipio.codigoIBGE})`);
                 answer.addField("Valor", res.valor);
