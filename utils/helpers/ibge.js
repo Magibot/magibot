@@ -1,7 +1,15 @@
 module.exports = {
-    municipios: {
-        RioDeJaneiro: 3304557,
-        SaoPaulo: 3550308,
-        BeloHorizonte: 3106200
+    _queryPromise: function(conn, query, queryParam=null) {
+        return new Promise((resolve, reject) => {
+            conn.query(query, queryParam, (err, result, field) => {
+                if (err) {
+                    return reject(err);    
+                }
+                resolve(result);
+            });
+        });
+    },
+    municipios: function (conn) {
+        return this._queryPromise(conn, "SELECT * FROM MUNICIPIOIBGE");
     }
 }
