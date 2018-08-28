@@ -49,6 +49,14 @@ setInterval(() => {
     updateBotActivity();
 }, 600000);
 
+function guildMemberEmbed(member, footerText, color) {
+    return new Discord.RichEmbed()
+        .setColor(color)
+        .setFooter(footerText, icon=member.client.user.avatarURL)
+        .setAuthor(`${member.user.username} (${member.user.id})`, icon=member.user.avatarURL)
+        .setTimestamp(new Date());
+}
+
 bot.registry.registerGroup("simple", "Simple");
 bot.registry.registerGroup("music", "Music");
 bot.registry.registerGroup("transparency", "Transparency");
@@ -75,17 +83,26 @@ bot.on("guildDelete", guild => {
 });
 
 bot.on("guildMemberAdd", member => {
-    let answer = new Discord.RichEmbed()
-        .setColor(0x99e6ff)
+    let welcomeEmbedDM = new Discord.RichEmbed()
+        .setColor(config.botconfig.memberAddColor)
         .setTitle(`${member.user.username}. Seja bem vindo(a) ao servidor ${member.guild.name}.`)
         .addField("Regra 1", "The first rule of Fight Club is: You do not talk about Fight Club.", false)
-        .addField("Regra 2", "The second rule of Fight Club is: You do not talk about Fight Club.");
+        .addField("Regra 2", "The second rule of Fight Club is: You do not talk about Fight Club.")
+        .setFooter(`© ${member.client.user.username}`, icon=member.client.user.avatarURL)
+        .setTimestamp(new Date());
 
-    answer.setFooter("Se alguma das regras acima for quebrada não se surprenda com um ban.");
+    member.send(welcomeEmbedDM);
 
-    member.send(answer);
-    let memberRole = member.guild.roles.find("name", "Membro");
+    let memberRole = member.guild.roles.find("name", config.botconfig.initRole);
     member.addRole(memberRole).then().catch(console.error);
+
+    let newMemberLog = guildMemberEmbed(member, "Novo membro", config.botconfig.memberAddColor);
+    member.guild.channels.find("name", config.botconfig.mainChannel).send(newMemberLog);
+});
+
+bot.on("guildMemberRemove", member => {
+    let removeMemberLog = guildMemberEmbed(member, "Membro saiu", config.botconfig.memberRemoveColor);
+    member.guild.channels.find("name", config.botconfig.mainChannel).send(removeMemberLog);
 });
 
 bot.login(config.token);

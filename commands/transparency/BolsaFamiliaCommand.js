@@ -4,6 +4,7 @@ const GovernInterfaceApi = require("../../utils/models/GovernInterfaceApi");
 const HttpService = require("../../utils/services/HttpService");
 const ibge = require("../../utils/helpers/ibge");
 const dbconn = require("../../dbconn.js");
+const config = require("../../config/config.js");
 
 
 class BolsaFamiliaCommand extends Commando.Command {
@@ -25,7 +26,7 @@ class BolsaFamiliaCommand extends Commando.Command {
     async run(msg, args) {
         let answer = new Discord.RichEmbed()
             .setTitle("Resultado da Pesquisa")
-            .setColor(0x99e6ff);
+            .setColor(config.botconfig.mainColor);
 
         let arrayArgs = args.trim().split(/ +/g);
         if (arrayArgs.length <= 1) {
