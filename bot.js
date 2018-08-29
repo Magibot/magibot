@@ -12,6 +12,8 @@ Array.prototype.randomElement = function () {
     return this[Math.floor(Math.random() * this.length)];
 }
 
+global.servers = {};
+
 function updateBotActivity(firstActivityChange=false) {
     statusActivities.activitiesList(dbconn).then(result => {
         let possibleActivities = [];
@@ -42,6 +44,9 @@ function updateBotActivity(firstActivityChange=false) {
 
         console.log(message);
         bot.user.setActivity(activity.DESCRICAO);
+    }).catch(err => {
+        console.log("Não foi possível se conectar ao banco de dado");
+        console.log(`Motivo: ${err}`);
     });
 }
 
