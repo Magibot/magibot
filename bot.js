@@ -1,18 +1,35 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
+const path = require("path");
 const config = require("./config/config.js");
 const server = require("./utils/server.js");
 const dateHelper = require("./utils/helpers/dateGenerator");
 const statusActivities = require("./utils/helpers/statusActivities.js");
 const dbconn = require("./dbconn.js");
 
-const bot = new Commando.Client();
+const bot = new Commando.Client({
+    commandPrefix: '+',
+    unknownCommandResponse: false,
+    disableEveryone: true
+});
 
 Array.prototype.randomElement = function () {
     return this[Math.floor(Math.random() * this.length)];
 }
 
 global.servers = {};
+
+bot.registry
+    .registerDefaultTypes()
+    .registerGroups([
+        ["simple", "Simple"],
+        ["music", "Music"],
+        ["transparency", "Transparency"]
+    ])
+    .registerDefaultGroups()
+    .registerDefaultCommands()
+    .registerCommandsIn(path.join(__dirname, "commands"));
+
 
 function updateBotActivity(firstActivityChange=false) {
     statusActivities.activitiesList(dbconn).then(result => {
@@ -61,12 +78,6 @@ function guildMemberEmbed(member, footerText, color) {
         .setAuthor(`${member.user.username} (${member.user.id})`, icon=member.user.avatarURL)
         .setTimestamp(new Date());
 }
-
-bot.registry.registerGroup("simple", "Simple");
-bot.registry.registerGroup("music", "Music");
-bot.registry.registerGroup("transparency", "Transparency");
-bot.registry.registerDefaults();
-bot.registry.registerCommandsIn(__dirname + "/commands");
 
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
