@@ -12,8 +12,8 @@ function play(voiceConnection, msg) {
     };
     let stream = YTDL(currentServer.queue[0], { filter: "audioonly" });
     currentServer.dispatcher = voiceConnection.playStream(stream, streamOptions);
-    currentServer.queue.shift();
     currentServer.dispatcher.on("end", () => {
+        currentServer.queue.shift();
         if (currentServer.queue[0]) {
             play(voiceConnection, msg);
         } else {
