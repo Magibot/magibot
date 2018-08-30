@@ -13,15 +13,21 @@ class JoinCommand extends Commando.Command {
 
     async run(msg, args) {
         let voiceChannel = msg.member.voiceChannel;
-        if (voiceChannel && !msg.guild.voiceConnection) {
-            voiceChannel.join().then(conn => {
-                msg.channel.send(`Conectado ao \`${voiceChannel.name}\` com sucesso. :yum:`);
-            }).catch(err => {
-                msg.channel.send(`Não foi possível se conectar ao canal \`${voiceChannel.name}\`. :disappointed_relieved:`);
-            });
-        } else {
+        if (!voiceChannel) {
             msg.channel.send(`Você deve estar conectado a um canal de voz para executar este comando.`);
+            return;
         }
+
+        if (msg.guild.voiceConnection) {
+            msg.channel.send(`O bot já está conectado no canal \`${msg.guild.voiceConnection.channel.name}\``);
+            return;
+        }
+
+        voiceChannel.join().then(conn => {
+            msg.channel.send(`Conectado ao \`${voiceChannel.name}\` com sucesso. :yum:`);
+        }).catch(err => {
+            msg.channel.send(`Não foi possível se conectar ao canal \`${voiceChannel.name}\`. :disappointed_relieved:`);
+        });
     }
 }
 
