@@ -31,7 +31,7 @@ class LeaveCommand extends Commando.Command {
         }
 
         if (servers[msg.guild.id] && servers[msg.guild.id].queue.length > 0) {
-            servers[msg.guild.id].queue = [];
+            servers[msg.guild.id].clearQueue();
         }
     }
 }
