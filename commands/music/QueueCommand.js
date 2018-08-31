@@ -25,27 +25,27 @@ class QueueCommand extends Commando.Command {
         }
     
         let currentServer = servers[msg.guild.id];
+        let songPlaying = currentServer.queue[0];
         let answer = new Discord.RichEmbed()
             .setTitle(`Fila de ${msg.guild.name}`, ".")
             .setColor(config.botconfig.mainColor)
-            .addField("Tocando agora", currentServer.queue[0]);
-        
-        if (currentServer.queue.length <= 1) {
-            return;
-        }
+            .addField("Tocando agora", `\`0.\` ${songPlaying.info.title} | \`Adicionado por: ${songPlaying.addedBy}\``);
 
         let allSongs = "";
-        let currentSong;
-        let songInfo;
+        let songInlineInfo;
         for (let i = 1; i < currentServer.queue.length; i++) {
-            currentSong = currentServer.queue[i];
-            songInfo = `\`${i}.\` ${currentSong}`;
+            let song = currentServer.queue[i];
+            songInlineInfo = `\`${i}.\` ${song.info.title} | \`Adicionado por: ${song.addedBy}\``;
             if (i < currentServer.queue.length - 1) {
-                songInfo += "\n\n";
+                songInlineInfo += "\n\n";
             }
-            allSongs += songInfo;
+            allSongs += songInlineInfo;
         }
-        answer.addField("Próximas:", allSongs);
+
+        if (allSongs) {
+            answer.addField("Próximas:", allSongs);
+        }
+
         answer.setFooter(`${currentServer.queue.length - 1} músicas na fila.`);
         msg.channel.send(answer);
     }
