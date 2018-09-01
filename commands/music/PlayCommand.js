@@ -1,7 +1,10 @@
 const Commando = require("discord.js-commando");
+const Discord = require("discord.js");
 const YTDL = require("ytdl-core");
 const Guild = require("../../utils/models/Guild.js");
 const Song = require("../../utils/models/Song.js");
+const dateHelper = require("../../utils/helpers/dateGenerator.js");
+const config = require("../../config/config.js");
 
 
 class PlayCommand extends Commando.Command {
@@ -44,9 +47,25 @@ class PlayCommand extends Commando.Command {
         }
 
         let songInfo = await this.getVideoBasicInfo(args);
-        servers[msg.guild.id].addSongToQueue(new Song(args, msg.author.username, songInfo));
+        let newSong = new Song(args, msg.author.username, songInfo)
+        servers[msg.guild.id].addSongToQueue(newSong);
 
         this.play(msg.guild.voiceConnection, msg);
+
+        let answer;
+        if (servers[msg.guild.id].queue.length > 1) {
+            answer = new Discord.RichEmbed()
+                .setTitle(`${newSong.info.title}`)
+                .setURL(newSong.url)
+                .setAuthor(`Adicionado a fila`, msg.member.user.avatarURL)
+                .setColor(config.botconfig.mainColor)
+                .addField("Canal", newSong.info.author.name)
+                .addField("Duração", dateHelper.fmtMSS(newSong.info.length_seconds))
+                .addField("Posição na fila", servers[msg.guild.id].queue.length - 1);
+        }
+
+        answer = (answer) ? answer : `Tocando ${newSong.info.title} agora`
+        msg.channel.send(answer);
     }
 
     getVideoBasicInfo(songUrl) {
