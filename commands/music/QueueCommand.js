@@ -1,6 +1,7 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const config = require("../../config/config.js");
+const dateHelper = require("../../utils/helpers/dateGenerator.js");
 
 
 class QueueCommand extends Commando.Command {
@@ -29,13 +30,14 @@ class QueueCommand extends Commando.Command {
         let answer = new Discord.RichEmbed()
             .setTitle(`Fila de ${msg.guild.name}`, ".")
             .setColor(config.botconfig.mainColor)
-            .addField("Tocando agora", `\`0.\` ${songPlaying.info.title} | \`Adicionado por: ${songPlaying.addedBy}\``);
+            .addField("Tocando agora", this.createStringSongInfo(0, songPlaying));
 
         let allSongs = "";
         let songInlineInfo;
         for (let i = 1; i < currentServer.queue.length; i++) {
             let song = currentServer.queue[i];
-            songInlineInfo = `\`${i}.\` ${song.info.title} | \`Adicionado por: ${song.addedBy}\``;
+            // video_url
+            songInlineInfo = this.createStringSongInfo(i, song);
             if (i < currentServer.queue.length - 1) {
                 songInlineInfo += "\n\n";
             }
@@ -48,6 +50,10 @@ class QueueCommand extends Commando.Command {
 
         answer.setFooter(`${currentServer.queue.length - 1} músicas na fila.`);
         msg.channel.send(answer);
+    }
+
+    createStringSongInfo(index, song) {
+        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${dateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedBy}\``;
     }
 }
 
