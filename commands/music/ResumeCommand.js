@@ -15,18 +15,15 @@ class ResumeCommand extends Commando.Command {
     async run(msg, args) {
         let voiceChannel = msg.member.voiceChannel;
         if (msg.guild.voiceConnection && voiceChannel.position != msg.guild.voiceConnection.channel.position) {
-            msg.channel.send(`Você deve estar no mesmo canal de voz do bot para executar este comando.`);
-            return;
+            return msg.channel.send(`Você deve estar no mesmo canal de voz do bot para executar este comando.`);
         }
 
         if (!servers[msg.guild.id] || servers[msg.guild.id].queue.length == 0) {
-            msg.channel.send(`Não há música na fila.`);
-            return;
+            return msg.channel.send(`Não há música na fila.`);
         }
 
         if (!servers[msg.guild.id].dispatcher.paused || servers[msg.guild.id].dispatcher.speaking) {
-            msg.channel.send(`A música já está tocando.`);
-            return;
+            return msg.channel.send(`A música já está tocando.`);
         }
 
         servers[msg.guild.id].dispatcher.resume();

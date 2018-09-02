@@ -20,23 +20,20 @@ class PlayCommand extends Commando.Command {
     async run(msg, args) {
         let voiceChannel = msg.member.voiceChannel;
         if (!args) {
-            msg.channel.send(`Insira um parametro de pesquisa valido. Exemplo: \`!play <insira-link>\``);
-            return;
+            return msg.channel.send(`Insira um parametro de pesquisa valido. Exemplo: \`!play <insira-link>\``);   
         }
 
         if (!voiceChannel) {
-            msg.channel.send(`Você deve estar conectado a um canal de voz para executar este comando.`);
-            return;
+            return msg.channel.send(`Você deve estar conectado a um canal de voz para executar este comando.`);
         }
 
         if (msg.guild.voiceConnection && voiceChannel.position != msg.guild.voiceConnection.channel.position) {
-            msg.channel.send(`Você deve estar no mesmo canal de voz do bot.`);
-            return;
+            return msg.channel.send(`Você deve estar no mesmo canal de voz do bot.`);
         }
 
         if (!msg.guild.voiceConnection) {
             voiceChannel.join().then(conn => {
-                msg.channel.send(`Conectado ao \`${voiceChannel.name}\` com sucesso. :yum:`);
+                msg.channel.send(`**Conectado ao** \`${voiceChannel.name}\` com sucesso. :yum:`);
             }).catch(err => {
                 msg.channel.send(`Não foi possível se conectar ao canal \`${voiceChannel.name}\`. :disappointed_relieved:`);
             });
@@ -64,7 +61,7 @@ class PlayCommand extends Commando.Command {
                 .addField("Posição na fila", servers[msg.guild.id].queue.length - 1);
         }
 
-        answer = (answer) ? answer : `Tocando ${newSong.info.title} agora`
+        answer = (answer) ? answer : `Tocando \`${newSong.info.title}\` agora`
         msg.channel.send(answer);
     }
 

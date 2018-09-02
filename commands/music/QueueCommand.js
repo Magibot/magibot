@@ -16,13 +16,11 @@ class QueueCommand extends Commando.Command {
 
     async run(msg, args) {
         if (!servers[msg.guild.id]) {
-            msg.channel.send(`Não existe músicas na fila para este servidor.`);
-            return;
+            return msg.channel.send(`Não existe músicas na fila para este servidor.`);
         }
 
         if (servers[msg.guild.id].queue.length == 0) {
-            msg.channel.send(`A fila para este servidor está vazia.`);
-            return;
+            return msg.channel.send(`A fila para este servidor está vazia.`);
         }
     
         let currentServer = servers[msg.guild.id];
