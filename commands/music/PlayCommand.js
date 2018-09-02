@@ -90,12 +90,15 @@ class PlayCommand extends Commando.Command {
         currentServer.dispatcher = voiceConnection.playStream(stream, streamOptions);
         currentServer.dispatcher.on("end", () => {
             currentServer.shiftQueue();
-            if (currentServer.queue[0]) {
-                this.play(voiceConnection, msg);
-            } else {
-                voiceConnection.disconnect();
-                currentServer.dispatcher.destroy();
+            if (!currentServer.queue[0]) {
+                setTimeout(() => {
+                    voiceConnection.disconnect();
+                    currentServer.dispatcher.destroy();
+                }, 900000);
+                return;
             }
+
+            this.play(voiceConnection, msg);
         });
     }
 }
