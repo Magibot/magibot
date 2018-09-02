@@ -26,18 +26,21 @@ class SkipCommand extends Commando.Command {
             return msg.channel.send(`Não há música na fila.`);
         }
 
+        let answer = this.skip(msg);
+        msg.channel.send(answer);
+
+        answer = (servers[msg.guild.id].queue.length > 0) ? `**Tocando** \`${servers[msg.guild.id].queue[0].info.title}\` agora` : `Não há mais música na fila`;
+        msg.channel.send(answer);
+    }
+
+    skip(msg) {
         let currentServer = servers[msg.guild.id];
         let songPlaying = currentServer.queue[0];
         if (currentServer.dispatcher) {
             currentServer.dispatcher.end();
         }
-        msg.channel.send(`Música \`${songPlaying.info.title}\` skipada com sucesso.`);
-    }
 
-    skip(server) {
-        if (server.dispatcher) {
-            server.dispatcher.end();
-        }
+        return `Música \`${songPlaying.info.title}\` **skipada** com sucesso.`;
     }
 }
 
