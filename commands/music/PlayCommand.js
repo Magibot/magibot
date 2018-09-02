@@ -61,7 +61,7 @@ class PlayCommand extends Commando.Command {
                 .addField("Posição na fila", servers[msg.guild.id].queue.length - 1);
         }
 
-        answer = (answer) ? answer : `Tocando \`${newSong.info.title}\` agora`
+        answer = (answer) ? answer : `**Tocando** \`${newSong.info.title}\` agora`
         msg.channel.send(answer);
     }
 
