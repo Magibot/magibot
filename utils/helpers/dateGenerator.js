@@ -1,33 +1,42 @@
-function handleSingleDigitsDates(ss) {
-    return (ss < 10) ? "0" + ss : ss;
-}
+class DateHelper {
 
-module.exports = {
-    today: function () {
+    static _handleSingleDigitsDates(ss) {
+        return (ss < 10) ? "0" + ss : ss;
+    }
+
+    static today() {
         var today = new Date();
-        var dd = handleSingleDigitsDates(today.getDate());
-        var mm = handleSingleDigitsDates(today.getMonth() + 1);
+        var dd = this._handleSingleDigitsDates(today.getDate());
+        var mm = this._handleSingleDigitsDates(today.getMonth() + 1);
         var yyyy = today.getFullYear();
 
         return yyyy + mm + dd;
-    },
-    yearMonth: function () {
+    }
+
+    static yearMonth() {
         var today = new Date();
-        var mm = handleSingleDigitsDates(today.getMonth() + 1);
+        var mm = this._handleSingleDigitsDates(today.getMonth() + 1);
         var yyyy = today.getFullYear();
 
         return yyyy + mm;
-    },
-    year: function () {
+    }
+
+    static year() {
         return (new Date()).getFullYear();
-    },
-    day: function () {
-        return handleSingleDigitsDates((new Date()).getDate());
-    },
-    month: function () {
-        return handleSingleDigitsDates((new Date()).getMonth() + 1);
-    },
-    fmtMSS: function (s) {
+    }
+
+    static day() {
+        return this._handleSingleDigitsDates((new Date()).getDate());
+    }
+
+    static month() {
+        return this._handleSingleDigitsDates((new Date()).getMonth() + 1);
+    }
+
+    static fmtMSS(s) {
         return (s - ( s %= 60 )) / 60 + ( 9 < s ? ':' : ':0') + s;
     }
 }
+
+
+module.exports = DateHelper;
