@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const config = require("../../config/config.js");
-const dateHelper = require("../../utils/helpers/dateGenerator.js");
+const DateHelper = require("../../utils/helpers/DateHelper");
 
 
 class QueueCommand extends Commando.Command {
@@ -51,7 +51,7 @@ class QueueCommand extends Commando.Command {
     }
 
     createStringSongInfo(index, song) {
-        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${dateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedBy}\``;
+        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${DateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedBy}\``;
     }
 }
 
