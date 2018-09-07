@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const path = require("path");
 const config = require("./config/config.js");
 const server = require("./utils/server.js");
-const dateHelper = require("./utils/helpers/dateGenerator");
+const DateHelper = require("./utils/helpers/DateHelper.js");
 const statusActivities = require("./utils/helpers/statusActivities.js");
 const dbconn = require("./dbconn.js");
 

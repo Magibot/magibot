@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const YTDL = require("ytdl-core");
 const Guild = require("../../common/structures/Guild.js")
 const Song = require("../../common/structures/Song.js");
-const dateHelper = require("../../utils/helpers/dateGenerator.js");
+const DateHelper = require("../../utils/helpers/DateHelper.js");
 const config = require("../../config/config.js");
 
 
@@ -57,7 +57,7 @@ class PlayCommand extends Commando.Command {
                 .setAuthor(`Adicionado a fila`, msg.member.user.avatarURL)
                 .setColor(config.botconfig.mainColor)
                 .addField("Canal", newSong.info.author.name)
-                .addField("Duração", dateHelper.fmtMSS(newSong.info.length_seconds))
+                .addField("Duração", DateHelper.fmtMSS(newSong.info.length_seconds))
                 .addField("Posição na fila", servers[msg.guild.id].queue.length - 1);
         }
 
