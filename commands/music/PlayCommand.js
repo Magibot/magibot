@@ -1,8 +1,8 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const YTDL = require("ytdl-core");
-const Guild = require("../../utils/models/Guild.js");
-const Song = require("../../utils/models/Song.js");
+const Guild = require("../../common/structures/Guild.js")
+const Song = require("../../common/structures/Song.js");
 const dateHelper = require("../../utils/helpers/dateGenerator.js");
 const config = require("../../config/config.js");
 
