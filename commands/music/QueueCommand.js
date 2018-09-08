@@ -32,8 +32,10 @@ class QueueCommand extends Commando.Command {
 
         let allSongs = "";
         let songInlineInfo;
+        let totalQueueLength = 0;
         for (let i = 1; i < currentServer.queue.length; i++) {
             let song = currentServer.queue[i];
+            totalQueueLength += parseInt(song.info.length_seconds);
             // video_url
             songInlineInfo = this.createStringSongInfo(i, song);
             if (i < currentServer.queue.length - 1) {
@@ -46,7 +48,10 @@ class QueueCommand extends Commando.Command {
             answer.addField("Próximas:", allSongs);
         }
 
-        answer.setFooter(`${currentServer.queue.length - 1} músicas na fila.`);
+        let footerMsg = (totalQueueLength > 0) ? `${currentServer.queue.length - 1} músicas na fila | Tempo total de fila: ${DateHelper.fmtMSS(totalQueueLength)}` : `${currentServer.queue.length - 1} músicas na fila.`;
+
+        // answer.setFooter(`${currentServer.queue.length - 1} músicas na fila | Tempo total de fila: ${DateHelper.fmtMSS(totalQueueLength)}`);
+        answer.setFooter(footerMsg);
         msg.channel.send(answer);
     }
 
