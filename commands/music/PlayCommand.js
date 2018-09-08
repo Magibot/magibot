@@ -40,11 +40,11 @@ class PlayCommand extends Commando.Command {
         }
 
         if (!servers[msg.guild.id]) {
-            servers[msg.guild.id] = new Guild();
+            servers[msg.guild.id] = new Guild(msg.guild.id);
         }
 
         let songInfo = await this.getVideoBasicInfo(args);
-        let newSong = new Song(args, msg.author.username, songInfo)
+        let newSong = new Song(args, msg.author.username, songInfo);
         servers[msg.guild.id].addSongToQueue(newSong);
 
         this.play(msg.guild.voiceConnection, msg);

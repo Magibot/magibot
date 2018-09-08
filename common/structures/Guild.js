@@ -1,5 +1,6 @@
 class Guild {
-    constructor() {
+    constructor(id) {
+        this.__id = id;
         this.__queue = [];
         this.__dispatcher = null;
     }
@@ -21,7 +22,14 @@ class Guild {
     }
 
     clearQueue() {
+        // while (this.__queue.length > 1) {
+        //     this.__queue.pop();
+        // }
+
+        // Better perfomance
+        let songPlaying = this.__queue[0];
         this.__queue = [];
+        this.__queue.push(songPlaying);
     }
 
     set dispatcher(stream) {
@@ -34,6 +42,10 @@ class Guild {
 
     get dispatcher() {
         return this.__dispatcher;
+    }
+
+    get id() {
+        return this.__id;
     }
 }
 
