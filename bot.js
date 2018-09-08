@@ -4,8 +4,9 @@ const path = require("path");
 const config = require("./config/config.js");
 const server = require("./utils/server.js");
 const DateHelper = require("./utils/helpers/DateHelper.js");
-const statusActivities = require("./utils/helpers/statusActivities.js");
 const dbconn = require("./dbconn.js");
+const SearchDocument = require("./common/SearchDocument.js");
+const Finder = require("./common/Finder.js");
 
 const bot = new Commando.Client({
     commandPrefix: '+',
@@ -15,6 +16,25 @@ const bot = new Commando.Client({
 
 Array.prototype.randomElement = function () {
     return this[Math.floor(Math.random() * this.length)];
+}
+
+String.prototype.toCamelCase = function() {
+    let string = this.toLowerCase().replace(/(?:(^.)|([-_\s]+.))/g, function(match) {
+        return match.charAt(match.length-1).toUpperCase();
+    });
+    return string.charAt(0).toLowerCase() + string.substring(1);
+}
+
+Object.prototype.zip = function (arr1, arr2) {
+    let obj = {};
+    for (let i = 0; i < arr1.length; i++) {
+        obj[arr1[i]] = arr2[i];
+    }
+    return obj;
+}
+
+Object.prototype.exists = function () {
+    return Object.keys(this).length > 0;
 }
 
 global.servers = {};
@@ -32,12 +52,13 @@ bot.registry
 
 
 function updateBotActivity(firstActivityChange=false) {
-    statusActivities.activitiesList(dbconn).then(result => {
+    let searchDoc = new SearchDocument("STATUSATIVIDADE");
+    Finder.runSearch(dbconn, searchDoc).then(result => {
         let possibleActivities = [];
         let currentActivity;
         for (let i = 0; i < result.length; i++) {
             currentActivity = result[i];
-            if (currentActivity.UTILIZADO == 0) {
+            if (currentActivity.utilizado == 0) {
                 possibleActivities.push(currentActivity);
             }
         }
@@ -45,24 +66,31 @@ function updateBotActivity(firstActivityChange=false) {
         if (possibleActivities.length === 0) {
             for (let i = 0; i < result.length; i++) {
                 currentActivity = result[i];
-                statusActivities.updateUsedActivity(dbconn, currentActivity.CODIGOATIV, 0);
+                searchDoc.clear();
+                searchDoc.change.utilizado = 0;
+                searchDoc.parameters.codigoAtiv = currentActivity.codigoAtiv;
+                // statusActivities.updateUsedActivity(dbconn, currentActivity.CODIGOATIV, 0);
+                Finder.save(dbconn, searchDoc);
             }
             updateBotActivity(firstActivityChange);
             return;
         }
 
         let activity = possibleActivities.randomElement();
-        message = `Jogo alterado para ${activity.DESCRICAO}.`;
+        message = `Jogo alterado para ${activity.descricao}.`;
         if (firstActivityChange) {
-            message = `Agora jogando ${activity.DESCRICAO}.`;
+            message = `Agora jogando ${activity.descricao}.`;
         }
 
-        statusActivities.updateUsedActivity(dbconn, activity.CODIGOATIV, 1);
+        searchDoc.clear();
+        searchDoc.changes.utilizado = 1;
+        searchDoc.parameters.codigoAtiv = activity.codigoAtiv;
+        Finder.save(dbconn, searchDoc);
 
         console.log(message);
-        bot.user.setActivity(activity.DESCRICAO);
+        bot.user.setActivity(activity.descricao);
     }).catch(err => {
-        console.log("Não foi possível se conectar ao banco de dado");
+        console.log("Não foi possível se conectar ao banco de dados");
         console.log(`Motivo: ${err}`);
     });
 }

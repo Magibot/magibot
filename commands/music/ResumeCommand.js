@@ -1,5 +1,4 @@
 const Commando = require("discord.js-commando");
-const YTDL = require("ytdl-core");
 
 
 class ResumeCommand extends Commando.Command {

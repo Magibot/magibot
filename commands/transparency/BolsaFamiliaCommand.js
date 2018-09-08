@@ -2,9 +2,10 @@ const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const GovernInterfaceApi = require("../../utils/models/GovernInterfaceApi");
 const HttpService = require("../../utils/services/HttpService");
-const ibge = require("../../utils/helpers/ibge");
 const dbconn = require("../../dbconn.js");
 const config = require("../../config/config.js");
+const SearchDocument = require("../../common/SearchDocument.js");
+const Finder = require("../../common/Finder.js");
 
 
 class BolsaFamiliaCommand extends Commando.Command {
@@ -19,7 +20,6 @@ class BolsaFamiliaCommand extends Commando.Command {
         this.httpService = new HttpService();
         this.urlDataApi = "http://www.transparencia.gov.br/api-de-dados";
         this.bolsaFamiliaApi = new GovernInterfaceApi(this.urlDataApi, "/bolsa-familia-por-municipio", ["mesAno", "codigoIbge", "pagina"]);
-        this.ibge = ibge;
         this.db = dbconn;
     }
 
@@ -36,24 +36,27 @@ class BolsaFamiliaCommand extends Commando.Command {
             return;
         }
 
-        let searchObj = {
+        let cmdParameters = {
             mesAno: arrayArgs[0],
-            nomeconcat: arrayArgs[1],
+            nomeConcat: arrayArgs[1],
             codigoIbge: null,
             municipio: null,
         };
 
-        this.ibge.municipios(dbconn).then(result => {
+        let searchDoc = new SearchDocument("MUNICIPIOIBGE");
+        searchDoc.parameters.nomeConcat = arrayArgs[1];
+        // this.ibge.municipios(dbconn).then(result => {
+        Finder.runSearch(dbconn, searchDoc).then(result => {
             let currentCity;
             for (let i = 0; i < result.length; i++) {
                 currentCity = result[i];
-                if (currentCity.NOMECONCAT == searchObj.nomeconcat) {
-                    searchObj.municipio = currentCity.NOME;
-                    searchObj.codigoIbge = currentCity.CODIGOIBGE;
+                if (currentCity.nomeConcat == cmdParameters.nomeConcat) {
+                    cmdParameters.municipio = currentCity.nome;
+                    cmdParameters.codigoIbge = currentCity.codigoIbge;
                 }
             }
 
-            if (!searchObj.codigoIbge) {
+            if (!cmdParameters.codigoIbge) {
                 answer.addField("Error", "Cidade inválida ou não cadastrada no banco de dados.");
                 answer.addField("Exemplo de pesquisa", "!bolsafamilia 201805 RioDeJaneiro");
                 msg.channel.send(answer);
@@ -61,8 +64,8 @@ class BolsaFamiliaCommand extends Commando.Command {
             }
 
             this.bolsaFamiliaApi.data = {
-                mesAno: searchObj.mesAno,
-                codigoIbge: searchObj.codigoIbge,
+                mesAno: cmdParameters.mesAno,
+                codigoIbge: cmdParameters.codigoIbge,
                 pagina: 1
             };
     
