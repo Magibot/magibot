@@ -4,7 +4,6 @@ const YTDL = require("ytdl-core");
 const Guild = require("../../common/structures/Guild.js")
 const Song = require("../../common/structures/Song.js");
 const DateHelper = require("../../utils/helpers/DateHelper.js");
-const config = require("../../config/config.js");
 
 
 class PlayCommand extends Commando.Command {

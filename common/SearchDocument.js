@@ -1,5 +1,4 @@
 const Finder = require("./Finder.js");
-const dbconn = require("../dbconn.js");
 
 class SearchDocument {
     constructor(table) {

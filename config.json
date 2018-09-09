@@ -1,0 +1,9 @@
+{
+    "botconfig": {
+        "initRole": "Membro",
+        "mainChannel": "geral",
+        "memberRemoveColor": "0xcc6600",
+        "memberAddColor": "0x00cc7a",
+        "mainColor": "0x99e6ff"
+    }
+}

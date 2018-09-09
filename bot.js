@@ -1,13 +1,22 @@
 require("dotenv").config();
+const path = require("path");
+const fs = require("fs");
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const path = require("path");
-const config = require("./config/config.js");
+const mysql = require("mysql");
 const server = require("./utils/server.js");
 const DateHelper = require("./utils/helpers/DateHelper.js");
-const dbconn = require("./dbconn.js");
 const SearchDocument = require("./common/SearchDocument.js");
 const Finder = require("./common/Finder.js");
+
+global.config = JSON.parse(fs.readFileSync("config.json", "utf8"));
+global.dbconn = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
+global.servers = {};
 
 const bot = new Commando.Client({
     commandPrefix: process.env.PREFIX,
@@ -38,8 +47,6 @@ Object.prototype.exists = function () {
     return Object.keys(this).length > 0;
 }
 
-global.servers = {};
-
 bot.registry
     .registerDefaultTypes()
     .registerGroups([
@@ -68,7 +75,7 @@ function updateBotActivity(firstActivityChange=false) {
             for (let i = 0; i < result.length; i++) {
                 currentActivity = result[i];
                 searchDoc.clear();
-                searchDoc.change.utilizado = 0;
+                searchDoc.changes.utilizado = 0;
                 searchDoc.parameters.codigoAtiv = currentActivity.codigoAtiv;
                 // statusActivities.updateUsedActivity(dbconn, currentActivity.CODIGOATIV, 0);
                 Finder.save(dbconn, searchDoc);

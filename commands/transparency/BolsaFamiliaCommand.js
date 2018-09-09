@@ -2,8 +2,6 @@ const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const GovernInterfaceApi = require("../../utils/models/GovernInterfaceApi");
 const HttpService = require("../../utils/services/HttpService");
-const dbconn = require("../../dbconn.js");
-const config = require("../../config/config.js");
 const SearchDocument = require("../../common/SearchDocument.js");
 const Finder = require("../../common/Finder.js");
 

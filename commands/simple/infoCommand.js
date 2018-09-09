@@ -1,6 +1,5 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const config = require("../../config/config.js");
 
 
 class InfoCommand extends Commando.Command {
