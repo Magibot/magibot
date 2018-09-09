@@ -1,9 +1,8 @@
 const mysql = require("mysql");
-const config = require("./config/config.js");
 
 module.exports = mysql.createConnection({
-    host: config.database.host,
-    user: config.database.user,
-    password: config.database.password,
-    database: config.database.db
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });

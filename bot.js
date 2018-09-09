@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const path = require("path");
@@ -9,7 +10,7 @@ const SearchDocument = require("./common/SearchDocument.js");
 const Finder = require("./common/Finder.js");
 
 const bot = new Commando.Client({
-    commandPrefix: '+',
+    commandPrefix: process.env.PREFIX,
     unknownCommandResponse: false,
     disableEveryone: true
 });
@@ -109,9 +110,9 @@ function guildMemberEmbed(member, footerText, color) {
 
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
-    server.start(config.port);
-    console.log(`Aberto na porta ${config.port}.`);
-    console.log(`Conectado ao Banco de Dados: ${config.database.db}@${config.database.host}`);
+    server.start(process.env.PORT);
+    console.log(`Aberto na porta ${process.env.PORT}.`);
+    console.log(`Conectado ao Banco de Dados: ${process.env.DB_NAME}@${process.env.DB_HOST}`);
     console.log(`Startado em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
     updateBotActivity(firstActivityChange=true);
 });
@@ -149,4 +150,4 @@ bot.on("guildMemberRemove", member => {
     member.guild.channels.find("name", config.botconfig.mainChannel).send(removeMemberLog);
 });
 
-bot.login(config.token);
+bot.login(process.env.TOKEN);
