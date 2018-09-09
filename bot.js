@@ -72,14 +72,9 @@ function updateBotActivity(firstActivityChange=false) {
         }
 
         if (possibleActivities.length === 0) {
-            for (let i = 0; i < result.length; i++) {
-                currentActivity = result[i];
-                searchDoc.clear();
-                searchDoc.changes.utilizado = 0;
-                searchDoc.parameters.codigoAtiv = currentActivity.codigoAtiv;
-                // statusActivities.updateUsedActivity(dbconn, currentActivity.CODIGOATIV, 0);
-                Finder.save(dbconn, searchDoc);
-            }
+            searchDoc.clear();
+            searchDoc.changes.utilizado = 0;
+            Finder.save(dbconn, searchDoc);
             updateBotActivity(firstActivityChange);
             return;
         }
