@@ -1,5 +1,6 @@
 const SearchDocument = require("./SearchDocument.js");
 const Finder = require("./Finder.js");
+const Discord = require("discord.js");
 
 class BotCommon {
 
@@ -40,6 +41,14 @@ class BotCommon {
             console.log("Não foi possível se conectar ao banco de dados");
             console.log(`Motivo: ${err}`);
         });
+    }
+
+    static createGuildMemberEmbed(member, footerText, color) {
+        return new Discord.RichEmbed()
+            .setColor(color)
+            .setFooter(footerText, icon=member.client.user.avatarURL)
+            .setAuthor(`${member.user.username} (${member.user.id})`, icon=member.user.avatarURL)
+            .setTimestamp(new Date());
     }
 }
 

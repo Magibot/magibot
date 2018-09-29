@@ -64,14 +64,6 @@ setInterval(() => {
     BotCommon.updateBotActivity(bot);
 }, 600000);
 
-function guildMemberEmbed(member, footerText, color) {
-    return new Discord.RichEmbed()
-        .setColor(color)
-        .setFooter(footerText, icon=member.client.user.avatarURL)
-        .setAuthor(`${member.user.username} (${member.user.id})`, icon=member.user.avatarURL)
-        .setTimestamp(new Date());
-}
-
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
     server.start(process.env.PORT);
@@ -83,12 +75,12 @@ bot.on("ready", () => {
 
 bot.on("guildCreate", guild => {
     console.log(`Bot foi iniciado no server: ${guild.name} (${guild.id}). Esse server tem ${guild.memberCount} membros.`);
-    updateBotActivity();
+    BotCommon.updateBotActivity(bot);
 });
 
 bot.on("guildDelete", guild => {
     console.log(`Bot foi removido do server: ${guild.name} (${guild.id}).`);
-    updateBotActivity();
+    BotCommon.updateBotActivity(bot);
 });
 
 bot.on("guildMemberAdd", member => {
@@ -105,12 +97,12 @@ bot.on("guildMemberAdd", member => {
     let memberRole = member.guild.roles.find("name", config.botconfig.initRole);
     member.addRole(memberRole).then().catch(console.error);
 
-    let newMemberLog = guildMemberEmbed(member, "Novo membro", config.botconfig.memberAddColor);
+    let newMemberLog = BotCommon.createGuildMemberEmbed(member, "Novo membro", config.botconfig.memberAddColor);
     member.guild.channels.find("name", config.botconfig.mainChannel).send(newMemberLog);
 });
 
 bot.on("guildMemberRemove", member => {
-    let removeMemberLog = guildMemberEmbed(member, "Membro saiu", config.botconfig.memberRemoveColor);
+    let removeMemberLog = BotCommon.createGuildMemberEmbed(member, "Membro saiu", config.botconfig.memberRemoveColor);
     member.guild.channels.find("name", config.botconfig.mainChannel).send(removeMemberLog);
 });
 
