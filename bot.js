@@ -8,6 +8,7 @@ const server = require("./utils/server.js");
 const DateHelper = require("./utils/helpers/DateHelper.js");
 const SearchDocument = require("./common/SearchDocument.js");
 const Finder = require("./common/Finder.js");
+const BotCommon = require("./common/BotCommon.js");
 
 global.config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 global.dbconn = mysql.createConnection({
@@ -59,47 +60,8 @@ bot.registry
     .registerCommandsIn(path.join(__dirname, "commands"));
 
 
-function updateBotActivity(firstActivityChange=false) {
-    let searchDoc = new SearchDocument("STATUSATIVIDADE");
-    Finder.runSearch(dbconn, searchDoc).then(result => {
-        let possibleActivities = [];
-        let currentActivity;
-        for (let i = 0; i < result.length; i++) {
-            currentActivity = result[i];
-            if (currentActivity.utilizado == 0) {
-                possibleActivities.push(currentActivity);
-            }
-        }
-
-        if (possibleActivities.length === 0) {
-            searchDoc.clear();
-            searchDoc.changes.utilizado = 0;
-            Finder.save(dbconn, searchDoc);
-            updateBotActivity(firstActivityChange);
-            return;
-        }
-
-        let activity = possibleActivities.randomElement();
-        message = `Jogo alterado para ${activity.descricao}.`;
-        if (firstActivityChange) {
-            message = `Agora jogando ${activity.descricao}.`;
-        }
-
-        searchDoc.clear();
-        searchDoc.changes.utilizado = 1;
-        searchDoc.parameters.codigoAtiv = activity.codigoAtiv;
-        Finder.save(dbconn, searchDoc);
-
-        console.log(message);
-        bot.user.setActivity(activity.descricao);
-    }).catch(err => {
-        console.log("Não foi possível se conectar ao banco de dados");
-        console.log(`Motivo: ${err}`);
-    });
-}
-
 setInterval(() => {
-    updateBotActivity();
+    BotCommon.updateBotActivity(bot);
 }, 600000);
 
 function guildMemberEmbed(member, footerText, color) {
@@ -116,7 +78,7 @@ bot.on("ready", () => {
     console.log(`Aberto na porta ${process.env.PORT}.`);
     console.log(`Conectado ao Banco de Dados: ${process.env.DB_NAME}@${process.env.DB_HOST}`);
     console.log(`Startado em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
-    updateBotActivity(firstActivityChange=true);
+    BotCommon.updateBotActivity(bot, firstActivityChange=true);
 });
 
 bot.on("guildCreate", guild => {
