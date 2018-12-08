@@ -5,6 +5,10 @@ const Discord = require("discord.js");
 class BotCommon {
 
     static updateBotActivity(client, firstActivityChange=false) {
+        if (!client || !client.user) {
+            return;
+        }
+        
         let searchDoc = new SearchDocument("STATUSATIVIDADE");
         Finder.runSearch(dbconn, searchDoc).then(result => {
             let possibleActivities = [];
