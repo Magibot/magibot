@@ -50,7 +50,7 @@ No arquivo `config.json` que já se encontra no repositório, você pode configu
 5. Na variável `botconfig/mainColor`, configure a cor padrão de todas as outras mensagens do bot.
 
 Segue um exemplo de configuração deste arquivo:
-```
+```json
 {
     "botconfig": {
         "initRole": "Membro",
