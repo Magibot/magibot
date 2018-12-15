@@ -6,9 +6,6 @@ const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const mysql = require("mysql");
 const server = require("./utils/server.js");
-const DateHelper = require("./utils/helpers/DateHelper.js");
-const SearchDocument = require("./common/SearchDocument.js");
-const Finder = require("./common/Finder.js");
 const BotCommon = require("./common/BotCommon.js");
 
 global.config = JSON.parse(fs.readFileSync("config.json", "utf8"));
