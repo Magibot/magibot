@@ -1,8 +1,8 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const GovernInterfaceApi = require("../../utils/models/GovernInterfaceApi");
-const HttpService = require("../../utils/services/HttpService");
-const MunicipioIbgeController = require("../../common/controllers/MunicipioIbgeController.js");
+const GovernInterfaceApi = require("../../api/interfaces/GovernInterfaceApi");
+const HttpService = require("../../api/services/HttpService");
+const MunicipioIbgeController = require("../../controllers/MunicipioIbgeController.js");
 
 class BolsaFamiliaCommand extends Commando.Command {
     constructor(client) {

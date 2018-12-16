@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const ActivityController = require("../common/controllers/ActivityController.js");
+const ActivityController = require("./controllers/ActivityController.js");
 
 class BotCommon {
 

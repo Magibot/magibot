@@ -1,6 +1,6 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const DateHelper = require("../../utils/helpers/DateHelper");
+const DateHelper = require("../../helpers/DateHelper.js");
 
 
 class QueueCommand extends Commando.Command {

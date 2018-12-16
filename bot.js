@@ -1,11 +1,11 @@
 require("dotenv").config();
-require('./utils/PrototypesFunctions.js').config();
+require('./src/helpers/PrototypesFunctions.js').config();
 const path = require("path");
 const fs = require("fs");
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const server = require("./utils/server.js");
-const BotCommon = require("./common/BotCommon.js");
+const server = require("./src/api/server.js");
+const BotCommon = require("./src/BotCommon.js");
 
 global.config = JSON.parse(fs.readFileSync("config.json", "utf8"));
 global.servers = {};
@@ -25,7 +25,7 @@ bot.registry
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()
-    .registerCommandsIn(path.join(__dirname, "commands"));
+    .registerCommandsIn(path.join(__dirname, "src/commands"));
 
 if (process.env.NEED_UPDATE_ACTIVITY == true || process.env.NEED_UPDATE_ACTIVITY == "true") {
     setInterval(() => {
@@ -37,8 +37,7 @@ bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
     server.start(process.env.PORT);
     console.log(`Aberto na porta ${process.env.PORT}.`);
-    console.log(`Conectado ao Banco de Dados: ${process.env.DB_NAME}@${process.env.DB_HOST}`);
-    console.log(`Startado em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
+    console.log(`Iniciando em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
     BotCommon.updateBotActivity(bot, firstActivityChange=true);
 });
 

@@ -1,4 +1,4 @@
-var XMLHttpRequest = require("../../node_modules/xmlhttprequest").XMLHttpRequest
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 class HttpService {
     

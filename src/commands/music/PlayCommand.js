@@ -1,9 +1,9 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const YTDL = require("ytdl-core");
-const Guild = require("../../common/structures/Guild.js")
-const Song = require("../../common/structures/Song.js");
-const DateHelper = require("../../utils/helpers/DateHelper.js");
+const Guild = require("../../models/Guild.js")
+const Song = require("../../models/Song.js");
+const DateHelper = require("../../helpers/DateHelper.js");
 
 
 class PlayCommand extends Commando.Command {
