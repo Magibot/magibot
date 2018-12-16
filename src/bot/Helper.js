@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
-const ActivityController = require("./controllers/ActivityController.js");
+const ActivityController = require("../controllers/ActivityController.js");
 
-class BotCommon {
+class Helper {
 
     static updateBotActivity(client, firstActivityChange=false) {
         if (!client || !client.user) {
@@ -30,4 +30,4 @@ class BotCommon {
     }
 }
 
-module.exports = BotCommon;
+module.exports = Helper;
