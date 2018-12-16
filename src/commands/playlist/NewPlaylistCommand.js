@@ -52,6 +52,7 @@ class NewPlaylistCommand extends Commando.Command {
             .then((playlist) => {
                 answer
                     .setTitle("Playlist criada com sucesso.")
+                    .addField("Id da playlist:", `\`${playlist._id}\``)
                     .addField("Adição de música:", `\`!addsongto ${playlist.name} <link-da-musica>\`.`)
                     .addField(`Remoção de música:`, `\`!removesong ${playlist.name} <id-da-musica>\`.`)
                     .addField("Tocar playlist:", `\`!playlist ${playlist.name}\``)
