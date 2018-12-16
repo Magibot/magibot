@@ -4,17 +4,10 @@ const path = require("path");
 const fs = require("fs");
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const mysql = require("mysql");
 const server = require("./utils/server.js");
 const BotCommon = require("./common/BotCommon.js");
 
 global.config = JSON.parse(fs.readFileSync("config.json", "utf8"));
-global.dbconn = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
 global.servers = {};
 
 const bot = new Commando.Client({
@@ -34,10 +27,11 @@ bot.registry
     .registerDefaultCommands()
     .registerCommandsIn(path.join(__dirname, "commands"));
 
-
-setInterval(() => {
-    BotCommon.updateBotActivity(bot);
-}, 600000);
+if (process.env.NEED_UPDATE_ACTIVITY == true || process.env.NEED_UPDATE_ACTIVITY == "true") {
+    setInterval(() => {
+            BotCommon.updateBotActivity(bot);
+    }, 600000);
+}
 
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
