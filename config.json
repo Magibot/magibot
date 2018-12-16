@@ -1,6 +1,6 @@
 {
     "botconfig": {
-        "initRole": "Membro",
+        "initRole": "Soldado",
         "mainChannel": "geral",
         "memberRemoveColor": "0xcc6600",
         "memberAddColor": "0x00cc7a",
