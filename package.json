@@ -22,7 +22,7 @@
     "discord.js-commando": "^0.10.0",
     "dotenv": "^6.0.0",
     "ffmpeg-binaries": "^4.0.0",
-    "mysql": "^2.16.0",
+    "mongojs": "^2.6.0",
     "opusscript": "0.0.6",
     "xmlhttprequest": "^1.8.0",
     "ytdl-core": "^0.24.0"
