@@ -28,18 +28,17 @@ bot.registry
     .registerDefaultCommands()
     .registerCommandsIn(path.join(__dirname, "src/commands"));
 
-if (process.env.NEED_UPDATE_ACTIVITY == true || process.env.NEED_UPDATE_ACTIVITY == "true") {
-    setInterval(() => {
-            BotHelper.updateBotActivity(bot);
-    }, 600000);
-}
-
 bot.on("ready", () => {
     console.log(`${bot.user.username} startando.`);
-    server.start(process.env.PORT);
+    server.start(process.env.PORT || 3000);
     console.log(`Aberto na porta ${process.env.PORT}.`);
     console.log(`Iniciando em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
-    BotHelper.updateBotActivity(bot, firstActivityChange=true);
+    if (process.env.SET_FUN_ACTIVITIES == true || process.env.SET_FUN_ACTIVITIES == "true") {
+        BotHelper.updateBotActivity(bot, true);
+        setInterval(() => {
+                BotHelper.updateBotActivity(bot);
+        }, parseInt(process.env.CHANGE_ACTIVITY_TIME) || 600000);
+    }
 });
 
 // Events
