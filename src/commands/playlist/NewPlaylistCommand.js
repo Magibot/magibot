@@ -10,7 +10,7 @@ class NewPlaylistCommand extends Commando.Command {
             name: "newplaylist",
             group: "playlist",
             memberName: "newplaylist",
-            description: "Cadastra uma nova playlist para aquele servidor."
+            description: "Cadastra uma nova playlist para o servidor."
         });
     }
 
