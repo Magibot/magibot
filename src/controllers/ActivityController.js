@@ -13,7 +13,7 @@ class ActivityController {
                 // Tratar o caso de receber todas as atividades já utilizadas
                 if (activities.length == 0) {
                     ActivityController.updateAllUsed();
-                    ActivityController.updateBotActivity(client);
+                    ActivityController.getUnusedActivity();
                     return;
                 }
     
