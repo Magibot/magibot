@@ -16,7 +16,6 @@ class BolsaFamiliaCommand extends Commando.Command {
         this.httpService = new HttpService();
         this.urlDataApi = "http://www.transparencia.gov.br/api-de-dados";
         this.bolsaFamiliaApi = new GovernInterfaceApi(this.urlDataApi, "/bolsa-familia-por-municipio", ["mesAno", "codigoIbge", "pagina"]);
-        this.db = dbconn;
     }
 
     async run(msg, args) {
