@@ -1,39 +1,41 @@
 # Discord Bot
 
-Bot para o aplicativo de comunicação **Discord** que realiza funções administrativas no servidor. O Bot foi construido em Node.js utilizando as bibliotecas `discord.js` e `discord.js-commando`. Além disso, o Bot utilizado o banco de dados **MySQL** e a biblioteca `mysql` para seu gerenciamento.
+Bot para o aplicativo de comunicação **Discord** que realiza funções administrativas no servidor. O Bot foi construido em Node.js utilizando as bibliotecas `discord.js` e `discord.js-commando`. Além disso, o Bot utilizado o banco de dados **MongoDB** e a biblioteca `mongojs` para seu gerenciamento. 
+
+> É recomendável utilizar o MLab para a criação das collections e dos documents do Mongo.
 
 ## Dependências de Software
 
 - Node.js
-- MySQL
 
 ## Instalação do projeto
 
 Apõs clonar o repositório em sua máquina, utilize o gerenciador de pacotes do Node, **NPM**, para instalar todas das dependências do projeto. Para isto, execute o comando na pasta root do repositório:
-
 ```
 npm install
 ```
+
+## Configuração das Collections do MongoDB no Mlab
 
 ## Configuração do Bot
 
 ### Variáveis de Ambiente
 
-Crie um arquivo `.env` e salve na pasta root do repositório. Neste arquivo, deve conter o **token** da aplicação do Discord, o **prefixo** que será utilizado para a criação de comandos e a porta em que o servidor irá se iniciar. Além disso, variáveis de configuração de banco de dados **MySQL** como: **host**, **user**, **password** e **name**. No final, seu arquivo `.env` deve estar parecido com este:
-
+Crie um arquivo `.env` e salve na pasta root do repositório. Neste arquivo, deve conter o **token** da aplicação do Discord, o **prefixo** que será utilizado para a criação de comandos e a porta em que o servidor irá se iniciar. Além disso, a configuração de banco de dados **MongoDB** na variável: `MONGODB`. No final, seu arquivo `.env` deve estar parecido com este:
 ```
 TOKEN=<insira-seu-token>
 OAUTH=<insira-seu-oauth-link>
 PREFIX=!
 
-DB_HOST=<host-do-banco>
-DB_USER=<usuario-do-banco>
-DB_PASSWORD=<senha-do-banco>
-DB_NAME=<nome-da-conexao-do-banco>
+MONGODB=<insira-sua-MongoDB0-URI>
 
-PORT=8080
+SET_FUN_ACTIVITIES=true
+CHANGE_ACTIVITY_TIME=600000
 
+PORT=3000
 ```
+
+> A variável **SET_FUN_ACTIVITIES** faz com que o bot troque sua atividade de tempos em tempos de acordo com a variável **CHANGE_ACTIVITY_TIME** em milisegundos.
 
 ### Configuração de comportamentos
 
@@ -67,6 +69,11 @@ Segue um exemplo de configuração deste arquivo:
 Inicie o bot com o comando:
 ```
 npm start
+```
+
+Iniciando o bot no modo de desenvolvimento:
+```
+npm run dev
 ```
 
 > Não esqueça de incluir o bot a seu servidor
