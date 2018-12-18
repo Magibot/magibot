@@ -7,6 +7,11 @@ class Playlist {
         this.allowOtherToModify = allowOtherToModify;
         this.songs = [];
     }
+
+    insereMusicas(songs) {
+        this.songs.push(...songs);
+    }
+
 }
 
 module.exports = Playlist;
