@@ -1,12 +1,13 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const YTDL = require("ytdl-core");
-const Guild = require("../../models/Guild.js")
-const Song = require("../../models/Song.js");
+const Guild = require("../../structures/Guild.js")
+const Song = require("../../structures/Song.js");
 const DateHelper = require("../../helpers/DateHelper.js");
 
 
 class PlayCommand extends Commando.Command {
+
     constructor(client) {
         super(client, {
             name: "play",
