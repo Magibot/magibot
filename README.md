@@ -1,4 +1,4 @@
-# Discord Bot
+# Magi Bot
 
 Bot para o aplicativo de comunicação **Discord** que realiza funções administrativas no servidor. O Bot foi construido em Node.js utilizando as bibliotecas `discord.js` e `discord.js-commando`. Além disso, o Bot utilizado o banco de dados **MongoDB** e a biblioteca `mongojs` para seu gerenciamento. 
 
