@@ -44,7 +44,7 @@ class AddSongToPlaylistCommand extends Commando.Command {
                     .setTitle("Playlist atualizada com sucesso. Nova música adicionada")
                     .addField("ID da playlist:", `\`${playlist._id}\``)
                     .addField("Nome da playlist:", `\`${playlist.name}\`.`)
-                    .addField(`Quantidade de músicas:`, `\`${playlist.songs.length}\`.`);
+                    .addField(`Quantidade de músicas:`, `\`${playlist.length}\`.`);
 
                 msg.channel.send(answer);
             })

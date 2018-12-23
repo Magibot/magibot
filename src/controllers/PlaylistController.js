@@ -1,6 +1,8 @@
 const mongojs = require("mongojs");
-const db = mongojs(process.env.MONGODB, ['playlists']);
+const db = mongojs(process.env.MONGODB, ['playlists', 'playlistsongs']);
 const Playlist = require("../models/Playlist.js");
+const Song = require("../structures/Song.js");
+const MusicHelper = require("../helpers/MusicHelper.js");
 
 class PlaylistController {
 
@@ -23,6 +25,10 @@ class PlaylistController {
                     return reject(error);
                 }
 
+                if (!playlist) {
+                    return reject("Não existe playlist com esse nome cadastrada.");
+                }
+
                 db.playlists.remove({ name: playlistName, guildId: guildId }, (error, deleteInfo) => {
                     if (error) {
                         return reject(error);
@@ -42,23 +48,44 @@ class PlaylistController {
                 }
 
                 if (playlist.creator != modifierId && !playlist.allowOtherToModify) {
-                    return reject(new TypeError("Somente o criador desta playlist pode modificá-la."));
+                    return reject("Somente o criador desta playlist pode modificá-la.");
                 }
 
-                let updPlaylist = new Playlist(guildId, playlistName, playlist.creator, playlist.allowOtherToModify);
-                let songs = playlist.songs;
-                updPlaylist.insereMusicas(songs);
+                MusicHelper.getVideoBasicInfo(songSearchString)
+                    .then(songInfo => {
+                        let song = new Song(songSearchString, modifierId, songInfo, playlist._id);
 
-                db.playlists.update({ _id: playlist._id }, updPlaylist, {}, (error, updateInfo) => {
-                    if (error) {
-                        return reject(error);
-                    }
+                        PlaylistController.getPlaylistSongs(playlist._id)
+                            .then(listaDeMusicas => {
+                                for (let i = 0; i < listaDeMusicas.length; i++) {
+                                    let musicaCadastrada = listaDeMusicas[i];
+                                    if (musicaCadastrada.info.title == song.info.title) {
+                                        return reject("Esta musica já existe na playlist.");
+                                    }
+                                }
 
-                    updPlaylist._id = playlist._id;
-            
-                    resolve(updPlaylist);
-                });
+                                db.playlistsongs.save(song, (error, song) => {
+                                    if (error) {
+                                        return reject(error);
+                                    }
+                                    
+                                    playlist.length = listaDeMusicas.length + 1;
+                                    resolve(playlist);
+                                });
+                            });
+                    });
             });
+        });
+
+    }
+
+    static getPlaylistSongs(playlistId) {
+        return new Promise((resolve, reject) => {
+            db.playlistsongs.find({ playlistId: playlistId }, (error, songs) => {
+                if (error) return reject(error);
+
+                resolve(songs);
+            })
         });
     }
 }
