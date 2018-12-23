@@ -4,6 +4,7 @@ const YTDL = require("ytdl-core");
 const Guild = require("../../structures/Guild.js")
 const Song = require("../../structures/Song.js");
 const DateHelper = require("../../helpers/DateHelper.js");
+const MusicHelper = require("../../helpers/MusicHelper.js");
 
 
 class PlayCommand extends Commando.Command {
@@ -43,7 +44,7 @@ class PlayCommand extends Commando.Command {
             servers[msg.guild.id] = new Guild(msg.guild.id);
         }
 
-        let songInfo = await this.getVideoBasicInfo(args);
+        let songInfo = await MusicHelper.getVideoBasicInfo(args);
         let newSong = new Song(args, msg.author.username, songInfo);
         servers[msg.guild.id].addSongToQueue(newSong);
 
@@ -63,18 +64,6 @@ class PlayCommand extends Commando.Command {
 
         answer = (answer) ? answer : `**Tocando** \`${newSong.info.title}\` agora`
         msg.channel.send(answer);
-    }
-
-    getVideoBasicInfo(songUrl) {
-        return new Promise((resolve, reject) => {
-            YTDL.getBasicInfo(songUrl, (err, songInfo) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                resolve(songInfo);
-            });
-        });
     }
 
     play(voiceConnection, msg) {
