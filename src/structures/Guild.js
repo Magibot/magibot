@@ -29,7 +29,9 @@ class Guild {
         // Better perfomance
         let songPlaying = this.__queue[0];
         this.__queue = [];
-        this.__queue.push(songPlaying);
+        if (songPlaying) {
+            this.__queue.push(songPlaying);
+        }
     }
 
     set dispatcher(stream) {
