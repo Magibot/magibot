@@ -5,11 +5,6 @@ class Playlist {
         this.name = playlistName;
         this.creator = creator;
         this.allowOtherToModify = allowOtherToModify;
-        this.songs = [];
-    }
-
-    insereMusicas(songs) {
-        this.songs.push(...songs);
     }
 
 }
