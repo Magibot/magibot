@@ -45,8 +45,8 @@ class DeletePlaylistCommand extends Commando.Command {
                 msg.channel.send(answer);
             })
             .catch((error) => {
-                console.log(error);
                 msg.channel.send("Não foi possível excluir esta playlist.");
+                msg.channel.send(error);
             });
     }
 
