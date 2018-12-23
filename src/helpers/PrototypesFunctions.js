@@ -11,16 +11,5 @@ module.exports = {
             return string.charAt(0).toLowerCase() + string.substring(1);
         }
         
-        Object.prototype.zip = function (arr1, arr2) {
-            let obj = {};
-            for (let i = 0; i < arr1.length; i++) {
-                obj[arr1[i]] = arr2[i];
-            }
-            return obj;
-        }
-        
-        Object.prototype.exists = function () {
-            return Object.keys(this).length > 0;
-        }
     }
 };
