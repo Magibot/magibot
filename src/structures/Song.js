@@ -1,21 +1,11 @@
 class Song {
-    constructor(url, addedBy, info) {
-        this.__url = url;
-        this.__addedBy = addedBy;
-        this.__info = info;
+    constructor(url, addedBy, info, playlistId=null) {
+        this.url = url;
+        this.addedBy = addedBy;
+        this.info = info;
+        this.playlistId = playlistId;
     }
 
-    get url() {
-        return this.__url;
-    }
-
-    get addedBy() {
-        return this.__addedBy;
-    }
-
-    get info() {
-        return this.__info;
-    }
 }
 
 module.exports = Song;
