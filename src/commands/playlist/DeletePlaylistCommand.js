@@ -1,6 +1,5 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const Playlist = require("../../models/Playlist.js");
 const PlaylistController = require("../../controllers/PlaylistController.js");
 
 class DeletePlaylistCommand extends Commando.Command {

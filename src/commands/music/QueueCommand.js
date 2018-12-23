@@ -14,15 +14,15 @@ class QueueCommand extends Commando.Command {
     }
 
     async run(msg, args) {
-        if (!servers[msg.guild.id]) {
+        if (!global.servers[msg.guild.id]) {
             return msg.channel.send(`Não existe músicas na fila para este servidor.`);
         }
 
-        if (servers[msg.guild.id].queue.length == 0) {
+        if (global.servers[msg.guild.id].queue.length == 0) {
             return msg.channel.send(`A fila para este servidor está vazia.`);
         }
     
-        let currentServer = servers[msg.guild.id];
+        let currentServer = global.servers[msg.guild.id];
         let songPlaying = currentServer.queue[0];
         let answer = new Discord.RichEmbed()
             .setTitle(`Fila de ${msg.guild.name}`, ".")

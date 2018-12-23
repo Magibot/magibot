@@ -24,12 +24,12 @@ class LeaveCommand extends Commando.Command {
 
         msg.guild.voiceConnection.disconnect();
         msg.channel.send(`**Desconectado de** \`${msg.member.voiceChannel.name}\` com sucesso.`);
-        if (servers[msg.guild.id] && servers[msg.guild.id].dispatcher) {
-            servers[msg.guild.id].dispatcher.destroy();
+        if (global.servers[msg.guild.id] && global.servers[msg.guild.id].dispatcher) {
+            global.servers[msg.guild.id].dispatcher.destroy();
         }
 
-        if (servers[msg.guild.id] && servers[msg.guild.id].queue.length > 0) {
-            servers[msg.guild.id].clearQueue();
+        if (global.servers[msg.guild.id] && global.servers[msg.guild.id].queue.length > 0) {
+            global.servers[msg.guild.id].clearQueue();
         }
     }
 }

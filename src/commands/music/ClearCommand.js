@@ -27,7 +27,7 @@ class ClearCommand extends Commando.Command {
     }
 
     clear(guildId) {
-        let currentServer = servers[guildId];
+        let currentServer = global.servers[guildId];
         if (currentServer.queue.length == 1) {
             return `Apenas uma música tocando. Nenhuma na fila`;
         }
