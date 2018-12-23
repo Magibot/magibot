@@ -81,6 +81,25 @@ class PlaylistController {
 
     }
 
+    static getSongsByPlaylistName(guildId, playlistName) {
+        return new Promise((resolve, reject) => {
+            db.playlists.findOne({ name: playlistName, guildId: guildId }, (error, playlist) => {
+                if (error) {
+                    return reject(error);
+                }
+
+                if (!playlist) {
+                    return reject("Não existe playlist cadastrada com esse nome.");
+                }
+
+                PlaylistController.getPlaylistSongs(playlist._id)
+                    .then(songs => resolve(songs))
+                    .catch(error => reject(error));
+
+            });
+        });
+    }
+
     static getPlaylistSongs(playlistId) {
         return new Promise((resolve, reject) => {
             db.playlistsongs.find({ playlistId: playlistId }, (error, songs) => {
