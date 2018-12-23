@@ -1,6 +1,5 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
-const Playlist = require("../../models/Playlist.js");
 const PlaylistController = require("../../controllers/PlaylistController.js");
 
 class NewPlaylistCommand extends Commando.Command {
@@ -46,8 +45,7 @@ class NewPlaylistCommand extends Commando.Command {
         let guildId = msg.guild.id;
         let creator = msg.author.id;
 
-        let playlist = new Playlist(guildId, playlistName, creator, allowOtherToModify);
-        PlaylistController.createNewPlaylist(playlist)
+        PlaylistController.createNewPlaylist(guildId, playlistName, creator, allowOtherToModify)
             .then((playlist) => {
                 answer
                     .setTitle("Playlist criada com sucesso.")

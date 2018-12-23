@@ -6,8 +6,10 @@ const MusicHelper = require("../helpers/MusicHelper.js");
 
 class PlaylistController {
 
-    static createNewPlaylist(playlist) {
+    static createNewPlaylist(guildId, name, creator, allowOtherToModify) {
         return new Promise((resolve, reject) => {
+            let playlist = new Playlist(guildId, name, creator, allowOtherToModify);
+
             db.playlists.save(playlist, (error, playlist) => {
                 if (error) {
                     return reject(error);
@@ -18,7 +20,7 @@ class PlaylistController {
         });
     }
 
-    static deletePlaylistByaName(playlistName, guildId) {
+    static deletePlaylistByName(playlistName, guildId) {
         return new Promise((resolve, reject) => {
             db.playlists.findOne({ name: playlistName, guildId: guildId }, (error, playlist) => {
                 if (error) {

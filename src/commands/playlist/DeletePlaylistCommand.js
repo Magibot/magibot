@@ -34,7 +34,7 @@ class DeletePlaylistCommand extends Commando.Command {
             return msg.channel.send("Parametros para exclusão de playlist inválidos.");
         }
 
-        PlaylistController.deletePlaylistByaName(playlistName, msg.guild.id)
+        PlaylistController.deletePlaylistByName(playlistName, msg.guild.id)
             .then((playlist) => {
                 answer
                     .setTitle("Playlist excluída com sucesso.")
