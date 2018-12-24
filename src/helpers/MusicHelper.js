@@ -1,4 +1,6 @@
 const YTDL = require("ytdl-core");
+const Discord = require("discord.js");
+const DateHelper = require("./DateHelper.js");
 
 class MusicHelper {
 
@@ -46,6 +48,15 @@ class MusicHelper {
             MusicHelper.playVideo(voiceConnection, msg);
         });
     }
+
+    static getSongListLength(songList) {
+        return songList.reduce((acc, song) => acc + parseInt(song.info.length_seconds), 0);
+    }
+
+    static createStringSongInfo(index, song) {
+        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${DateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedBy}\``;
+    }
+
 }
 
 module.exports = MusicHelper;
