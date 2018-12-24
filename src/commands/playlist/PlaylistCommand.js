@@ -38,7 +38,7 @@ class PlaylistCommand extends Commando.Command {
         if (!args) {
             answer
                 .setTitle("Parametro do comando inválido.")
-                .addField("Exemplo:", `\`!playlist <nome-da-playlist>\`.`);
+                .addField("Exemplo:", `\`${process.env.PREFIX}playlist <nome-da-playlist>\`.`);
             return msg.channel.send(answer);
         }
 

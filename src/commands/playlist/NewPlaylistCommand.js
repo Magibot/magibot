@@ -18,7 +18,7 @@ class NewPlaylistCommand extends Commando.Command {
         if (!args) {
             answer
                 .setTitle("Parametro de cadastro inválido.")
-                .addField("Exemplo:", `\`!newplaylist <nome-da-playlist> ?<outros-podem-modificar>\`.`)
+                .addField("Exemplo:", `\`${process.env.PREFIX}newplaylist <nome-da-playlist> ?<outros-podem-modificar>\`.`)
                 .addField(`Se outros podem modificar sua playlist insira \`1\` se não podem, insira \`0\`. Exemplo:`, `\`!newplaylist kpop 1\`.`)
                 .setFooter("Este parametro <outros-podem-modificar> é opcional e por padrão será 0", "");
             return msg.channel.send(answer);
@@ -50,11 +50,11 @@ class NewPlaylistCommand extends Commando.Command {
                 answer
                     .setTitle("Playlist criada com sucesso.")
                     .addField("ID da playlist:", `\`${playlist._id}\``)
-                    .addField("Adição de música:", `\`!addsongto ${playlist.name} <link-da-musica>\`.`)
-                    .addField(`Remoção de música:`, `\`!removesong ${playlist.name} <id-da-musica>\`.`)
-                    .addField("Tocar playlist:", `\`!playlist ${playlist.name}\``)
-                    .addField("Exibir playlist:", `\`!showplaylist ${playlist.name}\``)
-                    .addField("Excluindo a playlist:", `\`!delplaylist ${playlist.name}\``);
+                    .addField("Adição de música:", `\`${process.env.PREFIX}addsongto ${playlist.name} <link-da-musica>\`.`)
+                    .addField(`Remoção de música:`, `\`${process.env.PREFIX}removesong ${playlist.name} <id-da-musica>\`.`)
+                    .addField("Tocar playlist:", `\`${process.env.PREFIX}playlist ${playlist.name}\``)
+                    .addField("Exibir playlist:", `\`${process.env.PREFIX}showplaylist ${playlist.name}\``)
+                    .addField("Excluindo a playlist:", `\`${process.env.PREFIX}delplaylist ${playlist.name}\``);
                     
                 msg.channel.send(answer);
             })

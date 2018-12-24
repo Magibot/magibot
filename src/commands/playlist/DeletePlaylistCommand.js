@@ -18,7 +18,7 @@ class DeletePlaylistCommand extends Commando.Command {
         if (!args) {
             answer
                 .setTitle("Parametro do comando inválido.")
-                .addField("Exemplo:", `\`!delplaylist <nome-da-playlist>\`.`);
+                .addField("Exemplo:", `\`${process.env.PREFIX}delplaylist <nome-da-playlist>\`.`);
             return msg.channel.send(answer);
         }
 
