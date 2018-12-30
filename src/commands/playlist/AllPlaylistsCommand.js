@@ -2,6 +2,7 @@ const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const PlaylistController = require("../../controllers/PlaylistController.js");
 const MusicHelper = require("../../helpers/MusicHelper.js");
+const DateHelper = require("../../helpers/DateHelper.js");
 
 
 class ShowPlaylistCommand extends Commando.Command {
@@ -37,7 +38,7 @@ class ShowPlaylistCommand extends Commando.Command {
 
                     let playlistLength = MusicHelper.getSongListLength(playlist.songs);
 
-                    let playlistString = `\`${i}.\` **Nome:** \`${playlist.name}\` | **Total de Músicas:** \`${playlist.songs.length}\` | **Tempo total:** \`${playlistLength}\` | **Criada por:** \`${creatorUsername}\``;
+                    let playlistString = `\`${i}.\` **Nome:** \`${playlist.name}\` | **Total de Músicas:** \`${playlist.songs.length}\` | **Tempo total:** \`${DateHelper.fmtMSS(playlistLength)}\` | **Criada por:** \`${creatorUsername}\``;
                     if (i < playlists.length - 1) {
                         playlistString += "\n\n";
                     }
