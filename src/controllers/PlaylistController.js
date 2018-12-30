@@ -109,6 +109,21 @@ class PlaylistController {
             })
         });
     }
+
+    static getAllPlaylistOnGuild(guildId) {
+        return new Promise((resolve, reject) => {
+            db.playlists.find({ guildId: guildId }, async (error, playlists) => {
+                if (error) return reject(error);
+
+                for (let i = 0; i < playlists.length; i++) {
+                    let playlist = playlists[i];
+                    playlist.songs = await PlaylistController.getPlaylistSongs(playlist._id);
+                }
+
+                resolve(playlists);
+            });
+        });
+    }
 }
 
 module.exports = PlaylistController;
