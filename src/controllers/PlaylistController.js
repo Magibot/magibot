@@ -22,7 +22,7 @@ class PlaylistController {
 
     static deletePlaylistByName(playlistName, guildId) {
         return new Promise((resolve, reject) => {
-            db.playlists.findOne({ name: playlistName, guildId: guildId }, (error, playlist) => {
+            db.playlists.findOne({ name: playlistName, guildId: guildId }, async (error, playlist) => {
                 if (error) {
                     return reject(error);
                 }
@@ -31,13 +31,20 @@ class PlaylistController {
                     return reject("Não existe playlist com esse nome cadastrada.");
                 }
 
+                playlist.songs = await PlaylistController.getPlaylistSongs(playlist._id);
+
                 db.playlists.remove({ name: playlistName, guildId: guildId }, (error, deleteInfo) => {
                     if (error) {
                         return reject(error);
                     }
+
+                    db.playlistsongs.remove({ playlistId: playlist._id }, (error, deleteInfo) => {
+                        if (error) return reject(error);
+                    });
     
-                    resolve(playlist);
                 });
+
+                resolve(playlist);
             });
         });
     }
@@ -121,6 +128,16 @@ class PlaylistController {
                 }
 
                 resolve(playlists);
+            });
+        });
+    }
+
+    static getPlaylistByName(guildId, playlistName) {
+        return new Promise((resolve, reject) => {
+            db.playlists.findOne({ name: playlistName, guildId: guildId }, (error, playlist) => {
+                if (error) return reject(error);
+
+                resolve(playlist);
             });
         });
     }

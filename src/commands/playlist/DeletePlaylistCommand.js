@@ -1,6 +1,8 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const PlaylistController = require("../../controllers/PlaylistController.js");
+const MusicHelper = require("../../helpers/MusicHelper.js");
+const DateHelper = require("../../helpers/DateHelper.js");
 
 class DeletePlaylistCommand extends Commando.Command {
 
@@ -35,11 +37,18 @@ class DeletePlaylistCommand extends Commando.Command {
 
         PlaylistController.deletePlaylistByName(playlistName, msg.guild.id)
             .then((playlist) => {
+                let playlistLength = MusicHelper.getSongListLength(playlist.songs);
+
                 answer
                     .setTitle("Playlist excluída com sucesso.")
+                    .setColor(global.config.botconfig.mainColor)
                     .addField("ID da playlist:", `\`${playlist._id}\``)
                     .addField("Nome da playlist:", `\`${playlist.name}\`.`)
                     .addField(`Quantidade de músicas:`, `\`${playlist.songs.length}\`.`);
+
+                if (playlist.songs.length > 0) {
+                    answer.addField("Tempo total:", `\`${DateHelper.fmtMSS(playlistLength)}\``);
+                }
 
                 msg.channel.send(answer);
             })
