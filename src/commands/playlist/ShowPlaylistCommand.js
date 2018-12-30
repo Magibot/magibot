@@ -31,7 +31,7 @@ class ShowPlaylistCommand extends Commando.Command {
         let page = (arrayArgs.length > 1) ? parseInt(arrayArgs[1]) : 1;
 
         PlaylistController.getSongsByPlaylistName(msg.guild.id, playlistName)
-            .then(songs => {
+            .then(async songs => {
                 if (!songs || songs.length == 0) {
                     return msg.channel.send("Não músicas cadastradas para esta playlist.");
                 }
@@ -55,6 +55,7 @@ class ShowPlaylistCommand extends Commando.Command {
 
                 for (let i = pageBegining; i < pageEnding; i++) {
                     let song = songs[i];
+                    song.addedBy = (await msg.client.fetchUser(song.addedBy)).username;
 
                     let songInlineInfo = MusicHelper.createStringSongInfo(i, song);
                     if (i < pageEnding - 1) {
