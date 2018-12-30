@@ -45,22 +45,32 @@ class NewPlaylistCommand extends Commando.Command {
         let guildId = msg.guild.id;
         let creator = msg.author.id;
 
-        PlaylistController.createNewPlaylist(guildId, playlistName, creator, allowOtherToModify)
-            .then((playlist) => {
-                answer
-                    .setTitle("Playlist criada com sucesso.")
-                    .addField("ID da playlist:", `\`${playlist._id}\``)
-                    .addField("Adição de música:", `\`${process.env.PREFIX}addsongto ${playlist.name} <link-da-musica>\`.`)
-                    .addField(`Remoção de música:`, `\`${process.env.PREFIX}removesong ${playlist.name} <id-da-musica>\`.`)
-                    .addField("Tocar playlist:", `\`${process.env.PREFIX}playlist ${playlist.name}\``)
-                    .addField("Exibir playlist:", `\`${process.env.PREFIX}showplaylist ${playlist.name}\``)
-                    .addField("Excluindo a playlist:", `\`${process.env.PREFIX}delplaylist ${playlist.name}\``);
-                    
-                msg.channel.send(answer);
-            })
-            .catch((error) => {
-                msg.channel.send("Não foi possível criar esta playlist.");
+        // Checar se já existe playlist com o nome informado
+        PlaylistController.getPlaylistByName(guildId, playlistName)
+            .then(playlist => {
+                if (playlist) {
+                    return msg.channel.send(`Já existe playlist cadastrada com o nome ${playlist.name} para este servidor.`);
+                }
+
+                PlaylistController.createNewPlaylist(guildId, playlistName, creator, allowOtherToModify)
+                    .then((playlist) => {
+                        answer
+                            .setTitle("Playlist criada com sucesso.")
+                            .setColor(global.config.botconfig.mainColor)
+                            .addField("ID da playlist:", `\`${playlist._id}\``)
+                            .addField("Adição de música:", `\`${process.env.PREFIX}addsongto ${playlist.name} <link-da-musica>\`.`)
+                            .addField(`Remoção de música:`, `\`${process.env.PREFIX}removesong ${playlist.name} <id-da-musica>\`.`)
+                            .addField("Tocar playlist:", `\`${process.env.PREFIX}playlist ${playlist.name}\``)
+                            .addField("Exibir playlist:", `\`${process.env.PREFIX}showplaylist ${playlist.name}\``)
+                            .addField("Excluindo a playlist:", `\`${process.env.PREFIX}delplaylist ${playlist.name}\``);
+                            
+                        msg.channel.send(answer);
+                    })
+                    .catch((error) => {
+                        msg.channel.send("Não foi possível criar esta playlist.");
+                    });
             });
+
     }
 
 }
