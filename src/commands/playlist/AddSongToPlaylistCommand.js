@@ -41,6 +41,7 @@ class AddSongToPlaylistCommand extends Commando.Command {
                 let answer = new Discord.RichEmbed();
                 answer
                     .setTitle("Playlist atualizada com sucesso. Nova música adicionada")
+                    .setColor(global.config.botconfig.mainColor)
                     .addField("ID da playlist:", `\`${playlist._id}\``)
                     .addField("Nome da playlist:", `\`${playlist.name}\`.`)
                     .addField(`Quantidade de músicas:`, `\`${playlist.length}\`.`);
