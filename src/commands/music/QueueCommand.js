@@ -28,7 +28,7 @@ class QueueCommand extends Commando.Command {
         let answer = new Discord.RichEmbed()
             .setTitle(`Fila de ${msg.guild.name}`, ".")
             .setColor(config.botconfig.mainColor)
-            .addField("Tocando agora", this.createStringSongInfo(0, songPlaying));
+            .addField("Tocando agora", MusicHelper.createStringSongInfo(0, songPlaying));
 
         let allSongs = "";
         let songInlineInfo;
