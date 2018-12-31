@@ -49,7 +49,7 @@ class PlaylistCommand extends Commando.Command {
 
         let playlist = await PlaylistController.getPlaylistByName(msg.guild.id, playlistName);
         if (!playlist) {
-            return msg.channel.send('Não existe playlist cadastrada com este nome para este servidor.');
+            return msg.channel.send(`Não existe playlist \`${playlistName}\` cadastrada para \`${msg.guild.name}\``);
         }
 
         if (!msg.guild.voiceConnection) {
