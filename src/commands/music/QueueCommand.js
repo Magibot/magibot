@@ -1,6 +1,7 @@
 const Commando = require("discord.js-commando");
 const Discord = require("discord.js");
 const DateHelper = require("../../helpers/DateHelper.js");
+const MusicHelper = require("../../helpers/MusicHelper.js");
 
 
 class QueueCommand extends Commando.Command {
@@ -14,20 +15,20 @@ class QueueCommand extends Commando.Command {
     }
 
     async run(msg, args) {
-        if (!servers[msg.guild.id]) {
+        if (!global.servers[msg.guild.id]) {
             return msg.channel.send(`Não existe músicas na fila para este servidor.`);
         }
 
-        if (servers[msg.guild.id].queue.length == 0) {
+        if (global.servers[msg.guild.id].queue.length == 0) {
             return msg.channel.send(`A fila para este servidor está vazia.`);
         }
     
-        let currentServer = servers[msg.guild.id];
+        let currentServer = global.servers[msg.guild.id];
         let songPlaying = currentServer.queue[0];
         let answer = new Discord.RichEmbed()
             .setTitle(`Fila de ${msg.guild.name}`, ".")
             .setColor(config.botconfig.mainColor)
-            .addField("Tocando agora", this.createStringSongInfo(0, songPlaying));
+            .addField("Tocando agora", MusicHelper.createStringSongInfo(0, songPlaying));
 
         let allSongs = "";
         let songInlineInfo;
@@ -36,7 +37,7 @@ class QueueCommand extends Commando.Command {
             let song = currentServer.queue[i];
             totalQueueLength += parseInt(song.info.length_seconds);
             // video_url
-            songInlineInfo = this.createStringSongInfo(i, song);
+            songInlineInfo = MusicHelper.createStringSongInfo(i, song);
             if (i < currentServer.queue.length - 1) {
                 songInlineInfo += "\n\n";
             }
@@ -52,10 +53,6 @@ class QueueCommand extends Commando.Command {
         // answer.setFooter(`${currentServer.queue.length - 1} músicas na fila | Tempo total de fila: ${DateHelper.fmtMSS(totalQueueLength)}`);
         answer.setFooter(footerMsg);
         msg.channel.send(answer);
-    }
-
-    createStringSongInfo(index, song) {
-        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${DateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedBy}\``;
     }
 }
 

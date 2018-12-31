@@ -22,7 +22,8 @@ bot.registry
     .registerGroups([
         ["simple", "Simple"],
         ["music", "Music"],
-        ["transparency", "Transparency"]
+        ["transparency", "Transparency"],
+        ["playlist", "Playlist"]
     ])
     .registerDefaultGroups()
     .registerDefaultCommands()

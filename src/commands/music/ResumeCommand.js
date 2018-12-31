@@ -17,15 +17,15 @@ class ResumeCommand extends Commando.Command {
             return msg.channel.send(`Você deve estar no mesmo canal de voz do bot para executar este comando.`);
         }
 
-        if (!servers[msg.guild.id] || servers[msg.guild.id].queue.length == 0) {
+        if (!global.servers[msg.guild.id] || global.servers[msg.guild.id].queue.length == 0) {
             return msg.channel.send(`Não há música na fila.`);
         }
 
-        if (!servers[msg.guild.id].dispatcher.paused || servers[msg.guild.id].dispatcher.speaking) {
+        if (!global.servers[msg.guild.id].dispatcher.paused || global.servers[msg.guild.id].dispatcher.speaking) {
             return msg.channel.send(`A música já está tocando.`);
         }
 
-        servers[msg.guild.id].dispatcher.resume();
+        global.servers[msg.guild.id].dispatcher.resume();
         msg.channel.send(`A música foi resumido.`);
     }
 }
