@@ -22,16 +22,15 @@ class Guild {
     }
 
     clearQueue() {
-        // while (this.__queue.length > 1) {
-        //     this.__queue.pop();
-        // }
-
-        // Better perfomance
         let songPlaying = this.__queue[0];
         this.__queue = [];
         if (songPlaying) {
             this.__queue.push(songPlaying);
         }
+    }
+
+    insertSongOnPosition(index, song) {
+        this.__queue.insert(index, song);
     }
 
     set dispatcher(stream) {
