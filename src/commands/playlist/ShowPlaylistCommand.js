@@ -28,7 +28,7 @@ class ShowPlaylistCommand extends Commando.Command {
         let arrayArgs = args.trim().split(/ +/g);
 
         let playlistName = arrayArgs[0];
-        let page = (arrayArgs.length > 1) ? parseInt(arrayArgs[1]) : 1;
+        let page = (arrayArgs.length > 1 && arrayArgs[1]) ? parseInt(arrayArgs[1]) : 1;
 
         PlaylistController.getSongsByPlaylistName(msg.guild.id, playlistName)
             .then(async songs => {
@@ -53,9 +53,13 @@ class ShowPlaylistCommand extends Commando.Command {
                 let pageEnding = (showPages) ? page * 10 : songs.length;
                 let pageBegining = (showPages) ? pageEnding - 10 : 0;
 
+                if (pageEnding > songs.length) {
+                    pageEnding = songs.length;
+                }
+
                 for (let i = pageBegining; i < pageEnding; i++) {
                     let song = songs[i];
-                    song.addedBy = (await msg.client.fetchUser(song.addedBy)).username;
+                    song.addedByUsername = (await msg.client.fetchUser(song.addedBy)).username;
 
                     let songInlineInfo = MusicHelper.createStringSongInfo(i, song);
                     if (i < pageEnding - 1) {

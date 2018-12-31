@@ -54,7 +54,7 @@ class MusicHelper {
     }
 
     static createStringSongInfo(index, song) {
-        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${DateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedBy}\``;
+        return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${DateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedByUsername}\``;
     }
 
 }

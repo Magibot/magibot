@@ -22,9 +22,14 @@ class QueueCommand extends Commando.Command {
         if (global.servers[msg.guild.id].queue.length == 0) {
             return msg.channel.send(`A fila para este servidor está vazia.`);
         }
+
+        let arrayArgs = args.trim().split(/ +/g);
+
+        let page = (arrayArgs.length > 0 && arrayArgs[0]) ? parseInt(arrayArgs[0]) : 1;
     
         let currentServer = global.servers[msg.guild.id];
         let songPlaying = currentServer.queue[0];
+        songPlaying.addedByUsername = (await msg.client.fetchUser(songPlaying.addedBy)).username;
         let answer = new Discord.RichEmbed()
             .setTitle(`Fila de ${msg.guild.name}`, ".")
             .setColor(config.botconfig.mainColor)
@@ -33,10 +38,28 @@ class QueueCommand extends Commando.Command {
         let allSongs = "";
         let songInlineInfo;
         let totalQueueLength = 0;
-        for (let i = 1; i < currentServer.queue.length; i++) {
+
+        // 1: 1 - 9
+        // 2: 10 - 19
+
+        let showPages = false;
+        if (currentServer.queue.length > 10) {
+            showPages = true;
+        }
+
+        let pageEnding = (showPages) ? page * 10 : currentServer.queue.length;
+        let pageBegining = (showPages) ? pageEnding - 10 : 1;
+        if (pageBegining == 0) pageBegining = 1;
+
+        if (pageEnding > currentServer.queue.length) {
+            pageEnding = currentServer.queue.length;
+        }
+
+        for (let i = pageBegining; i < pageEnding; i++) {
             let song = currentServer.queue[i];
+            song.addedByUsername = (await msg.client.fetchUser(song.addedBy)).username;
             totalQueueLength += parseInt(song.info.length_seconds);
-            // video_url
+            
             songInlineInfo = MusicHelper.createStringSongInfo(i, song);
             if (i < currentServer.queue.length - 1) {
                 songInlineInfo += "\n\n";
@@ -48,7 +71,14 @@ class QueueCommand extends Commando.Command {
             answer.addField("Próximas:", allSongs);
         }
 
-        let footerMsg = (totalQueueLength > 0) ? `${currentServer.queue.length - 1} músicas na fila | Tempo total de fila: ${DateHelper.fmtMSS(totalQueueLength)}` : `${currentServer.queue.length - 1} músicas na fila.`;
+
+        let pagesInfo = '';
+        if (showPages) {
+            let totalOfPages = Math.ceil(currentServer.queue.length / 10);
+            pagesInfo = ` | Página: ${page}/${totalOfPages}`;
+        }
+
+        let footerMsg = (totalQueueLength > 0) ? `${currentServer.queue.length - 1} músicas na fila | Tempo total de fila: ${DateHelper.fmtMSS(totalQueueLength)}${pagesInfo}` : `${currentServer.queue.length - 1} músicas na fila.`;
 
         // answer.setFooter(`${currentServer.queue.length - 1} músicas na fila | Tempo total de fila: ${DateHelper.fmtMSS(totalQueueLength)}`);
         answer.setFooter(footerMsg);
