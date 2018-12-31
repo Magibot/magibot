@@ -38,15 +38,17 @@ class PlaylistCommand extends Commando.Command {
         if (!args) {
             answer
                 .setTitle("Parametro do comando inválido.")
-                .addField("Exemplo:", `\`${process.env.PREFIX}playlist <nome-da-playlist>\`.`);
+                .addField("Exemplo:", `\`${process.env.PREFIX}playlist <nome-da-playlist> ?<shuffle>\`.`);
             return msg.channel.send(answer);
         }
 
         let arrayArgs = args.trim().split(/ +/g);
 
-        let playlistName;
-        if (arrayArgs.length > 0) {
-            playlistName = arrayArgs[0];
+        let playlistName = arrayArgs[0];
+        let shuffle = false;
+
+        if (arrayArgs.length > 1 && arrayArgs[1] == 'shuffle') {
+            shuffle = true;
         }
 
         if (!playlistName) {
@@ -60,6 +62,10 @@ class PlaylistCommand extends Commando.Command {
 
         global.servers[guildId].clearQueue();
         let songs = await PlaylistController.getSongsByPlaylistName(guildId, playlistName);
+        if (shuffle) {
+            songs = songs.shuffle();
+        }
+        
         global.servers[guildId].addSongsToQueue(songs);
         MusicHelper.playVideo(msg.guild.voiceConnection, msg, global.servers[msg.guild.id]);
         msg.channel.send(`**Playlist** \`${playlistName}\` tocando agora`);
