@@ -11,5 +11,15 @@ module.exports = {
             return string.charAt(0).toLowerCase() + string.substring(1);
         }
         
+        Array.prototype.shuffle = function() {
+            if (this.length == 0) return this;
+
+            for (let i = 0; i < this.length; i++) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [this[i], this[j]] = [this[j], this[i]];
+            }
+
+            return this;
+        }
     }
 };
