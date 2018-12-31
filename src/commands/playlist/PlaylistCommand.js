@@ -73,7 +73,9 @@ class PlaylistCommand extends Commando.Command {
         
         global.servers[guildId].addSongsToQueue(songs);
         MusicHelper.playVideo(msg.guild.voiceConnection, msg, global.servers[msg.guild.id]);
-        msg.channel.send(`**Playlist** \`${playlistName}\` tocando agora`);
+
+        let shuffleInfo = (shuffle) ? ' em ordem aleatória.' : '.';
+        msg.channel.send(`**Playlist** \`${playlistName}\` tocando agora${shuffleInfo}`);
     }
 
 }
