@@ -30,10 +30,10 @@ bot.registry
     .registerCommandsIn(path.join(__dirname, "src/commands"));
 
 bot.on("ready", () => {
-    console.log(`${bot.user.username} startando.`);
+    console.log(`${bot.user.username} iniciando.`);
     server.start(process.env.PORT || 3000);
     console.log(`Aberto na porta ${process.env.PORT}.`);
-    console.log(`Iniciando em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
+    console.log(`Iniciado em ${bot.guilds.size} servidor, com total de ${bot.channels.size} canais e ${bot.users.size} membros.`);
     if (process.env.SET_FUN_ACTIVITIES == true || process.env.SET_FUN_ACTIVITIES == "true") {
         BotHelper.updateBotActivity(bot, true);
         setInterval(() => {
@@ -48,4 +48,9 @@ bot.on("guildDelete", EventHandler.onGuildDelete);
 bot.on("guildMemberAdd", EventHandler.onGuildMemberAdd);
 bot.on("guildMemberRemove", EventHandler.onGuildMemberRemove);
 
-bot.login(process.env.TOKEN);
+let token = process.env.TOKEN;
+if (process.env.NODE_ENV == 'development') {
+    token = process.env.TESTING_TOKEN;
+}
+
+bot.login(token);
