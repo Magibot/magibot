@@ -7,7 +7,7 @@ class ClearCommand extends Commando.Command {
             name: "clear",
             group: "music",
             memberName: "clear",
-            description: "Limpa a fila de música."
+            description: "Limpa a fila de música, deixando apenas a música que está tocando."
         });
     }
 

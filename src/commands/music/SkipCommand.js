@@ -1,4 +1,5 @@
 const Commando = require("discord.js-commando");
+const MusicHelper = require('../../helpers/MusicHelper.js');
 
 
 class SkipCommand extends Commando.Command {
@@ -26,21 +27,12 @@ class SkipCommand extends Commando.Command {
             return msg.channel.send(`Não há música na fila.`);
         }
 
-        let answer = this.skip(msg);
+        let songSkipped = MusicHelper.skipOnQueue(msg.guild.id);
+        let answer = `Música \`${songSkipped.info.title}\` **skipada** com sucesso.`;
         msg.channel.send(answer);
 
         answer = (global.servers[msg.guild.id].queue.length > 0) ? `**Tocando** \`${global.servers[msg.guild.id].queue[0].info.title}\` agora` : `Não há mais música na fila`;
         msg.channel.send(answer);
-    }
-
-    skip(msg) {
-        let currentServer = global.servers[msg.guild.id];
-        let songPlaying = currentServer.queue[0];
-        if (currentServer.dispatcher) {
-            currentServer.dispatcher.end();
-        }
-
-        return `Música \`${songPlaying.info.title}\` **skipada** com sucesso.`;
     }
 }
 

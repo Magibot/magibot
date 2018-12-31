@@ -27,14 +27,6 @@ class PlaylistCommand extends Commando.Command {
             return msg.channel.send(`Você deve estar no mesmo canal de voz do bot.`);
         }
 
-        if (!msg.guild.voiceConnection) {
-            voiceChannel.join().then(conn => {
-                msg.channel.send(`**Conectado ao** \`${voiceChannel.name}\` com sucesso. :yum:`);
-            }).catch(err => {
-                msg.channel.send(`Não foi possível se conectar ao canal \`${voiceChannel.name}\`. :disappointed_relieved:`);
-            });
-        }
-
         if (!args) {
             answer
                 .setTitle("Parametro do comando inválido.")
@@ -55,6 +47,19 @@ class PlaylistCommand extends Commando.Command {
             return msg.channel.send("Parametros para execução de playlist inválidos.");
         }
 
+        let playlist = await PlaylistController.getPlaylistByName(msg.guild.id, playlistName);
+        if (!playlist) {
+            return msg.channel.send(`Não existe playlist \`${playlistName}\` cadastrada para \`${msg.guild.name}\``);
+        }
+
+        if (!msg.guild.voiceConnection) {
+            voiceChannel.join().then(conn => {
+                msg.channel.send(`**Conectado ao** \`${voiceChannel.name}\` com sucesso. :yum:`);
+            }).catch(err => {
+                msg.channel.send(`Não foi possível se conectar ao canal \`${voiceChannel.name}\`. :disappointed_relieved:`);
+            });
+        }
+
         let guildId = msg.guild.id;
         if (!global.servers[guildId]) {
             global.servers[guildId] = new Guild(guildId);
@@ -68,8 +73,9 @@ class PlaylistCommand extends Commando.Command {
         
         global.servers[guildId].addSongsToQueue(songs);
         MusicHelper.playVideo(msg.guild.voiceConnection, msg, global.servers[msg.guild.id]);
-        msg.channel.send(`**Playlist** \`${playlistName}\` tocando agora`);
 
+        let shuffleInfo = (shuffle) ? ' em ordem aleatória.' : '.';
+        msg.channel.send(`**Playlist** \`${playlistName}\` tocando agora${shuffleInfo}`);
     }
 
 }

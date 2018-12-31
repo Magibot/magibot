@@ -49,8 +49,24 @@ class MusicHelper {
         });
     }
 
+    static skipOnQueue(guildId) {
+        let currentServer = global.servers[guildId];
+        let songPlaying = currentServer.queue[0];
+        if (currentServer.dispatcher) {
+            currentServer.dispatcher.end();
+        }
+
+        return songPlaying;
+    }
+
     static getSongListLength(songList) {
         return songList.reduce((acc, song) => acc + parseInt(song.info.length_seconds), 0);
+    }
+
+    static getQueueLength(queue) {
+        let q = Array.from(queue);
+        q.shift();
+        return q.reduce((acc, song) => acc + parseInt(song.info.length_seconds), 0);
     }
 
     static createStringSongInfo(index, song) {

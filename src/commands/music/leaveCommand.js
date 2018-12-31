@@ -29,7 +29,7 @@ class LeaveCommand extends Commando.Command {
         }
 
         if (global.servers[msg.guild.id] && global.servers[msg.guild.id].queue.length > 0) {
-            global.servers[msg.guild.id].clearQueue();
+            global.servers[msg.guild.id].destroyQueue();
         }
     }
 }

@@ -29,7 +29,7 @@ class StopCommand extends Commando.Command {
     stop(guildId) {
         let currentServer = global.servers[guildId];
         if (currentServer && currentServer.dispatcher) {
-            currentServer.clearQueue();
+            currentServer.destroyQueue();
             currentServer.dispatcher.end();
         }
 

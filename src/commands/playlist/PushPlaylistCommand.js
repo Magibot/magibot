@@ -4,7 +4,7 @@ const PlaylistController = require("../../controllers/PlaylistController.js");
 const Guild = require("../../structures/Guild.js");
 const MusicHelper = require("../../helpers/MusicHelper.js");
 
-class PlaylistCommand extends Commando.Command {
+class PushPlaylistCommand extends Commando.Command {
 
     constructor(client) {
         super(client, {
@@ -64,4 +64,4 @@ class PlaylistCommand extends Commando.Command {
 
 }
 
-module.exports = PlaylistCommand;
+module.exports = PushPlaylistCommand;
