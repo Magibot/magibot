@@ -32,6 +32,10 @@ class Guild {
     insertSongOnPosition(index, song) {
         this.__queue.insert(index, song);
     }
+    
+    destroyQueue() {
+        this.__queue = [];
+    }
 
     set dispatcher(stream) {
         this.__dispatcher = stream;
