@@ -34,6 +34,10 @@ class Guild {
         }
     }
 
+    destroyQueue() {
+        this.__queue = [];
+    }
+
     set dispatcher(stream) {
         this.__dispatcher = stream;
     }
