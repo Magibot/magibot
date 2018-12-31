@@ -44,7 +44,6 @@ class PlayCommand extends Commando.Command {
         }
 
         let songInfo = await MusicHelper.getVideoBasicInfo(args);
-        console.log(msg.author.id);
         let newSong = new Song(args, msg.author.id, songInfo);
         global.servers[msg.guild.id].addSongToQueue(newSong);
 
