@@ -53,6 +53,12 @@ class MusicHelper {
         return songList.reduce((acc, song) => acc + parseInt(song.info.length_seconds), 0);
     }
 
+    static getQueueLength(queue) {
+        let q = Array.from(queue);
+        q.shift();
+        return q.reduce((acc, song) => acc + parseInt(song.info.length_seconds), 0);
+    }
+
     static createStringSongInfo(index, song) {
         return `\`${index}.\` ${song.info.title} | ${song.info.author.name} \`${DateHelper.fmtMSS(song.info.length_seconds)}\` | \`Adicionado por: ${song.addedByUsername}\``;
     }
