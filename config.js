@@ -24,4 +24,12 @@ module.exports = {
       main: '0x99e6ff',
     },
   },
+  services: {
+    api: {
+      transparency: {
+        baseUrl: 'http://www.transparencia.gov.br/api-de-dados',
+        bolsaFamiliaByCityEndpoint: '/bolsa-familia-por-municipio',
+      },
+    },
+  },
 };
