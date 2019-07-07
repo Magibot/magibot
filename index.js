@@ -21,7 +21,7 @@ bot.registry
   ])
   .registerDefaultGroups()
   .registerDefaultCommands()
-  .registerCommandsIn(path.join(__dirname, 'src/commands'));
+  .registerCommandsIn(path.join(__dirname, 'commands'));
 
 setupEvents(bot);
 
