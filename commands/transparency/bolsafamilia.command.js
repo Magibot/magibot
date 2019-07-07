@@ -19,7 +19,7 @@ class BolsaFamiliaCommand extends Commando.Command {
 
     this.commandProps = commandProps;
 
-    this.example = `${config.app.prefix} ${commandProps.name} 201805 RioDeJaneiro`;
+    this.example = `${config.app.prefix}${commandProps.name} 201805 RioDeJaneiro`;
   }
 
   async run(msg, args) {
