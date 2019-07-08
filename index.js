@@ -11,6 +11,8 @@ const bot = new Commando.Client({
   disableEveryone: true,
 });
 
+global.guilds = {};
+
 bot.registry
   .registerDefaultTypes()
   .registerGroups([
