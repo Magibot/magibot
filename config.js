@@ -32,4 +32,7 @@ module.exports = {
       },
     },
   },
+  music: {
+    timeout: 900000,
+  },
 };
