@@ -9,6 +9,15 @@ class Guild {
       dispatcher: null,
     };
   }
+
+  resetMusicSettings() {
+    this.music.songPlaying = null;
+    this.music.queue = new Queue();
+    if (this.music.dispatcher) {
+      this.music.dispatcher.destroy();
+    }
+    this.music.dispatcher = null;
+  }
 }
 
 module.exports = Guild;
