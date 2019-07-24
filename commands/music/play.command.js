@@ -5,6 +5,7 @@ const config = require('../../config');
 const Guild = require('../../structures/guild');
 const Song = require('../../structures/song');
 const { getVideoBasicInfo, playVideo } = require('../../helpers/music.helper');
+const { checkUserVoiceConnection } = require('../../helpers/voice.helper');
 const { fmtMSS } = require('../../helpers/date.helper');
 
 class PlayCommand extends Commando.Command {
@@ -22,9 +23,14 @@ class PlayCommand extends Commando.Command {
   }
 
   async run(msg, args) {
-    const { error } = this.validateUserCommand(msg, args);
-    if (error) {
-      msg.channel.send(error);
+    const commandValidation = this.validateUserCommand(msg, args);
+    if (commandValidation.error) {
+      return msg.channel.send(commandValidation.error);
+    }
+
+    const voiceConnectionValidation = checkUserVoiceConnection(msg);
+    if (voiceConnectionValidation.error) {
+      return msg.channel.send(voiceConnectionValidation.error);
     }
 
     const { voiceChannel } = msg.member;
@@ -74,20 +80,6 @@ class PlayCommand extends Commando.Command {
       response.addField('Error', 'Put a YouTube video url as argument for the command');
       response.addField('Example', this.example);
       return { error: response };
-    }
-
-    const { voiceChannel } = msg.member;
-    if (!voiceChannel) {
-      return { error: 'You need to be connected in a voice channel to execute this command' };
-    }
-
-    // If bot is connected to a voice channel,
-    // but the user is trying to play music from another channel
-    const userConnectedToADifferentChannel = msg.guild.voiceConnection
-      && voiceChannel.position !== msg.guild.voiceConnection.channel.position;
-
-    if (userConnectedToADifferentChannel) {
-      return { error: 'You need to be connected to the same voice channel as the bot' };
     }
 
     return { ok: true };

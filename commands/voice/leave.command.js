@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 const Commando = require('discord.js-commando');
+const { checkUserVoiceConnection } = require('../../helpers/voice.helper');
 
 class LeaveCommand extends Commando.Command {
   constructor(client) {
@@ -15,18 +16,12 @@ class LeaveCommand extends Commando.Command {
   }
 
   async run(msg) {
+    const { error } = checkUserVoiceConnection(msg);
+    if (error) {
+      return msg.channel.send(error);
+    }
+
     const { voiceConnection } = msg.guild;
-    if (!voiceConnection) {
-      return msg.channel.send('Magibot should be connected to a voice channel to leave.');
-    }
-
-    const { voiceChannel } = msg.member;
-    if (!voiceChannel || voiceChannel.id !== voiceConnection.channel.id) {
-      return msg.channel.send(
-        'You should be connected to the same voice channel as the bot execute this command.',
-      );
-    }
-
     await voiceConnection.disconnect();
 
     const { id } = msg.guild;
