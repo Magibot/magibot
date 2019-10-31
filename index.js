@@ -1,5 +1,8 @@
 const env = require('./config/env');
 const Commando = require('discord.js-commando');
+const logger = require('./app/logger');
+
+const handleGuildCreate = require('./events/guildCreate');
 
 const bot = new Commando.Client({
   commandPrefix: '!magi',
@@ -7,18 +10,20 @@ const bot = new Commando.Client({
   disableEveryone: true
 });
 
-bot.on('ready', () => {
-  console.log(`${bot.user.username} starting`);
+bot.on('ready', async () => {
+  logger.success(`${bot.user.username} starting`);
   const guilds = bot.guilds.size;
   const channels = bot.channels.size;
   const users = bot.users.size;
-  console.log(
+  logger.success(
     `Connected to ${guilds} guilds, ${channels} channels and ${users} users`
   );
-  bot.user.setActivity("Fo' shizzle my nizzle");
+  const activity = "Fo' shizzle my nizzle";
+  logger.success(`Activity set to: ${activity}`);
+  bot.user.setActivity(activity);
 });
 
-// bot.on('guildCreate', EventHandler.onGuildCreate);
+bot.on('guildCreate', handleGuildCreate);
 // bot.on('guildDelete', EventHandler.onGuildDelete);
 
 // bot.on('disconnect');
