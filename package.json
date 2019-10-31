@@ -1,0 +1,22 @@
+{
+  "name": "magibot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Magibot/magibot",
+  "author": "Matheus Mello de Lima <mellomatheuslima@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "discord.js-commando": "^0.10.0",
+    "dotenv": "^8.2.0",
+    "superagent": "^5.1.0",
+    "superagent-absolute": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon"
+  }
+}
