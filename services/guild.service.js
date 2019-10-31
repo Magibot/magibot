@@ -25,6 +25,29 @@ const create = async guild => {
   }
 };
 
+const destroy = async guildId => {
+  try {
+    const response = await superagent
+      .delete(`/guilds/${guildId}`)
+      .set('Authorization', env.apiClientId)
+      .set('authorization_type', 'client_id');
+
+    return {
+      status: 'success',
+      code: response.statusCode,
+      payload: response.body.payload
+    };
+  } catch (err) {
+    return {
+      status: 'error',
+      type: err.name,
+      code: err.response.statusCode,
+      errors: err.response.body.errors
+    };
+  }
+};
+
 module.exports = {
-  create
+  create,
+  destroy
 };

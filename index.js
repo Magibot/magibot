@@ -3,6 +3,9 @@ const Commando = require('discord.js-commando');
 const logger = require('./app/logger');
 
 const handleGuildCreate = require('./events/guildCreate');
+const handleGuildDelete = require('./events/guildDelete');
+
+global.GuildIdMap = new Map();
 
 const bot = new Commando.Client({
   commandPrefix: '!magi',
@@ -24,7 +27,7 @@ bot.on('ready', async () => {
 });
 
 bot.on('guildCreate', handleGuildCreate);
-// bot.on('guildDelete', EventHandler.onGuildDelete);
+bot.on('guildDelete', handleGuildDelete);
 
 // bot.on('disconnect');
 
