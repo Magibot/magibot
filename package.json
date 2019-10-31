@@ -6,6 +6,7 @@
   "author": "Matheus Mello de Lima <mellomatheuslima@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.4.2",
     "discord.js": "^11.5.1",
     "discord.js-commando": "^0.10.0",
     "dotenv": "^8.2.0",
