@@ -18,7 +18,6 @@ module.exports = async guild => {
     return response.errors;
   }
 
-  global.GuildIdMap.set(guild.id, response.payload.guild._id);
   logger.success(`Guild ${guild.name}(${guild.id}) successfully registered`);
   return response.payload;
 };

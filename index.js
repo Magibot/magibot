@@ -5,8 +5,6 @@ const logger = require('./app/logger');
 const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
 
-global.GuildIdMap = new Map();
-
 const bot = new Commando.Client({
   commandPrefix: '!magi',
   unknownCommandResponse: false,

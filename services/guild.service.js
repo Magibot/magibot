@@ -25,10 +25,11 @@ const create = async guild => {
   }
 };
 
-const destroy = async guildId => {
+const destroy = async (guildId, query) => {
   try {
     const response = await superagent
       .delete(`/guilds/${guildId}`)
+      .query(query)
       .set('Authorization', env.apiClientId)
       .set('authorization_type', 'client_id');
 
