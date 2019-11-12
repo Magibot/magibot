@@ -12,6 +12,10 @@ const bot = new Commando.Client({
   unknownCommandResponse: false,
   disableEveryone: true,
   disabledEvents: magi.client.disabledEvents,
+  messageCacheLifetime: 1800,
+  messageSweepInterval: 3600,
+  messageCacheMaxSize: 125,
+  retryLimit: 5,
 });
 
 bot.registry
