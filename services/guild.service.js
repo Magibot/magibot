@@ -15,7 +15,6 @@ const create = async (guild) => {
       payload: response.body.payload,
     };
   } catch (err) {
-    // console.log(err);
     return {
       status: 'error',
       type: err.name,
