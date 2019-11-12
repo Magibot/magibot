@@ -1,3 +1,4 @@
+const path = require('path');
 const Commando = require('discord.js-commando');
 const env = require('./config/env');
 const logger = require('./app/logger');
@@ -11,7 +12,14 @@ const bot = new Commando.Client({
   disableEveryone: true,
 });
 
-bot.on('ready', async () => {
+bot.registry
+  .registerDefaultTypes()
+  .registerGroups([
+    ['simple', 'Simple'],
+  ])
+  .registerCommandsIn(path.join(__dirname, 'commands'));
+
+bot.once('ready', async () => {
   logger.success(`${bot.user.username} starting`);
   const guilds = bot.guilds.size;
   const channels = bot.channels.size;
