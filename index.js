@@ -8,7 +8,7 @@ const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
 
 const bot = new Commando.Client({
-  commandPrefix: '!magi',
+  commandPrefix: env.clientCommandPrefix,
   unknownCommandResponse: false,
   disableEveryone: true,
   disabledEvents: magi.client.disabledEvents,
