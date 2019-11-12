@@ -1,6 +1,7 @@
 const path = require('path');
 const Commando = require('discord.js-commando');
 const env = require('./config/env');
+const magi = require('./magi');
 const logger = require('./utils/logger');
 
 const handleGuildCreate = require('./events/guildCreate');
@@ -10,6 +11,7 @@ const bot = new Commando.Client({
   commandPrefix: '!magi',
   unknownCommandResponse: false,
   disableEveryone: true,
+  disabledEvents: magi.client.disabledEvents,
 });
 
 bot.registry
