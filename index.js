@@ -8,14 +8,14 @@ const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
 
 const bot = new Commando.Client({
-  commandPrefix: env.clientCommandPrefix,
+  commandPrefix: env.client.prefix,
   unknownCommandResponse: false,
   disableEveryone: true,
   disabledEvents: magi.client.disabledEvents,
-  messageCacheLifetime: 1800,
-  messageSweepInterval: 3600,
-  messageCacheMaxSize: 125,
-  retryLimit: 5,
+  messageCacheLifetime: env.client.messageCacheLifetime,
+  messageSweepInterval: env.client.messageSweepInterval,
+  messageCacheMaxSize: env.client.messageCacheMaxSize,
+  retryLimit: env.client.retryLimit,
 });
 
 bot.registry
@@ -48,4 +48,4 @@ bot.on('guildDelete', handleGuildDelete);
 
 // bot.on('disconnect');
 
-bot.login(env.token);
+bot.login(env.client.token);

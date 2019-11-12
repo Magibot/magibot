@@ -6,7 +6,7 @@ const create = async (guild) => {
     const response = await superagent
       .post('/guilds')
       .send(guild)
-      .set('Authorization', env.apiClientId)
+      .set('Authorization', env.backend.api.clientId)
       .set('authorization_type', 'client_id');
 
     return {
@@ -29,7 +29,7 @@ const destroy = async (guildId, query) => {
     const response = await superagent
       .delete(`/guilds/${guildId}`)
       .query(query)
-      .set('Authorization', env.apiClientId)
+      .set('Authorization', env.backend.api.clientId)
       .set('authorization_type', 'client_id');
 
     return {

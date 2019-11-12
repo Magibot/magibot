@@ -4,4 +4,4 @@ const env = require('./env');
 
 const agent = superagent.agent();
 
-module.exports = superagentAbsolute(agent)(env.apiBaseUrl);
+module.exports = superagentAbsolute(agent)(env.backend.api.baseUrl);

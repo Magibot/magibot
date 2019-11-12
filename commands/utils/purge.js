@@ -13,7 +13,7 @@ class Purge extends Commando.Command {
       description: 'This command removes all messages from all users in the channel, minimum of 2, up to 100 messages',
       details: 'Should receive one argument referring to the amount of messages you want to purge from channel',
       examples: [
-        `${env.clientCommandPrefix} ${commandName} 50 (this will purge the last 50 messages from the channel)`,
+        `${env.client.prefix} ${commandName} 50 (this will purge the last 50 messages from the channel)`,
       ],
       throttling: {
         usages: 2,
