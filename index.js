@@ -16,6 +16,7 @@ bot.registry
   .registerDefaultTypes()
   .registerGroups([
     ['simple', 'Simple'],
+    ['utils', 'Utilities'],
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
