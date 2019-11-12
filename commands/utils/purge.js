@@ -1,5 +1,5 @@
 const Commando = require('discord.js-commando');
-const logger = require('../../app/logger');
+const logger = require('../../utils/logger');
 const env = require('../../config/env');
 
 class Purge extends Commando.Command {

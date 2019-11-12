@@ -1,7 +1,7 @@
 const path = require('path');
 const Commando = require('discord.js-commando');
 const env = require('./config/env');
-const logger = require('./app/logger');
+const logger = require('./utils/logger');
 
 const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
@@ -35,6 +35,10 @@ bot.once('ready', async () => {
 
 bot.on('guildCreate', handleGuildCreate);
 bot.on('guildDelete', handleGuildDelete);
+
+// bot.on('guildMemberAdd')
+// bot.on('guildMemberRemove')
+
 
 // bot.on('disconnect');
 

@@ -1,4 +1,4 @@
-const logger = require('../app/logger');
+const logger = require('../utils/logger');
 require('dotenv').config();
 
 let token;

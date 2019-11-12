@@ -1,5 +1,5 @@
 const guildService = require('../services/guild.service');
-const logger = require('../app/logger');
+const logger = require('../utils/logger');
 
 module.exports = async (guild) => {
   const requestBody = {
