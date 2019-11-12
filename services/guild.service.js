@@ -1,7 +1,7 @@
 const superagent = require('../config/superagent');
 const env = require('../config/env');
 
-const create = async guild => {
+const create = async (guild) => {
   try {
     const response = await superagent
       .post('/guilds')
@@ -12,7 +12,7 @@ const create = async guild => {
     return {
       status: 'success',
       code: response.statusCode,
-      payload: response.body.payload
+      payload: response.body.payload,
     };
   } catch (err) {
     // console.log(err);
@@ -20,7 +20,7 @@ const create = async guild => {
       status: 'error',
       type: err.name,
       code: err.response.statusCode,
-      errors: err.response.body.errors
+      errors: err.response.body.errors,
     };
   }
 };
@@ -36,19 +36,19 @@ const destroy = async (guildId, query) => {
     return {
       status: 'success',
       code: response.statusCode,
-      payload: response.body.payload
+      payload: response.body.payload,
     };
   } catch (err) {
     return {
       status: 'error',
       type: err.name,
       code: err.response.statusCode,
-      errors: err.response.body.errors
+      errors: err.response.body.errors,
     };
   }
 };
 
 module.exports = {
   create,
-  destroy
+  destroy,
 };

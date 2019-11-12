@@ -1,9 +1,9 @@
 const guildService = require('../services/guild.service');
 const logger = require('../app/logger');
 
-module.exports = async guild => {
+module.exports = async (guild) => {
   const response = await guildService.destroy(guild.id, {
-    typeId: 'discordId'
+    typeId: 'discordId',
   });
   if (response.status === 'error') {
     // Create a system of notification through telegram bot, maybe
@@ -13,5 +13,5 @@ module.exports = async guild => {
   }
 
   logger.success(`Guild ${guild.name}(${guild.id}) successfully deleted`);
-  return;
+  return true;
 };

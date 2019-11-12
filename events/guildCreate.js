@@ -1,13 +1,13 @@
 const guildService = require('../services/guild.service');
 const logger = require('../app/logger');
 
-module.exports = async guild => {
+module.exports = async (guild) => {
   const requestBody = {
     name: guild.name,
     discordId: guild.id,
     region: guild.region,
     discordOwnerId: guild.ownerID,
-    iconHash: guild.icon
+    iconHash: guild.icon,
   };
 
   const response = await guildService.create(requestBody);

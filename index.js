@@ -1,5 +1,5 @@
-const env = require('./config/env');
 const Commando = require('discord.js-commando');
+const env = require('./config/env');
 const logger = require('./app/logger');
 
 const handleGuildCreate = require('./events/guildCreate');
@@ -8,7 +8,7 @@ const handleGuildDelete = require('./events/guildDelete');
 const bot = new Commando.Client({
   commandPrefix: '!magi',
   unknownCommandResponse: false,
-  disableEveryone: true
+  disableEveryone: true,
 });
 
 bot.on('ready', async () => {
@@ -17,7 +17,7 @@ bot.on('ready', async () => {
   const channels = bot.channels.size;
   const users = bot.users.size;
   logger.success(
-    `Connected to ${guilds} guilds, ${channels} channels and ${users} users`
+    `Connected to ${guilds} guilds, ${channels} channels and ${users} users`,
   );
   const activity = "Fo' shizzle my nizzle";
   logger.success(`Activity set to: ${activity}`);

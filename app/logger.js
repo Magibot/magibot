@@ -1,24 +1,24 @@
 const chalk = require('chalk');
 
 module.exports = {
-  success: str => {
+  success: (str) => {
     console.log(chalk.bold.green(str));
   },
-  error: str => {
+  error: (str) => {
     console.log(chalk.bold.red(str));
   },
-  warning: str => {
+  warning: (str) => {
     console.log(chalk.bold.yellow(str));
   },
-  normal: str => {
+  normal: (str) => {
     console.log(chalk.magenta(str));
   },
-  serviceResponseError: function(response) {
+  serviceResponseError(response) {
     this.error(`Error type: ${response.type}. Status code: ${response.code}`);
-    this.error(`Messages from API`);
+    this.error('Messages from API');
 
-    response.errors.forEach(err => {
+    response.errors.forEach((err) => {
       this.error(err.message);
     });
-  }
+  },
 };

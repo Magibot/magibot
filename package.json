@@ -14,10 +14,14 @@
     "superagent-absolute": "^1.0.1"
   },
   "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
     "nodemon": "^1.19.4"
   },
   "scripts": {
     "start": "node .",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "lint": "eslint ."
   }
 }
