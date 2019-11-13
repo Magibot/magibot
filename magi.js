@@ -4,11 +4,9 @@
 
 // Simple
 const Ping = require('./commands/simple/ping');
-const Help = require('./commands/simple/help');
 
 // Utils
 const Purge = require('./commands/utils/purge');
-
 
 module.exports = {
   client: {
@@ -40,8 +38,7 @@ module.exports = {
     ],
   },
   commands: {
-    purge: Purge.options(),
     ping: Ping.options(),
-    help: Help.options(),
+    purge: Purge.options(),
   },
 };
