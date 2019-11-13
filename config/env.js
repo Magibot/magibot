@@ -32,6 +32,8 @@ module.exports = {
     messageSweepInterval: parseInt(process.env.CLIENT_MESSAGE_SWEEP_INTERVAL, 10) || 3600,
     messageCacheMaxSize: parseInt(process.env.CLIENT_MESSAGE_CACHE_MAX_SIZE, 10) || 125,
     retryLimit: parseInt(process.env.CLIENT_RETRY_LIMIT, 10) || 5,
+    picture: process.env.CLIENT_PICTURE_LINK,
+    website: process.env.CLIENT_WEBSITE,
   },
   backend: {
     api: {
