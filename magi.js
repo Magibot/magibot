@@ -3,10 +3,11 @@
  */
 
 // Simple
-const { PingOptions } = require('./commands/simple/ping');
+const Ping = require('./commands/simple/ping');
+const Help = require('./commands/simple/help');
 
 // Utils
-const { PurgeOptions } = require('./commands/utils/purge');
+const Purge = require('./commands/utils/purge');
 
 
 module.exports = {
@@ -39,7 +40,8 @@ module.exports = {
     ],
   },
   commands: {
-    purge: PurgeOptions,
-    ping: PingOptions,
+    purge: Purge.options(),
+    ping: Ping.options(),
+    help: Help.options(),
   },
 };
