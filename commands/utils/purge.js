@@ -5,6 +5,7 @@ const env = require('../../config/env');
 class Purge extends Commando.Command {
   static options() {
     return {
+      usage: `${env.client.prefix} purge <amount of messages>`,
       name: 'purge',
       group: 'utils',
       memberName: 'purge',
@@ -23,7 +24,7 @@ class Purge extends Commando.Command {
       args: [
         {
           key: 'deleteCount',
-          prompt: '',
+          prompt: 'Amount of messages you want to purge from the channel',
           type: 'integer',
           validate: (deleteCount) => deleteCount && deleteCount > 1 && deleteCount < 101,
           label: 'amount of messages',
