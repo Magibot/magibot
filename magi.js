@@ -2,6 +2,13 @@
  * General config file for the Magi bot
  */
 
+// Simple
+const { PingOptions } = require('./commands/simple/ping');
+
+// Utils
+const { PurgeOptions } = require('./commands/utils/purge');
+
+
 module.exports = {
   client: {
     disabledEvents: [
@@ -30,5 +37,9 @@ module.exports = {
       'RELATIONSHIP_REMOVE',
       'WEBHOOKS_UPDATE',
     ],
+  },
+  commands: {
+    purge: PurgeOptions,
+    ping: PingOptions,
   },
 };

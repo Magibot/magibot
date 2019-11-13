@@ -1,18 +1,22 @@
 const Commando = require('discord.js-commando');
 
+const options = {
+  name: 'ping',
+  aliases: ['pong', 'ms', 'latency'],
+  group: 'simple',
+  memberName: 'ping',
+  description: 'Calculates ping between sending a message and editing it, giving a nice round-trip latency. The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)',
+  throttling: {
+    usages: 3,
+    duration: 10,
+  },
+};
+
+exports.PingOptions = options;
+
 class Ping extends Commando.Command {
   constructor(client) {
-    super(client, {
-      name: 'ping',
-      aliases: ['pong', 'ms', 'latency'],
-      group: 'simple',
-      memberName: 'ping',
-      description: 'Calculates ping between sending a message and editing it, giving a nice round-trip latency. The second ping is an average latency between the bot and the websocket server (one-way, not round-trip)',
-      throttling: {
-        usages: 3,
-        duration: 10,
-      },
-    });
+    super(client, options);
   }
 
   async run(message) {
