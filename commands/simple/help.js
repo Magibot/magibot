@@ -2,14 +2,16 @@ const Commando = require('discord.js-commando');
 const Discord = require('discord.js');
 const env = require('../../config/env');
 const magi = require('../../magi');
+const Commands = require('./commands');
 
 class Help extends Commando.Command {
   static options() {
     return {
+      usage: `${env.client.prefix} help <command name>`,
       name: 'help',
       group: 'simple',
       memberName: 'help',
-      description: 'Describe the usage of a command',
+      description: 'Show how you can use an especific bot command',
       details: 'Should receive one argument referring to the command you want to know about',
       examples: [
         `${env.client.prefix} help purge`,
@@ -18,7 +20,7 @@ class Help extends Commando.Command {
       args: [
         {
           key: 'commandName',
-          prompt: '',
+          prompt: 'Name of the command you want to know about',
           type: 'string',
           label: 'command name',
         },
@@ -31,7 +33,11 @@ class Help extends Commando.Command {
   }
 
   async run(message, { commandName }) {
-    const command = magi.commands[commandName];
+    let command = magi.commands[commandName];
+    if (commandName === 'commands') {
+      command = Commands.options();
+    }
+
     if (!command) {
       return message.reply(`This command does not exist. Use "${env.client.prefix} commands" to know all commands`);
     }
