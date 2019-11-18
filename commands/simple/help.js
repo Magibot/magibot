@@ -1,8 +1,8 @@
 const Commando = require('discord.js-commando');
-const Discord = require('discord.js');
 const env = require('../../config/env');
 const magi = require('../../magi');
 const Commands = require('./commands');
+const embed = require('../../utils/embed');
 
 class Help extends Commando.Command {
   static options() {
@@ -42,16 +42,13 @@ class Help extends Commando.Command {
       return message.reply(`This command does not exist. Use "${env.client.prefix} commands" to know all commands`);
     }
 
-    const embed = new Discord.RichEmbed()
-      .setColor('#0099ff')
+    const reply = embed.create();
+
+    reply
       .setTitle(`The "${command.name}" command`)
-      // .setURL('https://discord.js.org/')
-      // .setAuthor('Magi', env.client.picture, env.client.website)
       .setDescription(command.usage)
       .addField('Description', command.description, true)
-      .addField('Details', command.details, true)
-      .setTimestamp()
-      .setFooter('Magi', env.client.picture);
+      .addField('Details', command.details, true);
 
     if (command.args && command.args.length > 0) {
       let argsFieldValue = '';
@@ -59,7 +56,7 @@ class Help extends Commando.Command {
         argsFieldValue += `${i + 1}: <${command.args[i].label}> ${command.args[i].prompt}\n`;
       }
 
-      embed.addField('Arguments', argsFieldValue);
+      reply.addField('Arguments', argsFieldValue);
     }
 
     if (command.examples && command.examples.length > 0) {
@@ -68,7 +65,7 @@ class Help extends Commando.Command {
         examplesFieldValues += `${command.examples[i]}\n`;
       }
 
-      embed.addField('Examples', examplesFieldValues);
+      reply.addField('Examples', examplesFieldValues);
     }
 
     let permissionsFieldValue = '';
@@ -79,20 +76,20 @@ class Help extends Commando.Command {
     } else {
       permissionsFieldValue = 'All members can use this command';
     }
-    embed.addField('Permissions', permissionsFieldValue, true);
+    reply.addField('Permissions', permissionsFieldValue, true);
 
     if (command.guildOnly) {
-      embed.addField('Can be used in DM?', 'No', true);
+      reply.addField('Can be used in DM?', 'No', true);
     } else {
-      embed.addField('Can be used in DM?', 'Yes', true);
+      reply.addField('Can be used in DM?', 'Yes', true);
     }
 
     if (command.throttling) {
       const { usages, duration } = command.throttling;
-      embed.addField('Use limit', `This command can only be used ${usages} times in ${duration} seconds`, true);
+      reply.addField('Use limit', `This command can only be used ${usages} times in ${duration} seconds`, true);
     }
 
-    return message.channel.send(embed);
+    return message.channel.send(reply);
   }
 }
 

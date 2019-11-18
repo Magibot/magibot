@@ -1,12 +1,12 @@
 const Commando = require('discord.js-commando');
-const Discord = require('discord.js');
 const env = require('../../config/env');
 const magi = require('../../magi');
-const Help = require('./help');
+const embed = require('../../utils/embed');
 
 class Commands extends Commando.Command {
   static options() {
     return {
+      usage: `${env.client.prefix} commands`,
       name: 'commands',
       group: 'simple',
       memberName: 'commands',
@@ -28,19 +28,13 @@ class Commands extends Commando.Command {
       commandsList.push(`\`${magi.commands[cmdName].usage}\` => ${magi.commands[cmdName].description}`);
     });
 
-    const embed = new Discord.RichEmbed()
-      .setColor('#0099ff')
+    commandsList.push(`\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
+    const reply = embed.create();
+    reply
       .setTitle('List of all bot commands')
-      // .setURL('https://discord.js.org/')
-      // .setAuthor('Magi', env.client.picture, env.client.website)
-      .setTimestamp()
-      .setFooter('Magi', env.client.picture);
+      .addField('Commands', commandsList.join('\n\n'));
 
-    const help = Help.options();
-    commandsList.push(`\`${help.usage}\` => ${help.description}`);
-
-    embed.addField('Commands', commandsList.join('\n\n'));
-    return message.channel.send(embed);
+    return message.channel.send(reply);
   }
 }
 
