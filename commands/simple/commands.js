@@ -24,11 +24,11 @@ class Commands extends Commando.Command {
 
   async run(message) {
     const commandsList = [];
+    commandsList.push(`\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
+
     Object.keys(magi.commands).forEach((cmdName) => {
       commandsList.push(`\`${magi.commands[cmdName].usage}\` => ${magi.commands[cmdName].description}`);
     });
-
-    commandsList.push(`\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
     const reply = embed.create();
     reply
       .setTitle('List of all bot commands')
