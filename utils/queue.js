@@ -23,6 +23,10 @@ class Queue {
   clear() {
     this.q = [];
   }
+
+  totalOfElements() {
+    return this.q;
+  }
 }
 
 module.exports = Queue;

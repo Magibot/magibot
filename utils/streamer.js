@@ -60,6 +60,14 @@ class Streamer {
     this.play(next);
   }
 
+  clearQueue() {
+    this.queue.clear();
+  }
+
+  totalOfElementsInQueue() {
+    return this.queue.totalOfElements();
+  }
+
   disconnect() {
     if (this.voiceConnection) {
       this.voiceConnection.disconnect();
