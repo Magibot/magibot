@@ -7,7 +7,7 @@ class Play extends Commando.Command {
     return {
       usage: `${env.client.prefix} play <url of the stream to play>`,
       name: 'play',
-      group: 'stream',
+      group: 'radio',
       memberName: 'play',
       description: 'Play the sound of a video stream in channel to all users',
       details: 'Everyone should enjoy some music',

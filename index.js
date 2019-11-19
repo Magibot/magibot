@@ -24,7 +24,7 @@ bot.registry
   .registerGroups([
     ['simple', 'Simple'],
     ['utils', 'Utilities'],
-    ['stream', 'Stream'],
+    ['radio', 'Radio'],
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
