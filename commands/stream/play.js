@@ -21,7 +21,7 @@ class Play extends Commando.Command {
           prompt: 'Link (url) of a stream to play the sound of the video',
           type: 'integer',
           // Validate with a URL Regex
-          // validate: (deleteCount) => deleteCount && deleteCount > 1 && deleteCount < 101,
+          validate: (url) => true,
           label: 'url of the stream to play',
         },
       ],
@@ -62,7 +62,7 @@ class Play extends Commando.Command {
         );
       }
 
-      const video = streamer.play(url, message.author.id);
+      const video = await streamer.play(url, message.author.id);
       let answer;
       if (video.status === 'queued') {
         answer = embed.create();
