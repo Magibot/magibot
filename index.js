@@ -25,6 +25,7 @@ bot.registry
     ['simple', 'Simple'],
     ['utils', 'Utilities'],
     ['radio', 'Radio'],
+    ['voice', 'Voice'],
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'));
 

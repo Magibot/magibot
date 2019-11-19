@@ -5,6 +5,12 @@
 // Simple
 const Ping = require('./commands/simple/ping');
 
+// Voice
+const Leave = require('./commands/voice/leave');
+
+// Radio
+const Play = require('./commands/radio/play');
+
 // Utils
 const Purge = require('./commands/utils/purge');
 
@@ -38,5 +44,9 @@ module.exports = {
   commands: {
     ping: Ping.options(),
     purge: Purge.options(),
+
+    play: Play.options(),
+
+    leave: Leave.options(),
   },
 };
