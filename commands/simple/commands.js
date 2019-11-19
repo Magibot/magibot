@@ -23,18 +23,54 @@ class Commands extends Commando.Command {
   }
 
   async run(message) {
-    const commandsList = [];
-    commandsList.push(`\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
-
-    Object.keys(magi.commands).forEach((cmdName) => {
-      commandsList.push(`\`${magi.commands[cmdName].usage}\` => ${magi.commands[cmdName].description}`);
-    });
     const reply = embed.create();
     reply
       .setTitle('List of all bot commands')
-      .addField('Commands', commandsList.join('\n\n'));
+      .addField('HELP', `\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
+
+    const groups = this.separateCommandsInGroups(magi.commands);
+    Object.keys(groups).sort().forEach((group) => {
+      const groupMessage = this.createCommandsGroupMessage(groups[group]);
+      reply.addField(group.toUpperCase(), groupMessage);
+    });
 
     return message.channel.send(reply);
+  }
+
+  separateCommandsInGroups(commands) {
+    const groups = {};
+    Object.keys(commands).forEach((name) => {
+      const options = commands[name];
+      const { group } = options;
+      if (!groups[group]) {
+        groups[group] = [];
+      }
+
+      groups[group].push(options);
+    });
+
+    return groups;
+  }
+
+  createCommandsGroupMessage(group) {
+    const message = [];
+
+    group
+      .sort((a, b) => {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        }
+
+        return 0;
+      })
+      .forEach((command) => {
+        message.push(`\`${command.usage}\` => ${command.description}`);
+      });
+
+    return message.join('\n\n');
   }
 }
 
