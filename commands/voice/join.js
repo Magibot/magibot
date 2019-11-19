@@ -6,6 +6,7 @@ class Join extends Commando.Command {
     return {
       usage: `${env.client.prefix} join`,
       name: 'join',
+      aliases: ['connect', 'enter', 'in', 'come'],
       group: 'voice',
       memberName: 'join',
       description: 'Join the voice channel that the user is connected',

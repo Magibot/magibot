@@ -6,6 +6,7 @@ class Leave extends Commando.Command {
     return {
       usage: `${env.client.prefix} leave`,
       name: 'leave',
+      aliases: ['disconnect', 'out', 'go'],
       group: 'voice',
       memberName: 'leave',
       description: 'Leave the voice channel if the bot is in one',
