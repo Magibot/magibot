@@ -7,6 +7,7 @@ const Ping = require('./commands/simple/ping');
 
 // Voice
 const Leave = require('./commands/voice/leave');
+const Join = require('./commands/voice/join');
 
 // Radio
 const Play = require('./commands/radio/play');
@@ -46,5 +47,6 @@ module.exports = {
     purge: Purge.options(),
     play: Play.options(),
     leave: Leave.options(),
+    join: Join.options(),
   },
 };
