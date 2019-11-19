@@ -3,6 +3,7 @@ const Commando = require('discord.js-commando');
 const env = require('./config/env');
 const magi = require('./magi');
 const logger = require('./utils/logger');
+const Radio = require('./utils/radio');
 
 const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
@@ -23,6 +24,7 @@ bot.registry
   .registerGroups([
     ['simple', 'Simple'],
     ['utils', 'Utilities'],
+    ['stream', 'Stream'],
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
@@ -37,6 +39,8 @@ bot.once('ready', async () => {
   const activity = "Fo' shizzle my nizzle";
   logger.success(`Activity set to: ${activity}`);
   bot.user.setActivity(activity);
+
+  global.Radio = new Radio();
 });
 
 bot.on('guildCreate', handleGuildCreate);
