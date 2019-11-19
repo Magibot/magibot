@@ -44,9 +44,7 @@ module.exports = {
   commands: {
     ping: Ping.options(),
     purge: Purge.options(),
-
     play: Play.options(),
-
     leave: Leave.options(),
   },
 };
