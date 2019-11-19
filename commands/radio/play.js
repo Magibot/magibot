@@ -43,8 +43,10 @@ class Play extends Commando.Command {
       return message.reply('To execute this command you should connect to a voice channel');
     }
 
-    if (message.guild.voiceConnection
-      && voiceChannel.position !== message.guild.voiceConnection.channel.position) {
+    const { voiceConnection } = message.guild;
+
+    if (voiceConnection
+      && voiceChannel.id !== voiceConnection.channel.id) {
       return message.reply('To execute this command you should be connected to the same voice channel as the bot');
     }
 
