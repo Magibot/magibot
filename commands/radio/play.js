@@ -10,7 +10,7 @@ class Play extends Commando.Command {
       group: 'radio',
       aliases: ['p', 'start', 'song', 'video', 'stream'],
       memberName: 'play',
-      description: 'Play the sound of a video stream in channel to all users',
+      description: 'Play the sound of a video stream to all users in voice channel. If something is already playing, the video will be added to a queue',
       details: 'Everyone should enjoy some music',
       examples: [
         `${env.client.prefix} play http://youtube.com/link-to-your-favorite-song`,
