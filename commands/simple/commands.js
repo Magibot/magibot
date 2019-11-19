@@ -70,7 +70,7 @@ class Commands extends Commando.Command {
         message.push(`\`${command.usage}\` => ${command.description}`);
       });
 
-    return message.join('\n\n');
+    return message.join('\n');
   }
 }
 
