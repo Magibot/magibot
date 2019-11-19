@@ -19,6 +19,10 @@ class Queue {
   next() {
     return this.q.shift();
   }
+
+  clear() {
+    this.q = [];
+  }
 }
 
 module.exports = Queue;

@@ -11,7 +11,6 @@ class Streamer {
 
     this.queue = new Queue();
     this.state = 'stopped';
-    this.totalTime = 0;
 
     this.timeout = 900000;
 
@@ -23,6 +22,10 @@ class Streamer {
 
   get isPlaying() {
     return this.state === 'playing';
+  }
+
+  setup(voiceConnection) {
+    this.voiceConnection = voiceConnection;
   }
 
   async play(url, addedBy) {
@@ -49,14 +52,26 @@ class Streamer {
     const next = this.queue.next();
     if (!next) {
       setTimeout(() => {
-        this.voiceConnection.disconnect();
-        this.voiceConnection.dispatcher.destroy();
-        this.state = 'stopped';
+        this.disconnect();
       }, this.timeout);
     }
 
     this.videoPlaying = next;
     this.play(next);
+  }
+
+  disconnect() {
+    if (this.voiceConnection) {
+      this.voiceConnection.disconnect();
+      if (this.voiceConnection.dispatcher) {
+        this.voiceConnection.dispatcher.destroy();
+      }
+    }
+
+    this.state = 'stopped';
+    this.queue.clear();
+    this.videoPlaying = null;
+    this.voiceConnection = null;
   }
 
   static async getVideoInformation(url) {

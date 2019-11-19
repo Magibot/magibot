@@ -6,8 +6,16 @@ class Radio {
   }
 
   createStream(guildId, channelId, voiceConnection) {
-    const streamer = new Streamer(guildId, channelId, voiceConnection);
-    this.streams.set(guildId, streamer);
+    let streamer = this.getStream(guildId);
+    if (streamer && !streamer.voiceConnection) {
+      streamer.setup(voiceConnection);
+    }
+
+    if (!streamer) {
+      streamer = new Streamer(guildId, channelId, voiceConnection);
+      this.streams.set(guildId, streamer);
+    }
+
     return streamer;
   }
 

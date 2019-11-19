@@ -19,9 +19,13 @@ class Play extends Commando.Command {
         {
           key: 'url',
           prompt: 'Link (url) of a stream to play the sound of the video',
-          type: 'integer',
+          type: 'string',
           // Validate with a URL Regex
-          validate: (url) => true,
+          validate: (url) => {
+            const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+            const regex = new RegExp(expression);
+            return url.match(regex);
+          },
           label: 'url of the stream to play',
         },
       ],
@@ -53,14 +57,11 @@ class Play extends Commando.Command {
       }
 
       const { guild, channel } = message;
-      let streamer = global.Radio.getStream(message.guild.id);
-      if (!streamer) {
-        streamer = global.Radio.createStream(
-          guild.id,
-          channel.id,
-          guild.voiceConnection,
-        );
-      }
+      const streamer = global.Radio.createStream(
+        guild.id,
+        channel.id,
+        guild.voiceConnection,
+      );
 
       const video = await streamer.play(url, message.author.id);
       let answer;
@@ -71,8 +72,8 @@ class Play extends Commando.Command {
           .setURL(video.url)
           .setAuthor('Adicionado a fila', message.member.user.avatarURL)
           .addField('Canal', video.info.author.name)
-          .addField('Duração', video.duration)
-          .addField('Posição na fila', video.positionOnQueue);
+          .addField('Duração', video.duration, true)
+          .addField('Posição na fila', video.positionOnQueue, true);
       }
 
       answer = (answer) || `**Tocando** \`${video.info.title}\` agora`;
