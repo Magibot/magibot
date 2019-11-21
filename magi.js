@@ -11,6 +11,8 @@ const Join = require('./commands/voice/join');
 
 // Radio
 const Play = require('./commands/radio/play');
+const Clear = require('./commands/radio/clear');
+const Pause = require('./commands/radio/pause');
 
 // Utils
 const Purge = require('./commands/utils/purge');
@@ -48,5 +50,7 @@ module.exports = {
     play: Play.options(),
     leave: Leave.options(),
     join: Join.options(),
+    pause: Pause.options(),
+    clear: Clear.options(),
   },
 };
