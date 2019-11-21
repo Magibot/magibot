@@ -24,6 +24,18 @@ class Streamer {
     return this.state === 'playing';
   }
 
+  get isPaused() {
+    return this.state === 'paused';
+  }
+
+  get isStopped() {
+    return this.state === 'stopped';
+  }
+
+  get totalOfElementsInQueue() {
+    return this.queue.totalOfElements();
+  }
+
   setup(voiceConnection) {
     this.voiceConnection = voiceConnection;
   }
@@ -34,7 +46,7 @@ class Streamer {
     let lengthSeconds = info.length_seconds;
     video.duration = (lengthSeconds - (lengthSeconds %= 60)) / 60 + (lengthSeconds > 9 ? ':' : ':0') + lengthSeconds;
 
-    if (this.state === 'playing' || this.state === 'paused') {
+    if (this.isPlaying || this.isPaused) {
       video.positionOnQueue = this.queue.insert(video);
       video.status = 'queued';
       return video;
@@ -43,17 +55,13 @@ class Streamer {
     this.state = 'playing';
     this.voiceConnection.playOpusStream(await ytdlStream(url));
     this.voiceConnection.dispatcher.on('end', () => this.events.emit('stream-finished'));
-    this.videoPlaying = video;
     video.status = 'playing';
+    this.videoPlaying = video;
     return video;
   }
 
   clearQueue() {
     this.queue.clear();
-  }
-
-  totalOfElementsInQueue() {
-    return this.queue.totalOfElements();
   }
 
   disconnect() {

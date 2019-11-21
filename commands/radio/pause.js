@@ -33,7 +33,7 @@ class Pause extends Commando.Command {
       return message.reply('There is nothing playing on Magi\'s radio');
     }
 
-    if (streamer && streamer.state === 'paused') {
+    if (streamer && streamer.isPaused) {
       return message.reply('Radio is already paused');
     }
 

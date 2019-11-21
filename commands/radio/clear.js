@@ -30,7 +30,7 @@ class Clear extends Commando.Command {
     }
 
     const streamer = global.Radio.getStream(message.guild.id);
-    if (streamer && streamer.isPlaying && streamer.totalOfElementsInQueue() === 0) {
+    if (streamer && streamer.isPlaying && streamer.totalOfElementsInQueue === 0) {
       return message.channel.send('There is only one stream playing. None in queue');
     }
 
