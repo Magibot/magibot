@@ -16,6 +16,10 @@ class Queue {
     return this.q.length === 0;
   }
 
+  get totalOfElements() {
+    return this.q.length;
+  }
+
   insert(element) {
     this.q.push(element);
     return this.q.length - 1;
@@ -27,10 +31,6 @@ class Queue {
 
   clear() {
     this.q = [];
-  }
-
-  totalOfElements() {
-    return this.q.length;
   }
 
   paginate(page) {

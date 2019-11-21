@@ -33,7 +33,7 @@ class Streamer {
   }
 
   get totalOfElementsInQueue() {
-    return this.queue.totalOfElements();
+    return this.queue.totalOfElements;
   }
 
   get totalLenghSecondsQueue() {
