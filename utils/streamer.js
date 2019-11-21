@@ -47,9 +47,7 @@ class Streamer {
     video.duration = (lengthSeconds - (lengthSeconds %= 60)) / 60 + (lengthSeconds > 9 ? ':' : ':0') + lengthSeconds;
 
     if (this.isPlaying || this.isPaused) {
-      video.positionOnQueue = this.queue.insert(video);
-      video.status = 'queued';
-      return video;
+      return this.insertIntoQueue(video);
     }
 
     this.state = 'playing';
@@ -60,21 +58,26 @@ class Streamer {
     return video;
   }
 
+  insertIntoQueue(info) {
+    const video = info;
+    video.status = 'queued';
+    video.positionOnQueue = this.queue.insert(video);
+    return video;
+  }
+
   clearQueue() {
     this.queue.clear();
   }
 
   disconnect() {
     if (this.voiceConnection) {
-      this.voiceConnection.disconnect();
       if (this.voiceConnection.dispatcher) {
         this.voiceConnection.dispatcher.destroy();
       }
+
+      this.voiceConnection.disconnect();
     }
 
-    this.state = 'stopped';
-    this.queue.clear();
-    this.videoPlaying = null;
     this.voiceConnection = null;
   }
 
@@ -83,11 +86,20 @@ class Streamer {
     this.voiceConnection.dispatcher.pause();
   }
 
+  stop() {
+    this.state = 'stopped';
+    this.clearQueue();
+    this.videoPlaying = null;
+    this.voiceConnection = null;
+  }
+
   // Events handlers
 
   handleStreamFinish() {
     const next = this.queue.next();
     if (!next) {
+      this.stop();
+
       setTimeout(() => {
         this.disconnect();
       }, this.timeout);
@@ -97,7 +109,7 @@ class Streamer {
     this.play(next);
   }
 
-  // Statics
+  // Statics methods
 
   static async getVideoInformation(url) {
     return new Promise((resolve, reject) => {
