@@ -17,7 +17,7 @@ class Streamer {
     this.videoPlaying = null;
 
     this.events = new events.EventEmitter();
-    this.events.on('stream-finished', this.handleQueue.bind(this));
+    this.events.on('stream-finished', this.handleStreamFinish.bind(this));
   }
 
   get isPlaying() {
@@ -48,18 +48,6 @@ class Streamer {
     return video;
   }
 
-  handleQueue() {
-    const next = this.queue.next();
-    if (!next) {
-      setTimeout(() => {
-        this.disconnect();
-      }, this.timeout);
-    }
-
-    this.videoPlaying = next;
-    this.play(next);
-  }
-
   clearQueue() {
     this.queue.clear();
   }
@@ -81,6 +69,27 @@ class Streamer {
     this.videoPlaying = null;
     this.voiceConnection = null;
   }
+
+  pause() {
+    this.state = 'paused';
+    this.voiceConnection.dispatcher.pause();
+  }
+
+  // Events handlers
+
+  handleStreamFinish() {
+    const next = this.queue.next();
+    if (!next) {
+      setTimeout(() => {
+        this.disconnect();
+      }, this.timeout);
+    }
+
+    this.videoPlaying = next;
+    this.play(next);
+  }
+
+  // Statics
 
   static async getVideoInformation(url) {
     return new Promise((resolve, reject) => {
