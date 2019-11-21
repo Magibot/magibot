@@ -41,7 +41,7 @@ class Leave extends Commando.Command {
       const streamer = global.Radio.getStream(message.guild.id);
       if (streamer) {
         streamer.disconnect();
-        // Destroy the streamer after some time without use
+        // TODO: Destroy the streamer after some time without use
         // global.Radio.destroy(message.guild.id)
       }
 
