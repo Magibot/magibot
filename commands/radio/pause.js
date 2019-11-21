@@ -29,7 +29,7 @@ class Pause extends Commando.Command {
     }
 
     const streamer = global.Radio.getStream(message.guild.id);
-    if (!streamer || (streamer && !streamer.isPlaying)) {
+    if (!streamer || (streamer && streamer.isStopped)) {
       return message.reply('There is nothing playing on Magi\'s radio');
     }
 
