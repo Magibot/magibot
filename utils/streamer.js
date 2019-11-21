@@ -71,10 +71,7 @@ class Streamer {
 
   disconnect() {
     if (this.voiceConnection) {
-      if (this.voiceConnection.dispatcher) {
-        this.voiceConnection.dispatcher.destroy();
-      }
-
+      this.destroyDispatcher();
       this.voiceConnection.disconnect();
     }
 
@@ -87,10 +84,17 @@ class Streamer {
   }
 
   stop() {
+    this.destroyDispatcher();
     this.state = 'stopped';
     this.clearQueue();
     this.videoPlaying = null;
     this.voiceConnection = null;
+  }
+
+  destroyDispatcher() {
+    if (this.voiceConnection && this.voiceConnection.dispatcher) {
+      this.voiceConnection.dispatcher.destroy();
+    }
   }
 
   // Events handlers
