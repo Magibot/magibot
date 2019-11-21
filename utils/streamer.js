@@ -76,6 +76,7 @@ class Streamer {
     }
 
     this.voiceConnection = null;
+    this.stop();
   }
 
   pause() {
@@ -103,7 +104,6 @@ class Streamer {
     const next = this.queue.next();
     if (!next) {
       this.stop();
-
       setTimeout(() => {
         this.disconnect();
       }, this.timeout);
