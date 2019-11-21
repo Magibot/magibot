@@ -73,13 +73,13 @@ class Play extends Commando.Command {
         answer
           .setTitle(`${video.info.title}`)
           .setURL(video.url)
-          .setAuthor('Adicionado a fila', message.member.user.avatarURL)
-          .addField('Canal', video.info.author.name)
-          .addField('Duração', video.duration, true)
-          .addField('Posição na fila', video.positionOnQueue, true);
+          .setAuthor('Added to queue', message.member.user.avatarURL)
+          .addField('Channel', video.info.author.name)
+          .addField('Duration', video.duration, true)
+          .addField('Position in queue', video.positionOnQueue, true);
       }
 
-      answer = (answer) || `**Tocando** \`${video.info.title}\` agora`;
+      answer = (answer) || `**Playing** \`${video.info.title}\` now`;
       return message.channel.send(answer);
     } catch (err) {
       console.log(err);
