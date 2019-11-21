@@ -53,11 +53,18 @@ class Streamer {
       return this.insertIntoQueue(video);
     }
 
+    return this.execute(video);
+  }
+
+  async execute(stream) {
+    const video = stream;
+    this.voiceConnection.playOpusStream(await ytdlStream(video.url));
+
     this.state = 'playing';
-    this.voiceConnection.playOpusStream(await ytdlStream(url));
-    this.voiceConnection.dispatcher.on('end', () => this.events.emit('stream-finished'));
     video.status = 'playing';
     this.videoPlaying = video;
+
+    this.voiceConnection.dispatcher.on('end', () => this.events.emit('stream-finished'));
     return video;
   }
 
@@ -85,6 +92,7 @@ class Streamer {
   pause() {
     this.state = 'paused';
     this.voiceConnection.dispatcher.pause();
+    this.videoPlaying.status = 'paused';
   }
 
   stop() {
@@ -139,8 +147,7 @@ class Streamer {
       }, this.timeout);
     }
 
-    this.videoPlaying = next;
-    this.play(next);
+    this.execute(next);
   }
 
   // Statics methods
