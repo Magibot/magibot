@@ -66,7 +66,12 @@ class Play extends Commando.Command {
         guild.voiceConnection,
       );
 
-      const video = await streamer.play(url, message.author.id);
+      const addedBy = {
+        id: message.author.id,
+        username: message.author.username,
+      };
+
+      const video = await streamer.play(url, addedBy);
       let answer;
       if (video.status === 'queued') {
         answer = embed.create();

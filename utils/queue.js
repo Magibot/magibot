@@ -1,6 +1,7 @@
 class Queue {
-  constructor() {
+  constructor({ elementsPerPage = 10 }) {
     this.q = [];
+    this.elementsPerPage = elementsPerPage;
   }
 
   get head() {
@@ -9,6 +10,10 @@ class Queue {
     }
 
     return this.q[0];
+  }
+
+  get isEmpty() {
+    return this.q.length === 0;
   }
 
   insert(element) {
@@ -25,7 +30,21 @@ class Queue {
   }
 
   totalOfElements() {
-    return this.q;
+    return this.q.length;
+  }
+
+  paginate(page) {
+    if (this.q.length < this.elementsPerPage) {
+      return { needPagination: false, pagination: this.q };
+    }
+
+    const end = page * this.elementsPerPage;
+    const start = (end - this.elementsPerPage > 0) ? end - this.elementsPerPage : 1;
+    return {
+      needPagination: true,
+      pagination: this.q.slice(start, end),
+      totalOfPages: Math.ceil(this.q.length / this.elementsPerPage),
+    };
   }
 }
 

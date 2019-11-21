@@ -36,6 +36,10 @@ class Streamer {
     return this.queue.totalOfElements();
   }
 
+  get totalLenghSecondsQueue() {
+    return this.queue.q.reduce((total, element) => total + element.info.lengthSeconds, 0);
+  }
+
   setup(voiceConnection) {
     this.voiceConnection = voiceConnection;
   }
@@ -43,8 +47,7 @@ class Streamer {
   async play(url, addedBy) {
     const info = await Streamer.getVideoInformation(url);
     const video = { url, addedBy, info };
-    let lengthSeconds = info.length_seconds;
-    video.duration = (lengthSeconds - (lengthSeconds %= 60)) / 60 + (lengthSeconds > 9 ? ':' : ':0') + lengthSeconds;
+    video.duration = Streamer.formatSeconds(info.lengthSeconds);
 
     if (this.isPlaying || this.isPaused) {
       return this.insertIntoQueue(video);
@@ -98,6 +101,33 @@ class Streamer {
     }
   }
 
+  showQueueInformation({ page = 1 }) {
+    const { needPagination, pagination, totalOfPages } = this.queue.paginate(page);
+    const { totalLenghSecondsQueue } = this;
+    const queueInfo = {
+      page,
+      isEmpty: this.queue.isEmpty,
+      elements: pagination,
+      text: '',
+      totalOfPages,
+      playingNow: this.videoPlaying,
+      aboutPlayingNow: Streamer.getVideoStringInlineInfo(0, this.videoPlaying),
+      totalLenghSecondsQueue,
+      totalDuration: Streamer.formatSeconds(totalLenghSecondsQueue),
+      totalOfElementsInQueue: this.totalOfElementsInQueue,
+      aboutPage: `Page ${page} of ${totalOfPages}`,
+    };
+
+    if (!needPagination) {
+      queueInfo.text = `There's only ${pagination.length} elements in queue. No need for pagination.`;
+      queueInfo.totalOfPages = 1;
+      return queueInfo;
+    }
+
+    queueInfo.text = `Showing the page number ${page} of ${totalOfPages}`;
+    return queueInfo;
+  }
+
   // Events handlers
 
   handleStreamFinish() {
@@ -126,13 +156,23 @@ class Streamer {
         const videoInfo = {
           title: info.title,
           author: info.author,
-          length_seconds: info.length_seconds,
+          lengthSeconds: parseInt(info.length_seconds, 10),
           url,
         };
 
         resolve(videoInfo);
       });
     });
+  }
+
+  static getVideoStringInlineInfo(index, video) {
+    return `\`${index}.\` ${video.info.title} | ${video.info.author.name} \`${video.duration}\` | \`Added by: ${video.addedBy.username}\``;
+  }
+
+  static formatSeconds(s) {
+    let seconds = s;
+    seconds = (seconds - (seconds %= 60)) / 60 + (seconds > 9 ? ':' : ':0') + seconds;
+    return seconds;
   }
 }
 
