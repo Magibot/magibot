@@ -7,7 +7,7 @@ class Resume extends Commando.Command {
       usage: `${env.client.prefix} resume`,
       name: 'resume',
       group: 'radio',
-      aliases: ['r', 'restart', 'come back'],
+      aliases: ['res', 'restart', 'come back'],
       memberName: 'resume',
       description: 'Resume the stream paused. The bot will come back playing',
       details: 'Restart the fun',
