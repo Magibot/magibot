@@ -46,6 +46,16 @@ class Queue {
       totalOfPages: Math.ceil(this.q.length / this.elementsPerPage),
     };
   }
+
+  remove(index) {
+    if (index >= this.q.length) {
+      return null;
+    }
+
+    const element = this.q[index];
+    this.q.splice(index, 1);
+    return element;
+  }
 }
 
 module.exports = Queue;

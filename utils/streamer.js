@@ -40,6 +40,10 @@ class Streamer {
     return this.queue.q.reduce((total, element) => total + element.info.lengthSeconds, 0);
   }
 
+  get totalLenghSecondsQueueFormatMss() {
+    return Streamer.formatSeconds(this.totalLenghSecondsQueue);
+  }
+
   setup(voiceConnection) {
     this.voiceConnection = voiceConnection;
   }
@@ -146,6 +150,14 @@ class Streamer {
     }
 
     this.execute(next);
+  }
+
+  removeFromQueue(index) {
+    if (this.totalOfElementsInQueue === 0) {
+      return null;
+    }
+
+    return this.queue.remove(index);
   }
 
   // Statics methods
