@@ -94,8 +94,11 @@ class Streamer {
   }
 
   pause() {
+    if (this.voiceConnection && this.voiceConnection.dispatcher) {
+      this.voiceConnection.dispatcher.pause();
+    }
+
     this.state = 'paused';
-    this.voiceConnection.dispatcher.pause();
     this.videoPlaying.status = 'paused';
   }
 
