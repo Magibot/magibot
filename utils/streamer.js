@@ -140,6 +140,23 @@ class Streamer {
     return queueInfo;
   }
 
+  removeFromQueue(index) {
+    if (this.totalOfElementsInQueue === 0) {
+      return null;
+    }
+
+    return this.queue.remove(index);
+  }
+
+  resume() {
+    if (this.voiceConnection && this.voiceConnection.dispatcher) {
+      this.voiceConnection.dispatcher.resume();
+    }
+
+    this.state = 'playing';
+    this.videoPlaying.status = 'playing';
+  }
+
   // Events handlers
 
   handleStreamFinish() {
@@ -150,14 +167,6 @@ class Streamer {
     }
 
     this.execute(next);
-  }
-
-  removeFromQueue(index) {
-    if (this.totalOfElementsInQueue === 0) {
-      return null;
-    }
-
-    return this.queue.remove(index);
   }
 
   // Statics methods

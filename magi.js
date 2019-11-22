@@ -16,6 +16,7 @@ const Pause = require('./commands/radio/pause');
 const Stop = require('./commands/radio/stop');
 const Queue = require('./commands/radio/queue');
 const Remove = require('./commands/radio/remove');
+const Resume = require('./commands/radio/resume');
 
 // Utils
 const Purge = require('./commands/utils/purge');
@@ -58,5 +59,6 @@ module.exports = {
     stop: Stop.options(),
     queue: Queue.options(),
     remove: Remove.options(),
+    resume: Resume.options(),
   },
 };
