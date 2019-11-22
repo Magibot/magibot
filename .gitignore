@@ -62,3 +62,6 @@ typings/
 
 # typescript output directory build
 _build
+
+# enmap files
+enmap.*

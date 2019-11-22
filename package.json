@@ -6,10 +6,12 @@
   "author": "Matheus Mello de Lima <mellomatheuslima@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "better-sqlite3": "^5.4.3",
     "chalk": "^2.4.2",
     "discord.js": "^11.5.1",
     "discord.js-commando": "^0.10.0",
     "dotenv": "^8.2.0",
+    "enmap": "^5.2.3",
     "ffmpeg": "^0.0.4",
     "superagent": "^5.1.0",
     "superagent-absolute": "^1.0.1",

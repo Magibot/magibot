@@ -1,24 +1,35 @@
+const Enmap = require('enmap');
 const Streamer = require('./streamer');
 
 class Radio {
   constructor() {
-    this.streams = new Map();
+    this.streams = new Enmap({
+      persistent: true,
+      name: 'streams',
+      fetchAll: false,
+      autoFetch: true,
+    });
   }
 
   createStream(guildId, channelId, voiceConnection) {
-    if (this.streams.has(guildId)) {
-      const streamer = this.getStream(guildId);
+    let streamer = this.getStream(guildId);
+    if (streamer) {
       streamer.setup(voiceConnection);
       return streamer;
     }
 
-    const streamer = new Streamer(guildId, channelId, voiceConnection);
+    streamer = new Streamer(guildId, channelId, voiceConnection);
     this.streams.set(guildId, streamer);
     return streamer;
   }
 
   getStream(guildId) {
-    return this.streams.get(guildId);
+    let streamer = this.streams.get(guildId);
+    if (!streamer) {
+      streamer = this.streams.fetch(guildId);
+    }
+
+    return streamer;
   }
 
   destroyStream(guildId) {

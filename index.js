@@ -19,6 +19,8 @@ const bot = new Commando.Client({
   retryLimit: env.client.retryLimit,
 });
 
+bot.Radio = new Radio();
+
 bot.registry
   .registerDefaultTypes()
   .registerGroups([
@@ -40,8 +42,6 @@ bot.once('ready', async () => {
   const activity = "Fo' shizzle my nizzle";
   logger.success(`Activity set to: ${activity}`);
   bot.user.setActivity(activity);
-
-  global.Radio = new Radio();
 });
 
 bot.on('guildCreate', handleGuildCreate);
