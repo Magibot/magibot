@@ -30,12 +30,8 @@ class Stop extends Commando.Command {
     }
 
     const streamer = global.Radio.getStream(message.guild.id);
-    if (!streamer || (streamer && (streamer.isPlaying || streamer.isPaused))) {
-      return message.reply('There is nothing playing on Magi\'s radio');
-    }
-
-    if (streamer && streamer.isStopped) {
-      return message.reply('Radio is already stopped');
+    if (!streamer || (streamer && streamer.isStopped)) {
+      return message.reply('Radio is already stopped. There is nothing playing on Magi\'s radio');
     }
 
     if (streamer) {
