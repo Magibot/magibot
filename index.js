@@ -2,6 +2,7 @@ const path = require('path');
 const Commando = require('discord.js-commando');
 const env = require('./config/env');
 const magi = require('./magi');
+const nlp = require('./nlp');
 const logger = require('./utils/logger');
 const Radio = require('./utils/radio');
 
@@ -42,6 +43,10 @@ bot.once('ready', async () => {
   bot.user.setActivity(activity);
 
   global.Radio = new Radio();
+
+  await nlp.train();
+  nlp.save();
+  bot.nlp = nlp;
 });
 
 bot.on('guildCreate', handleGuildCreate);
