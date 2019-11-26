@@ -67,6 +67,15 @@ class Commands extends Commando.Command {
         return 0;
       })
       .forEach((command) => {
+        if (command.isWrapper) {
+          Object.keys(command.subCommands).sort().forEach((subCommandName) => {
+            const subCommand = command.subCommands[subCommandName];
+            message.push(`\`${subCommand.usage}\` => ${subCommand.description}`);
+          });
+
+          return;
+        }
+
         message.push(`\`${command.usage}\` => ${command.description}`);
       });
 

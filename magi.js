@@ -21,6 +21,9 @@ const Resume = require('./commands/radio/resume');
 // Utils
 const Purge = require('./commands/utils/purge');
 
+// Star Wars API Wrapper
+const StarWarsAPIWrapper = require('./commands/swapi');
+
 module.exports = {
   client: {
     disabledEvents: [
@@ -60,5 +63,6 @@ module.exports = {
     queue: Queue.options(),
     remove: Remove.options(),
     resume: Resume.options(),
+    swapi: StarWarsAPIWrapper.options(),
   },
 };
