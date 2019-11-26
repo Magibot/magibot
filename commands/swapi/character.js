@@ -1,6 +1,7 @@
 const Commando = require('discord.js-commando');
 const superagent = require('superagent');
 const env = require('../../config/env');
+const embed = require('../../utils/embed');
 
 class Character extends Commando.Command {
   static options() {
@@ -31,9 +32,25 @@ class Character extends Commando.Command {
 
   async run(message, { character }) {
     const response = await superagent.get('https://swapi.co/api/people').query({ search: character });
-    console.log(response.body);
+    if (response.body.count === 0) {
+      return message.reply(`The Star Wars character \`${character}\` was not found`);
+    }
 
-    return message.channel.send('Searching');
+    const info = response.body.results[0];
+    const reply = embed.create();
+    reply
+      .setTitle(info.name)
+      .addField('Height', info.height, true)
+      .addField('Mass', info.mass, true)
+      .addField('Gender', info.gender, true)
+      .addField('Hair Color', info.hair_color, true)
+      .addField('Skin Color', info.skin_color, true)
+      .addField('Eye Color', info.eye_color, true)
+      .addField('Birth Year', info.birth_year, true)
+      .addField('Appeared in', `${info.films.length} movies`, true)
+      .setURL(info.url);
+
+    return message.channel.send(reply);
   }
 }
 
