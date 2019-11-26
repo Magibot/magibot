@@ -23,6 +23,8 @@ const options = () => ({
   ],
 });
 
+const inlineCharacter = (person) => `${person.height}cm | ${person.mass}kg | hair: ${person.hair_color} | eyes: ${person.eye_color} | gender: ${person.gender}`;
+
 const search = async (message, character) => {
   const response = await superagent.get('https://swapi.co/api/people').query({ search: character });
   if (response.body.count === 0) {
@@ -46,4 +48,24 @@ const search = async (message, character) => {
   return message.channel.send(reply);
 };
 
-module.exports = { options, search };
+const all = async (message) => {
+  const endpoint = 'https://swapi.co/api/people';
+  const response = await superagent.get(endpoint);
+  const { count, results } = response.body;
+  if (count === 0) {
+    return message.reply('No Star Wars characters was found');
+  }
+
+  const reply = embed.create();
+  reply
+    .setTitle(`Total of ${count} characters`)
+    .setURL(endpoint);
+
+  results.forEach((person) => {
+    reply.addField(person.name, inlineCharacter(person));
+  });
+
+  return message.channel.send(reply);
+};
+
+module.exports = { options, search, all };

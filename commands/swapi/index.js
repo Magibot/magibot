@@ -36,13 +36,11 @@ class StarWarsAPI extends Commando.Command {
 
     const command = arrayArgs.shift();
     if (command === 'character') {
-      if (arrayArgs.length === 0) {
-        // Search all characters
-        return;
+      if (arrayArgs.length === 0 || arrayArgs[0] === 'all') {
+        return this.subCommands.Character.all(message);
       }
 
-      const charName = arrayArgs[0];
-      return this.subCommands.Character.search(message, { character: charName });
+      return this.subCommands.Character.search(message, { character: arrayArgs[0] });
     }
     // Show possible commands of Star Wars API
   }
