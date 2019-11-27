@@ -24,13 +24,15 @@ if (missingVariables.length > 0) {
 }
 
 module.exports = {
-  client: {
+  discord: {
     token: process.env.DISCORD_TOKEN,
     ownerId: process.env.DISCORD_OWNER_ID,
     prefix: process.env.CLIENT_COMMAND_PREFIX,
-    messageCacheLifetime: parseInt(process.env.CLIENT_MESSAGE_CACHE_LIFETIME, 10) || 1800,
-    messageSweepInterval: parseInt(process.env.CLIENT_MESSAGE_SWEEP_INTERVAL, 10) || 3600,
-    messageCacheMaxSize: parseInt(process.env.CLIENT_MESSAGE_CACHE_MAX_SIZE, 10) || 125,
+    message: {
+      cacheLifetime: parseInt(process.env.CLIENT_MESSAGE_CACHE_LIFETIME, 10) || 1800,
+      sweepInterval: parseInt(process.env.CLIENT_MESSAGE_SWEEP_INTERVAL, 10) || 3600,
+      cacheMaxSize: parseInt(process.env.CLIENT_MESSAGE_CACHE_MAX_SIZE, 10) || 125,
+    },
     retryLimit: parseInt(process.env.CLIENT_RETRY_LIMIT, 10) || 5,
     picture: process.env.CLIENT_PICTURE_LINK,
     website: process.env.CLIENT_WEBSITE,

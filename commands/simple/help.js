@@ -1,21 +1,21 @@
 const Commando = require('discord.js-commando');
 const env = require('../../config/env');
-const magi = require('../../magi');
+const commandWrapper = require('../wrapper');
 const Commands = require('./commands');
 const embed = require('../../utils/embed');
 
 class Help extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} help <command name>`,
+      usage: `${env.discord.prefix} help <command name>`,
       name: 'help',
       group: 'simple',
       memberName: 'help',
       description: 'Show how you can use an especific bot command',
       details: 'Should receive one argument referring to the command you want to know about',
       examples: [
-        `${env.client.prefix} help purge`,
-        `${env.client.prefix} help play`,
+        `${env.discord.prefix} help purge`,
+        `${env.discord.prefix} help play`,
       ],
       args: [
         {
@@ -33,7 +33,7 @@ class Help extends Commando.Command {
   }
 
   async run(message, { commandName }) {
-    let command = magi.commands[commandName];
+    let command = commandWrapper.commands[commandName];
     if (commandName === 'commands') {
       command = Commands.options();
     }

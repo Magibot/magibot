@@ -1,19 +1,19 @@
 const Commando = require('discord.js-commando');
 const env = require('../../config/env');
-const magi = require('../../magi');
+const commandWrapper = require('../wrapper');
 const embed = require('../../utils/embed');
 
 class Commands extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} commands`,
+      usage: `${env.discord.prefix} commands`,
       name: 'commands',
       group: 'simple',
       memberName: 'commands',
       description: 'Shows a list of all commands that the bot can do',
       details: 'Only for noobs',
       examples: [
-        `${env.client.prefix} commands`,
+        `${env.discord.prefix} commands`,
       ],
     };
   }
@@ -28,7 +28,7 @@ class Commands extends Commando.Command {
       .setTitle('List of all bot commands')
       .addField('HELP', `\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
 
-    const groups = Commands.separateCommandsInGroups(magi.commands);
+    const groups = Commands.separateCommandsInGroups(commandWrapper.commands);
     Object.keys(groups).sort().forEach((group) => {
       const groupMessage = Commands.createCommandsGroupMessage(groups[group]);
       reply.addField(group.toUpperCase(), groupMessage);

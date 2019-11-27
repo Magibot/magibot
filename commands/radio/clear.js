@@ -4,7 +4,7 @@ const env = require('../../config/env');
 class Clear extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} clear`,
+      usage: `${env.discord.prefix} clear`,
       name: 'clear',
       group: 'radio',
       aliases: ['c', 'clean', 'empty'],
@@ -12,7 +12,7 @@ class Clear extends Commando.Command {
       description: 'Clear the stream queue if there\'s one',
       details: 'You can repair some mess you did or destroy everyone\'s fun',
       examples: [
-        `${env.client.prefix} clear`,
+        `${env.discord.prefix} clear`,
       ],
       guildOnly: true,
     };

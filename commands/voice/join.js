@@ -4,7 +4,7 @@ const env = require('../../config/env');
 class Join extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} join`,
+      usage: `${env.discord.prefix} join`,
       name: 'join',
       aliases: ['connect', 'enter', 'in', 'come'],
       group: 'voice',
@@ -12,7 +12,7 @@ class Join extends Commando.Command {
       description: 'Join the voice channel that the user is connected',
       details: 'Let\'s play some game together',
       examples: [
-        `${env.client.prefix} join`,
+        `${env.discord.prefix} join`,
       ],
       guildOnly: true,
     };

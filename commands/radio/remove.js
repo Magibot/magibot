@@ -5,7 +5,7 @@ const embed = require('../../utils/embed');
 class Remove extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} remove`,
+      usage: `${env.discord.prefix} remove`,
       name: 'remove',
       group: 'radio',
       aliases: ['r'],
@@ -13,8 +13,8 @@ class Remove extends Commando.Command {
       description: 'Remove a stream from queue by it\'s index',
       details: 'Undo mess',
       examples: [
-        `${env.client.prefix} remove <index>'`,
-        `${env.client.prefix} remove 3`,
+        `${env.discord.prefix} remove <index>'`,
+        `${env.discord.prefix} remove 3`,
       ],
       guildOnly: true,
       args: [

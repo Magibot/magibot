@@ -4,14 +4,14 @@ const embed = require('../../../utils/embed');
 
 const options = () => ({
   subcommand: true,
-  usage: `${env.client.prefix} swapi character <name-of-character-from-star-wars>`,
+  usage: `${env.discord.prefix} swapi character <name-of-character-from-star-wars>`,
   name: 'swapi-character',
   group: 'swapi',
   memberName: 'swapi-character',
   description: 'Returns information about a character from Star Wars movies',
   details: 'Bringing the knowledge',
   examples: [
-    `${env.client.prefix} swapi character luke`,
+    `${env.discord.prefix} swapi character luke`,
   ],
   args: [
     {

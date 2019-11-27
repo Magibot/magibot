@@ -4,7 +4,7 @@ const env = require('../../config/env');
 class Resume extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} resume`,
+      usage: `${env.discord.prefix} resume`,
       name: 'resume',
       group: 'radio',
       aliases: ['restart', 'come back'],
@@ -12,7 +12,7 @@ class Resume extends Commando.Command {
       description: 'Resume the stream paused. The bot will come back playing',
       details: 'Restart the fun',
       examples: [
-        `${env.client.prefix} resume`,
+        `${env.discord.prefix} resume`,
       ],
       guildOnly: true,
     };

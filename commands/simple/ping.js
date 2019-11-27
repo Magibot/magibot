@@ -4,7 +4,7 @@ const env = require('../../config/env');
 class Ping extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} ping`,
+      usage: `${env.discord.prefix} ping`,
       name: 'ping',
       aliases: ['pong', 'ms', 'latency'],
       group: 'simple',
@@ -16,7 +16,7 @@ class Ping extends Commando.Command {
         duration: 10,
       },
       examples: [
-        `${env.client.prefix} ping`,
+        `${env.discord.prefix} ping`,
       ],
     };
   }

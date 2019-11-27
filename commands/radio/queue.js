@@ -7,7 +7,7 @@ const Streamer = require('../../utils/streamer');
 class Queue extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} queue`,
+      usage: `${env.discord.prefix} queue`,
       name: 'queue',
       group: 'radio',
       aliases: ['q'],
@@ -15,7 +15,7 @@ class Queue extends Commando.Command {
       description: 'Show the next 10 streams to be played (queue) on the channel. If you pass the page number, you can see the rest of the queue properly',
       details: 'Information is appreciated',
       examples: [
-        `${env.client.prefix} queue <?page> (optional)`,
+        `${env.discord.prefix} queue <?page> (optional)`,
       ],
       guildOnly: true,
       args: [

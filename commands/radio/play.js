@@ -5,7 +5,7 @@ const embed = require('../../utils/embed');
 class Play extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} play <url of the stream to play>`,
+      usage: `${env.discord.prefix} play <url of the stream to play>`,
       name: 'play',
       group: 'radio',
       aliases: ['p', 'start', 'song', 'video', 'stream'],
@@ -13,7 +13,7 @@ class Play extends Commando.Command {
       description: 'Play the sound of a video stream to all users in voice channel. If something is already playing, the video will be added to a queue',
       details: 'Everyone should enjoy some music',
       examples: [
-        `${env.client.prefix} play http://youtube.com/link-to-your-favorite-song`,
+        `${env.discord.prefix} play http://youtube.com/link-to-your-favorite-song`,
       ],
       guildOnly: true,
       args: [

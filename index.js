@@ -1,7 +1,6 @@
 const path = require('path');
 const Commando = require('discord.js-commando');
-const env = require('./config/env');
-const magi = require('./magi');
+const config = require('./config/bot');
 const logger = require('./utils/logger');
 const Radio = require('./utils/radio');
 
@@ -9,16 +8,17 @@ const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
 
 const bot = new Commando.Client({
-  commandPrefix: env.client.prefix,
+  commandPrefix: config.env.discord.prefix,
   unknownCommandResponse: false,
   disableEveryone: true,
-  disabledEvents: magi.client.disabledEvents,
-  messageCacheLifetime: env.client.messageCacheLifetime,
-  messageSweepInterval: env.client.messageSweepInterval,
-  messageCacheMaxSize: env.client.messageCacheMaxSize,
-  retryLimit: env.client.retryLimit,
+  disabledEvents: config.disabledEvents,
+  messageCacheLifetime: config.env.discord.message.cacheLifetime,
+  messageSweepInterval: config.env.discord.message.sweepInterval,
+  messageCacheMaxSize: config.env.discord.message.cacheMaxSize,
+  retryLimit: config.env.discord.retryLimit,
 });
 
+bot.config = config;
 bot.Radio = new Radio();
 
 bot.registry
@@ -53,4 +53,4 @@ bot.on('guildDelete', handleGuildDelete);
 
 // bot.on('disconnect');
 
-bot.login(env.client.token);
+bot.login(config.env.discord.token);

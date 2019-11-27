@@ -4,7 +4,7 @@ const env = require('../../config/env');
 class Stop extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} stop`,
+      usage: `${env.discord.prefix} stop`,
       name: 'stop',
       group: 'radio',
       aliases: ['s', 'break'],
@@ -12,7 +12,7 @@ class Stop extends Commando.Command {
       description: 'Stop the stream. This command will also clear the queue',
       details: 'Destroy the music if you hate it',
       examples: [
-        `${env.client.prefix} stop`,
+        `${env.discord.prefix} stop`,
       ],
       guildOnly: true,
     };

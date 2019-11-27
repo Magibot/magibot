@@ -4,7 +4,7 @@ const env = require('../../config/env');
 class Leave extends Commando.Command {
   static options() {
     return {
-      usage: `${env.client.prefix} leave`,
+      usage: `${env.discord.prefix} leave`,
       name: 'leave',
       aliases: ['disconnect', 'out', 'go'],
       group: 'voice',
@@ -12,7 +12,7 @@ class Leave extends Commando.Command {
       description: 'Leave the voice channel if the bot is in one',
       details: 'Come on man, don\'t threat me like that',
       examples: [
-        `${env.client.prefix} leave`,
+        `${env.discord.prefix} leave`,
       ],
       guildOnly: true,
     };
