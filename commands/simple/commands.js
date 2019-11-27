@@ -28,16 +28,16 @@ class Commands extends Commando.Command {
       .setTitle('List of all bot commands')
       .addField('HELP', `\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
 
-    const groups = this.separateCommandsInGroups(magi.commands);
+    const groups = Commands.separateCommandsInGroups(magi.commands);
     Object.keys(groups).sort().forEach((group) => {
-      const groupMessage = this.createCommandsGroupMessage(groups[group]);
+      const groupMessage = Commands.createCommandsGroupMessage(groups[group]);
       reply.addField(group.toUpperCase(), groupMessage);
     });
 
     return message.channel.send(reply);
   }
 
-  separateCommandsInGroups(commands) {
+  static separateCommandsInGroups(commands) {
     const groups = {};
     Object.keys(commands).forEach((name) => {
       const options = commands[name];
@@ -52,7 +52,7 @@ class Commands extends Commando.Command {
     return groups;
   }
 
-  createCommandsGroupMessage(group) {
+  static createCommandsGroupMessage(group) {
     const message = [];
 
     group
@@ -67,6 +67,15 @@ class Commands extends Commando.Command {
         return 0;
       })
       .forEach((command) => {
+        if (command.isWrapper) {
+          Object.keys(command.subCommands).sort().forEach((subCommandName) => {
+            const subCommand = command.subCommands[subCommandName];
+            message.push(`\`${subCommand.usage}\` => ${subCommand.description}`);
+          });
+
+          return;
+        }
+
         message.push(`\`${command.usage}\` => ${command.description}`);
       });
 

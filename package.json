@@ -2,9 +2,23 @@
   "name": "magibot",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/Magibot/magibot",
-  "author": "Matheus Mello de Lima <mellomatheuslima@gmail.com>",
-  "license": "MIT",
+  "author": {
+    "email": "mellomatheuslima@gmail.com",
+    "name": "Matheus Mello de Lima"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magibot/magibot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Magibot/magibot/issues"
+  },
+  "maintainers": [
+    {
+      "email": "mellomatheuslima@gmail.com",
+      "name": "Matheus Mello de Lima"
+    }
+  ],
   "dependencies": {
     "better-sqlite3": "^5.4.3",
     "chalk": "^2.4.2",

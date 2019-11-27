@@ -28,6 +28,7 @@ bot.registry
     ['utils', 'Utilities'],
     ['radio', 'Radio'],
     ['voice', 'Voice'],
+    ['swapi', 'Star Wars API'],
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
@@ -49,7 +50,6 @@ bot.on('guildDelete', handleGuildDelete);
 
 // bot.on('guildMemberAdd')
 // bot.on('guildMemberRemove')
-
 
 // bot.on('disconnect');
 
