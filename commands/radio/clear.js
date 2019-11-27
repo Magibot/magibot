@@ -29,7 +29,7 @@ class Clear extends Commando.Command {
       return message.reply('To execute this command you should be connected to the same voice channel as the bot');
     }
 
-    const streamer = global.Radio.getStream(message.guild.id);
+    const streamer = this.client.Radio.getStream(message.guild.id);
     if (streamer && streamer.isPlaying && streamer.totalOfElementsInQueue === 0) {
       return message.channel.send('There is only one stream playing. None in queue');
     }

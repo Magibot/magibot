@@ -29,7 +29,7 @@ class Resume extends Commando.Command {
       return message.reply('To execute this command you should be connected to the same voice channel as the bot');
     }
 
-    const streamer = global.Radio.getStream(message.guild.id);
+    const streamer = this.client.Radio.getStream(message.guild.id);
     if (!streamer || (streamer && streamer.isStopped)) {
       return message.reply('Radio is already stopped. There is nothing playing on Magi\'s radio');
     }

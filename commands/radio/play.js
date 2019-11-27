@@ -60,7 +60,7 @@ class Play extends Commando.Command {
       }
 
       const { guild, channel } = message;
-      const streamer = global.Radio.createStream(
+      const streamer = this.client.Radio.createStream(
         guild.id,
         channel.id,
         guild.voiceConnection,

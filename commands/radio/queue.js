@@ -35,7 +35,7 @@ class Queue extends Commando.Command {
   }
 
   async run(message, { page }) {
-    const streamer = global.Radio.getStream(message.guild.id);
+    const streamer = this.client.Radio.getStream(message.guild.id);
     if (!streamer || (streamer && streamer.isStopped)) {
       return message.reply('There is nothing playing on Magi\'s radio');
     }

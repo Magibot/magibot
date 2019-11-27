@@ -38,11 +38,11 @@ class Leave extends Commando.Command {
 
     if (voiceConnection) {
       voiceConnection.disconnect();
-      const streamer = global.Radio.getStream(message.guild.id);
+      const streamer = this.client.Radio.getStream(message.guild.id);
       if (streamer) {
         streamer.disconnect();
         // TODO: Destroy the streamer after some time without use
-        // global.Radio.destroy(message.guild.id)
+        // this.client.Radio.destroy(message.guild.id)
       }
 
       return message.channel.send(`**Successfully disconnected from** \`${voiceConnection.channel.name}\` :pleading_face:`);
