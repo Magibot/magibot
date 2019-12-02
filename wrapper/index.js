@@ -7,17 +7,34 @@ const getDirectories = (source) => fs.readdirSync(source, { withFileTypes: true 
 
 
 const getCommandsOptions = () => {
+  const options = {};
   const directories = getDirectories(__dirname);
   directories.forEach((subDirName) => {
     const fullPath = path.join(__dirname, subDirName);
     const dirents = fs.readdirSync(fullPath, { withFileTypes: true });
 
-    console.log(dirents.map((dir) => dir.name));
+    dirents.forEach((dir) => {
+      const innerPath = path.join(fullPath, dir.name);
+      if (dir.name === 'sub' && dir.isDirectory()) {
+        console.log(`Directory ${dir.name}`);
+        const subdirents = fs.readdirSync(innerPath, { withFileTypes: true });
+        subdirents.forEach((subdir) => {
+          console.log(subdir.name);
+        });
+      } else {
+        console.log(`File ${dir.name}`);
+        const [modulename, type] = dir.name.split('.');
+        if (type === 'js') {
+          const inner = require(innerPath);
+          options[modulename] = inner.options('!magi');
+        }
+      }
+    });
   });
+
+  console.log(options);
 };
 
-getCommandsOptions();
-
 module.exports = {
-  commands: {},
+  commands: getCommandsOptions(),
 };

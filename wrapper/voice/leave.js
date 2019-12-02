@@ -12,4 +12,6 @@ const options = (prefix) => ({
   guildOnly: true,
 });
 
-module.exports = options;
+module.exports = {
+  options,
+};
