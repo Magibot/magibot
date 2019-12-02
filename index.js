@@ -1,8 +1,11 @@
 const path = require('path');
 const Commando = require('discord.js-commando');
+
 const config = require('./config/bot');
+const wrapper = require('./wrapper');
 const logger = require('./utils/logger');
 const Radio = require('./utils/radio');
+const embed = require('./utils/embed');
 
 const handleGuildCreate = require('./events/guildCreate');
 const handleGuildDelete = require('./events/guildDelete');
@@ -19,6 +22,9 @@ const bot = new Commando.Client({
 });
 
 bot.config = config;
+bot.wrapper = wrapper;
+bot.logger = logger;
+bot.customEmbed = embed;
 bot.Radio = new Radio();
 
 bot.registry

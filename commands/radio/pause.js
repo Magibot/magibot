@@ -1,24 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Pause extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} pause`,
-      name: 'pause',
-      group: 'radio',
-      memberName: 'pause',
-      description: 'Pause the stream playing. It can be resumed back with the command resume',
-      details: 'Crash the people\'s fun',
-      examples: [
-        `${env.discord.prefix} pause`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Pause.options());
+    super(client, client.wrapper.commands.pause);
   }
 
   async run(message) {

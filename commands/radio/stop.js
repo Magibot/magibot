@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Stop extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} stop`,
-      name: 'stop',
-      group: 'radio',
-      aliases: ['s', 'break'],
-      memberName: 'stop',
-      description: 'Stop the stream. This command will also clear the queue',
-      details: 'Destroy the music if you hate it',
-      examples: [
-        `${env.discord.prefix} stop`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Stop.options());
+    super(client, client.wrapper.commands.stop);
   }
 
   async run(message) {

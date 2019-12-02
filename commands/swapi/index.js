@@ -2,21 +2,8 @@ const Commando = require('discord.js-commando');
 const Character = require('./sub/character');
 
 class StarWarsAPI extends Commando.Command {
-  static options() {
-    return {
-      name: 'swapi',
-      group: 'swapi',
-      memberName: 'swapi',
-      description: '',
-      isWrapper: true,
-      subCommands: {
-        character: Character.options(),
-      },
-    };
-  }
-
   constructor(client) {
-    super(client, StarWarsAPI.options());
+    super(client, client.wrapper.commands.swapi);
     this.subCommands = {
       Character,
     };

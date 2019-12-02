@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Join extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} join`,
-      name: 'join',
-      aliases: ['connect', 'enter', 'in', 'come'],
-      group: 'voice',
-      memberName: 'join',
-      description: 'Join the voice channel that the user is connected',
-      details: 'Let\'s play some game together',
-      examples: [
-        `${env.discord.prefix} join`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Join.options());
+    super(client, client.wrapper.commands.join);
   }
 
   async run(message) {

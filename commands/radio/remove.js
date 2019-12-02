@@ -1,36 +1,9 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 const embed = require('../../utils/embed');
 
 class Remove extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} remove`,
-      name: 'remove',
-      group: 'radio',
-      aliases: ['r'],
-      memberName: 'remove',
-      description: 'Remove a stream from queue by it\'s index',
-      details: 'Undo mess',
-      examples: [
-        `${env.discord.prefix} remove <index>'`,
-        `${env.discord.prefix} remove 3`,
-      ],
-      guildOnly: true,
-      args: [
-        {
-          key: 'index',
-          prompt: 'Index of the element in queue to be removed',
-          type: 'integer',
-          validate: () => true,
-          label: 'index in queue',
-        },
-      ],
-    };
-  }
-
   constructor(client) {
-    super(client, Remove.options());
+    super(client, client.wrapper.commands.remove);
   }
 
   async run(message, { index }) {

@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Resume extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} resume`,
-      name: 'resume',
-      group: 'radio',
-      aliases: ['restart', 'come back'],
-      memberName: 'resume',
-      description: 'Resume the stream paused. The bot will come back playing',
-      details: 'Restart the fun',
-      examples: [
-        `${env.discord.prefix} resume`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Resume.options());
+    super(client, client.wrapper.commands.resume);
   }
 
   async run(message) {

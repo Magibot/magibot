@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Leave extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} leave`,
-      name: 'leave',
-      aliases: ['disconnect', 'out', 'go'],
-      group: 'voice',
-      memberName: 'leave',
-      description: 'Leave the voice channel if the bot is in one',
-      details: 'Come on man, don\'t threat me like that',
-      examples: [
-        `${env.discord.prefix} leave`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Leave.options());
+    super(client, client.wrapper.commands.leave);
   }
 
   async run(message) {

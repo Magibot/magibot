@@ -1,27 +1,5 @@
 const superagent = require('superagent');
-const env = require('../../../config/env');
 const embed = require('../../../utils/embed');
-
-const options = () => ({
-  subcommand: true,
-  usage: `${env.discord.prefix} swapi character <name-of-character-from-star-wars>`,
-  name: 'swapi-character',
-  group: 'swapi',
-  memberName: 'swapi-character',
-  description: 'Returns information about a character from Star Wars movies',
-  details: 'Bringing the knowledge',
-  examples: [
-    `${env.discord.prefix} swapi character luke`,
-  ],
-  args: [
-    {
-      key: 'character',
-      prompt: 'Name of the character to search',
-      type: 'string',
-      label: 'character name',
-    },
-  ],
-});
 
 const inlineCharacter = (person) => `${person.height}cm | ${person.mass}kg | hair: ${person.hair_color} | eyes: ${person.eye_color} | gender: ${person.gender}`;
 
@@ -68,4 +46,4 @@ const all = async (message) => {
   return message.channel.send(reply);
 };
 
-module.exports = { options, search, all };
+module.exports = { search, all };

@@ -1,34 +1,18 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
-const commandWrapper = require('../wrapper');
 const embed = require('../../utils/embed');
 
 class Commands extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} commands`,
-      name: 'commands',
-      group: 'simple',
-      memberName: 'commands',
-      description: 'Shows a list of all commands that the bot can do',
-      details: 'Only for noobs',
-      examples: [
-        `${env.discord.prefix} commands`,
-      ],
-    };
-  }
-
   constructor(client) {
-    super(client, Commands.options());
+    super(client, client.wrapper.commands.commands);
   }
 
   async run(message) {
     const reply = embed.create();
     reply
       .setTitle('List of all bot commands')
-      .addField('HELP', `\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
+      .addField('HELP', `\`${this.client.config.env.discord.prefix} help <command name>\` => Show how you can use an especific bot command`);
 
-    const groups = Commands.separateCommandsInGroups(commandWrapper.commands);
+    const groups = Commands.separateCommandsInGroups(this.client.wrapper.commands);
     Object.keys(groups).sort().forEach((group) => {
       const groupMessage = Commands.createCommandsGroupMessage(groups[group]);
       reply.addField(group.toUpperCase(), groupMessage);

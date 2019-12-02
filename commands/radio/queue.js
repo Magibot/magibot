@@ -1,37 +1,10 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 const embed = require('../../utils/embed');
-
 const Streamer = require('../../utils/streamer');
 
 class Queue extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} queue`,
-      name: 'queue',
-      group: 'radio',
-      aliases: ['q'],
-      memberName: 'queue',
-      description: 'Show the next 10 streams to be played (queue) on the channel. If you pass the page number, you can see the rest of the queue properly',
-      details: 'Information is appreciated',
-      examples: [
-        `${env.discord.prefix} queue <?page> (optional)`,
-      ],
-      guildOnly: true,
-      args: [
-        {
-          key: 'page',
-          prompt: 'Pagination of the queue, it represents the page to be shown',
-          type: 'integer',
-          validate: () => true,
-          label: 'page of queue',
-        },
-      ],
-    };
-  }
-
   constructor(client) {
-    super(client, Queue.options());
+    super(client, client.wrapper.commands.queue);
   }
 
   async run(message, { page }) {

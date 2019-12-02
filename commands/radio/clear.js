@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Clear extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.discord.prefix} clear`,
-      name: 'clear',
-      group: 'radio',
-      aliases: ['c', 'clean', 'empty'],
-      memberName: 'clear',
-      description: 'Clear the stream queue if there\'s one',
-      details: 'You can repair some mess you did or destroy everyone\'s fun',
-      examples: [
-        `${env.discord.prefix} clear`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Clear.options());
+    super(client, client.wrapper.commands.clear);
   }
 
   async run(message) {
