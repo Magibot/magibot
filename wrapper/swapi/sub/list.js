@@ -3,7 +3,7 @@ const options = (prefix) => ({
   usage: `${prefix} swapi list <name-of-collection>`,
   name: 'swapi-list',
   group: 'swapi',
-  memberName: 'swapi-list',
+  memberName: 'list',
   description: 'List <movies>, <characters>, <planets>, <starships> of Star Wars movies',
   details: 'Bringing the knowledge',
   examples: [

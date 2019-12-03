@@ -3,7 +3,7 @@ const options = (prefix) => ({
   usage: `${prefix} swapi character <name-of-character-from-star-wars>`,
   name: 'swapi-character',
   group: 'swapi',
-  memberName: 'swapi-character',
+  memberName: 'character',
   description: 'Returns information about a character from Star Wars movies',
   details: 'Bringing the knowledge',
   examples: [

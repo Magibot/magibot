@@ -17,12 +17,13 @@ const requireCommandOptions = (requirePath) => {
         const inner = require(innerPath);
         const commandOptions = inner.options(config.env.discord.prefix);
         if (modulename === 'index') {
-          const wrapperCommand = requirePath.split(path.sep).pop();
-          options[wrapperCommand] = commandOptions;
-          options[wrapperCommand].isWrapper = true;
-          options[wrapperCommand].subCommands = requireCommandOptions(path.join(requirePath, 'sub'));
+          const wrapperName = commandOptions.name;
+          options[wrapperName] = commandOptions;
+          options[wrapperName].isWrapper = true;
+          options[wrapperName].subCommands = requireCommandOptions(path.join(requirePath, 'sub'));
         } else {
-          options[modulename] = commandOptions;
+          const commandName = commandOptions.memberName;
+          options[commandName] = commandOptions;
         }
       }
     }
