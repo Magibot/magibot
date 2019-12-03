@@ -1,11 +1,13 @@
 const Commando = require('discord.js-commando');
 const Character = require('./sub/character');
+const List = require('./sub/list');
 
 class StarWarsAPI extends Commando.Command {
   constructor(client) {
     super(client, client.wrapper.commands.swapi);
     this.subCommands = {
       Character,
+      List,
     };
   }
 
@@ -18,18 +20,19 @@ class StarWarsAPI extends Commando.Command {
     const arrayArgs = args.trim().split(/ +/g);
     if (arrayArgs.length === 0) {
       // Show possible commands of Star Wars API
-      return message;
+      return message.reply('Wrong usage of command');
     }
 
-    const command = arrayArgs.shift();
-    if (command === 'character') {
-      if (arrayArgs.length === 0 || arrayArgs[0] === 'all') {
-        return this.subCommands.Character.all(message);
-      }
-
-      return this.subCommands.Character.search(message, { character: arrayArgs[0] });
+    const subcommand = arrayArgs.shift();
+    switch (subcommand) {
+      case 'character':
+        return this.subCommands.Character.handle(this.client, message, arrayArgs);
+      case 'list':
+        return this.subCommands.List.handle(this.client, message, arrayArgs);
+      default:
+        // Show possible commands of Star Wars API
+        return message.reply('Wrong usage of command');
     }
-    // Show possible commands of Star Wars API
   }
 }
 

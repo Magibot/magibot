@@ -1,49 +1,34 @@
-const superagent = require('superagent');
-const embed = require('../../../utils/embed');
+const characterEmbed = (client, character) => {
+  const info = client.customEmbed.create();
+  info
+    .setTitle(character.name)
+    .addField('Height', character.height, true)
+    .addField('Mass', character.mass, true)
+    .addField('Gender', character.gender, true)
+    .addField('Hair Color', character.hair_color, true)
+    .addField('Skin Color', character.skin_color, true)
+    .addField('Eye Color', character.eye_color, true)
+    .addField('Birth Year', character.birth_year, true)
+    .addField('Appeared in', `${character.films.length} movies`, true)
+    .setURL(character.url);
 
-const inlineCharacter = (person) => `${person.height}cm | ${person.mass}kg | hair: ${person.hair_color} | eyes: ${person.eye_color} | gender: ${person.gender}`;
-
-const search = async (message, character) => {
-  const response = await superagent.get('https://swapi.co/api/people').query({ search: character });
-  if (response.body.count === 0) {
-    return message.reply(`The Star Wars character \`${character}\` was not found`);
-  }
-
-  const info = response.body.results[0];
-  const reply = embed.create();
-  reply
-    .setTitle(info.name)
-    .addField('Height', info.height, true)
-    .addField('Mass', info.mass, true)
-    .addField('Gender', info.gender, true)
-    .addField('Hair Color', info.hair_color, true)
-    .addField('Skin Color', info.skin_color, true)
-    .addField('Eye Color', info.eye_color, true)
-    .addField('Birth Year', info.birth_year, true)
-    .addField('Appeared in', `${info.films.length} movies`, true)
-    .setURL(info.url);
-
-  return message.channel.send(reply);
+  return info;
 };
 
-const all = async (message) => {
-  const endpoint = 'https://swapi.co/api/people';
-  const response = await superagent.get(endpoint);
-  const { count, results } = response.body;
-  if (count === 0) {
-    return message.reply('No Star Wars characters was found');
+const handle = async (client, message, args) => {
+  if (!args || args.length === 0) {
+    return message.reply('You should inform a name of a Star Wars character to search');
   }
 
-  const reply = embed.create();
-  reply
-    .setTitle(`Total of ${count} characters`)
-    .setURL(endpoint);
+  const [search] = args;
 
-  results.forEach((person) => {
-    reply.addField(person.name, inlineCharacter(person));
-  });
+  const { status, payload } = await client.services.swapi.characters({ search });
+  if (status === 'notfound') {
+    return message.reply(`The Star Wars character \`${search}\` was not found`);
+  }
 
-  return message.channel.send(reply);
+  const [character] = payload;
+  return message.channel.send(characterEmbed(client, character));
 };
 
-module.exports = { search, all };
+module.exports = { handle };
