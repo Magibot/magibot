@@ -21,6 +21,13 @@ const bot = new Commando.Client({
   retryLimit: config.env.discord.retryLimit,
 });
 
+bot.services = {};
+bot.services.swapi = require('./services/swapi.service');
+
+bot.services.magi = {
+  guild: require('./services/guild.service'),
+};
+
 bot.config = config;
 bot.wrapper = wrapper;
 bot.logger = logger;
