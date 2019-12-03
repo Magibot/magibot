@@ -1,8 +1,8 @@
 const Commando = require('discord.js-commando');
 
-class Help extends Commando.Command {
+class Describe extends Commando.Command {
   constructor(client) {
-    super(client, client.wrapper.commands.help);
+    super(client, client.wrapper.commands.describe);
   }
 
   async run(message, { commandName }) {
@@ -62,4 +62,4 @@ class Help extends Commando.Command {
   }
 }
 
-module.exports = Help;
+module.exports = Describe;

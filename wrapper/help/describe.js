@@ -1,13 +1,13 @@
 const options = (prefix) => ({
-  usage: `${prefix} help <command name>`,
-  name: 'help',
-  group: 'simple',
-  memberName: 'help',
-  description: 'Show how you can use an especific bot command',
+  usage: `${prefix} describe <command name>`,
+  name: 'describe',
+  group: 'help',
+  memberName: 'describe',
+  description: 'Describe the usage of an specific command, showing examples and parameters needed',
   details: 'Should receive one argument referring to the command you want to know about',
   examples: [
-    `${prefix} help purge`,
-    `${prefix} help play`,
+    `${prefix} describe purge`,
+    `${prefix} describe play`,
   ],
   args: [
     {
