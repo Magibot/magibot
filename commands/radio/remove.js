@@ -1,5 +1,4 @@
 const Commando = require('discord.js-commando');
-const embed = require('../../utils/embed');
 
 class Remove extends Commando.Command {
   constructor(client) {
@@ -27,7 +26,7 @@ class Remove extends Commando.Command {
       return message.reply('Wrong value for index, no element with this index was found');
     }
 
-    const response = embed.create();
+    const response = this.client.customEmbed.create();
     response
       .setTitle('Stream successfully removed from queue')
       .addField('Title', removed.info.title)

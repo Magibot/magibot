@@ -1,5 +1,4 @@
 const Commando = require('discord.js-commando');
-const embed = require('../../utils/embed');
 const Streamer = require('../../utils/streamer');
 
 class Queue extends Commando.Command {
@@ -18,7 +17,7 @@ class Queue extends Commando.Command {
     }
 
     const queue = streamer.showQueueInformation({ page: (page) || 1 });
-    const answer = Queue.createEmbed(embed.create(), message.guild.name, queue);
+    const answer = Queue.createEmbed(this.client.customEmbed.create(), message.guild.name, queue);
 
     return message.channel.send(answer);
   }

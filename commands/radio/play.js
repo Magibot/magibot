@@ -1,5 +1,4 @@
 const Commando = require('discord.js-commando');
-const embed = require('../../utils/embed');
 
 class Play extends Commando.Command {
   constructor(client) {
@@ -43,7 +42,7 @@ class Play extends Commando.Command {
       const video = await streamer.play(url, addedBy);
       let answer;
       if (video.status === 'queued') {
-        answer = embed.create();
+        answer = this.client.custonEmbed.create();
         answer
           .setTitle(`${video.info.title}`)
           .setURL(video.url)

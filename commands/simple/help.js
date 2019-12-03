@@ -1,5 +1,4 @@
 const Commando = require('discord.js-commando');
-const embed = require('../../utils/embed');
 
 class Help extends Commando.Command {
   constructor(client) {
@@ -12,7 +11,7 @@ class Help extends Commando.Command {
       return message.reply(`This command does not exist. Use "${this.client.config.env.discord.prefix} commands" to know all commands`);
     }
 
-    const reply = embed.create();
+    const reply = this.client.customEmbed.create();
 
     reply
       .setTitle(`The "${command.name}" command`)

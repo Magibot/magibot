@@ -39,15 +39,15 @@ bot.registry
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
 bot.once('ready', async () => {
-  logger.success(`${bot.user.username} starting`);
+  bot.logger.success(`${bot.user.username} starting`);
   const guilds = bot.guilds.size;
   const channels = bot.channels.size;
   const users = bot.users.size;
-  logger.success(
+  bot.logger.success(
     `Connected to ${guilds} guilds, ${channels} channels and ${users} users`,
   );
   const activity = "Fo' shizzle my nizzle";
-  logger.success(`Activity set to: ${activity}`);
+  bot.logger.success(`Activity set to: ${activity}`);
   bot.user.setActivity(activity);
 });
 

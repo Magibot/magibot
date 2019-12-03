@@ -1,5 +1,4 @@
 const Commando = require('discord.js-commando');
-const embed = require('../../utils/embed');
 
 class Commands extends Commando.Command {
   constructor(client) {
@@ -7,7 +6,7 @@ class Commands extends Commando.Command {
   }
 
   async run(message) {
-    const reply = embed.create();
+    const reply = this.client.customEmbed.create();
     reply
       .setTitle('List of all bot commands')
       .addField('HELP', `\`${this.client.config.env.discord.prefix} help <command name>\` => Show how you can use an especific bot command`);
