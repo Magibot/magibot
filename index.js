@@ -2,6 +2,7 @@ const path = require('path');
 const Commando = require('discord.js-commando');
 
 const config = require('./config/bot');
+const youtube = require('./config/youtube');
 const wrapper = require('./wrapper');
 const logger = require('./utils/logger');
 const Radio = require('./utils/radio');
@@ -20,6 +21,7 @@ const bot = new Commando.Client({
   retryLimit: config.env.discord.retryLimit,
 });
 
+bot.youtube = youtube.create(config.env.youtube.apiKey);
 bot.services = {};
 bot.services.swapi = require('./services/swapi.service');
 
@@ -56,6 +58,13 @@ bot.once('ready', async () => {
   const activity = "Fo' shizzle my nizzle";
   bot.logger.success(`Activity set to: ${activity}`);
   bot.user.setActivity(activity);
+
+  const response = await bot.youtube.search.list({
+    part: 'id,snippet',
+    q: 'Node.js on Google Cloud',
+  });
+
+  console.log(response.data.items[0].snippet);
 });
 
 bot.on('guildCreate', guildEventHandler.onCreate);
