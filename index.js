@@ -7,8 +7,7 @@ const logger = require('./utils/logger');
 const Radio = require('./utils/radio');
 const embed = require('./utils/embed');
 
-const handleGuildCreate = require('./events/guildCreate');
-const handleGuildDelete = require('./events/guildDelete');
+const guildEventHandler = require('./events/guild');
 
 const bot = new Commando.Client({
   commandPrefix: config.env.discord.prefix,
@@ -59,8 +58,8 @@ bot.once('ready', async () => {
   bot.user.setActivity(activity);
 });
 
-bot.on('guildCreate', handleGuildCreate);
-bot.on('guildDelete', handleGuildDelete);
+bot.on('guildCreate', guildEventHandler.onCreate);
+bot.on('guildDelete', guildEventHandler.onDelete);
 
 // bot.on('guildMemberAdd')
 // bot.on('guildMemberRemove')
