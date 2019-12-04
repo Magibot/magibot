@@ -160,6 +160,19 @@ class Streamer {
     this.videoPlaying.status = 'playing';
   }
 
+  async skip() {
+    let next = null;
+    if (this.totalOfElementsInQueue > 0) {
+      next = this.queue.head;
+    }
+
+    if (this.voiceConnection && this.voiceConnection.dispatcher) {
+      this.voiceConnection.dispatcher.end();
+    }
+
+    return next;
+  }
+
   // Events handlers
 
   handleStreamFinish() {
