@@ -84,13 +84,13 @@ class Streamer {
   }
 
   disconnect() {
+    this.stop();
     if (this.voiceConnection) {
       this.destroyDispatcher();
       this.voiceConnection.disconnect();
     }
 
     this.voiceConnection = null;
-    this.stop();
   }
 
   pause() {
@@ -180,6 +180,7 @@ class Streamer {
     if (!next) {
       this.stop();
       this.disconnect();
+      return;
     }
 
     this.execute(next);
