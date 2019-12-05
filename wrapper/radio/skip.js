@@ -2,7 +2,7 @@ const options = (prefix) => ({
   usage: `${prefix} skip`,
   name: 'skip',
   group: 'radio',
-  aliases: ['s', 'jump', 'j'],
+  aliases: ['jump', 'j'],
   memberName: 'skip',
   description: 'Skip the current stream playing on voice channel if there is one',
   details: 'Come on, stop doing that',
