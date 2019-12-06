@@ -17,6 +17,7 @@ const options = (prefix) => ({
       type: 'integer',
       validate: () => true,
       label: 'page of queue',
+      default: 1,
     },
   ],
 });

@@ -23,8 +23,8 @@ class Queue extends Commando.Command {
   }
 
   static createEmbed(customEmbed, guildName, queue) {
-    const allSongsInfo = queue.elements.map(
-      (element, index) => Streamer.getVideoStringInlineInfo(index, element),
+    const queueInfo = queue.elements.map(
+      (element) => Streamer.getVideoStringInlineInfo(element.positionOnQueue, element),
     );
 
     customEmbed
@@ -33,7 +33,7 @@ class Queue extends Commando.Command {
       .addField('Playing now', queue.aboutPlayingNow)
       .addField('Queue length', queue.totalOfElementsInQueue, true)
       .addField('Queue duration', queue.totalDuration, true)
-      .addField('Next on queue', allSongsInfo.join('\n\n'));
+      .addField('Next on queue', queueInfo.join('\n\n'));
 
     return customEmbed;
   }

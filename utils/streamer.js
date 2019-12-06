@@ -66,16 +66,28 @@ class Streamer {
 
     this.state = 'playing';
     video.status = 'playing';
+    video.positionOnQueue = 0;
     this.videoPlaying = video;
+
+    this.updateQueue();
 
     this.voiceConnection.dispatcher.on('end', () => this.events.emit('stream-finished'));
     return video;
   }
 
+  updateQueue() {
+    if (this.totalOfElementsInQueue > 0) {
+      for (let i = 0; i < this.totalOfElementsInQueue; i += 1) {
+        const stream = this.queue.q[i];
+        stream.positionOnQueue -= 1;
+      }
+    }
+  }
+
   insertIntoQueue(info) {
     const video = info;
     video.status = 'queued';
-    video.positionOnQueue = this.queue.insert(video);
+    video.positionOnQueue = this.queue.insert(video) + 1;
     return video;
   }
 
@@ -208,7 +220,7 @@ class Streamer {
   }
 
   static getVideoStringInlineInfo(index, video) {
-    return `\`${index}.\` ${video.info.title} | ${video.info.author.name} \`${video.duration}\` | \`Added by: ${video.addedBy.username}\``;
+    return `\`${index}.\` ${video.info.title} | ${video.info.author.name} ${video.duration} | Added by: ${video.addedBy.username}`;
   }
 
   static formatSeconds(s) {
