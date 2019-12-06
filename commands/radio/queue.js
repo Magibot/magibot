@@ -1,5 +1,5 @@
 const Commando = require('discord.js-commando');
-const Streamer = require('../../utils/streamer');
+const helpers = require('../../helpers');
 
 class Queue extends Commando.Command {
   constructor(client) {
@@ -24,7 +24,7 @@ class Queue extends Commando.Command {
 
   static createEmbed(customEmbed, guildName, queue) {
     const queueInfo = queue.elements.map(
-      (element) => Streamer.getVideoStringInlineInfo(element.positionOnQueue, element),
+      (element) => helpers.formatter.getVideoStringInlineInfo(element.positionOnQueue, element),
     );
 
     customEmbed

@@ -1,8 +1,12 @@
 const Streamer = require('./streamer');
 
+const youtube = require('../config/youtube');
+
 class Radio {
-  constructor() {
+  constructor(googleApiKey) {
     this.streams = new Map();
+    this.googleApiKey = googleApiKey;
+    this.youtube = youtube.create(googleApiKey);
   }
 
   createStream(guildId, channelId, voiceConnection) {

@@ -1,13 +1,15 @@
-const ytdl = require('ytdl-core');
 const ytdlStream = require('ytdl-core-discord');
 const events = require('events');
 const Queue = require('./queue');
+const youtube = require('../config/youtube');
+const helpers = require('../helpers');
 
 class Streamer {
-  constructor(guildId, channelId, voiceConnection) {
+  constructor(guildId, channelId, voiceConnection, googleApiKey) {
     this.guildId = guildId;
     this.channelId = channelId;
     this.voiceConnection = voiceConnection;
+    this.googleApiKey = googleApiKey;
 
     this.queue = new Queue();
     this.state = 'stopped';
@@ -41,23 +43,37 @@ class Streamer {
   }
 
   get totalLenghSecondsQueueFormatMss() {
-    return Streamer.formatSeconds(this.totalLenghSecondsQueue);
+    return helpers.formatSeconds(this.totalLenghSecondsQueue);
   }
 
   setup(voiceConnection) {
     this.voiceConnection = voiceConnection;
   }
 
-  async play(url, addedBy) {
-    const info = await Streamer.getVideoInformation(url);
-    const video = { url, addedBy, info };
-    video.duration = Streamer.formatSeconds(info.lengthSeconds);
+  async play(args, addedBy) {
+    let url;
+    if (helpers.validator.isUrl(args)) {
+      url = args;
+    } else {
+      const result = await youtube.searchVideo(this.googleApiKey, args);
+      if (result.errors) {
+        return { errorMessage: result.errorMessage };
+      }
 
-    if (this.isPlaying || this.isPaused) {
-      return this.insertIntoQueue(video);
+      url = result.url;
     }
 
-    return this.execute(video);
+    const info = await youtube.getVideoInformation(url);
+    const video = { url, addedBy, info };
+    video.duration = helpers.datetime.formatSeconds(info.lengthSeconds);
+
+    if (this.isPlaying || this.isPaused) {
+      const stream = this.insertIntoQueue(video);
+      return { stream };
+    }
+
+    const stream = this.execute(video);
+    return { stream };
   }
 
   async execute(stream) {
@@ -137,9 +153,9 @@ class Streamer {
       text: '',
       totalOfPages,
       playingNow: this.videoPlaying,
-      aboutPlayingNow: Streamer.getVideoStringInlineInfo(0, this.videoPlaying),
+      aboutPlayingNow: helpers.formatter.getVideoStringInlineInfo(0, this.videoPlaying),
       totalLenghSecondsQueue,
-      totalDuration: Streamer.formatSeconds(totalLenghSecondsQueue),
+      totalDuration: helpers.datetime.formatSeconds(totalLenghSecondsQueue),
       totalOfElementsInQueue: this.totalOfElementsInQueue,
       aboutPage: `Page ${page} of ${totalOfPages}`,
     };
@@ -195,38 +211,6 @@ class Streamer {
     }
 
     this.execute(next);
-  }
-
-  // Statics methods
-
-  static async getVideoInformation(url) {
-    return new Promise((resolve, reject) => {
-      ytdl.getBasicInfo(url, (err, info) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-
-        const videoInfo = {
-          title: info.title,
-          author: info.author,
-          lengthSeconds: parseInt(info.length_seconds, 10),
-          url,
-        };
-
-        resolve(videoInfo);
-      });
-    });
-  }
-
-  static getVideoStringInlineInfo(index, video) {
-    return `\`${index}.\` ${video.info.title} | ${video.info.author.name} ${video.duration} | Added by: ${video.addedBy.username}`;
-  }
-
-  static formatSeconds(s) {
-    let seconds = s;
-    seconds = (seconds - (seconds %= 60)) / 60 + (seconds > 9 ? ':' : ':0') + seconds;
-    return seconds;
   }
 }
 
