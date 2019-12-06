@@ -1,10 +1,15 @@
-const superagent = require('../config/superagent');
+const superagent = require('superagent');
+const superagentAbsolute = require('superagent-absolute');
 const config = require('../config/bot');
+
+const agent = superagent.agent();
+const apiPath = `${config.env.backend.api.baseUrl}/guilds`;
+const guildApi = superagentAbsolute(agent)(apiPath);
 
 const create = async (guild) => {
   try {
-    const response = await superagent
-      .post('/guilds')
+    const response = await guildApi
+      .post('/')
       .send(guild)
       .set('Authorization', config.env.backend.api.clientId)
       .set('authorization_type', 'client_id');
@@ -26,8 +31,8 @@ const create = async (guild) => {
 
 const destroy = async (guildId, query) => {
   try {
-    const response = await superagent
-      .delete(`/guilds/${guildId}`)
+    const response = await guildApi
+      .delete(`/${guildId}`)
       .query(query)
       .set('Authorization', config.env.backend.api.clientId)
       .set('authorization_type', 'client_id');
