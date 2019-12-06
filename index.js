@@ -7,6 +7,7 @@ const wrapper = require('./wrapper');
 const logger = require('./utils/logger');
 const Radio = require('./utils/radio');
 const embed = require('./utils/embed');
+const helpers = require('./helpers');
 
 const guildEventHandler = require('./events/guild');
 
@@ -33,6 +34,7 @@ bot.config = config;
 bot.wrapper = wrapper;
 bot.logger = logger;
 bot.customEmbed = embed;
+bot.helpers = helpers;
 bot.Radio = new Radio();
 
 bot.registry
