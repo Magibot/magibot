@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Stop extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.client.prefix} stop`,
-      name: 'stop',
-      group: 'radio',
-      aliases: ['s', 'break'],
-      memberName: 'stop',
-      description: 'Stop the stream. This command will also clear the queue',
-      details: 'Destroy the music if you hate it',
-      examples: [
-        `${env.client.prefix} stop`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Stop.options());
+    super(client, client.wrapper.commands.stop);
   }
 
   async run(message) {
@@ -29,7 +12,7 @@ class Stop extends Commando.Command {
       return message.reply('To execute this command you should be connected to the same voice channel as the bot');
     }
 
-    const streamer = global.Radio.getStream(message.guild.id);
+    const streamer = this.client.Radio.getStream(message.guild.id);
     if (!streamer || (streamer && streamer.isStopped)) {
       return message.reply('Radio is already stopped. There is nothing playing on Magi\'s radio');
     }

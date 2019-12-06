@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Leave extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.client.prefix} leave`,
-      name: 'leave',
-      aliases: ['disconnect', 'out', 'go'],
-      group: 'voice',
-      memberName: 'leave',
-      description: 'Leave the voice channel if the bot is in one',
-      details: 'Come on man, don\'t threat me like that',
-      examples: [
-        `${env.client.prefix} leave`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Leave.options());
+    super(client, client.wrapper.commands.leave);
   }
 
   async run(message) {
@@ -38,11 +21,11 @@ class Leave extends Commando.Command {
 
     if (voiceConnection) {
       voiceConnection.disconnect();
-      const streamer = global.Radio.getStream(message.guild.id);
+      const streamer = this.client.Radio.getStream(message.guild.id);
       if (streamer) {
         streamer.disconnect();
         // TODO: Destroy the streamer after some time without use
-        // global.Radio.destroy(message.guild.id)
+        // this.client.Radio.destroy(message.guild.id)
       }
 
       return message.channel.send(`**Successfully disconnected from** \`${voiceConnection.channel.name}\` :pleading_face:`);

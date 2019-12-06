@@ -1,48 +1,17 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
-const magi = require('../../magi');
-const Commands = require('./commands');
-const embed = require('../../utils/embed');
 
-class Help extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.client.prefix} help <command name>`,
-      name: 'help',
-      group: 'simple',
-      memberName: 'help',
-      description: 'Show how you can use an especific bot command',
-      details: 'Should receive one argument referring to the command you want to know about',
-      examples: [
-        `${env.client.prefix} help purge`,
-        `${env.client.prefix} help play`,
-      ],
-      args: [
-        {
-          key: 'commandName',
-          prompt: 'Name of the command you want to know about',
-          type: 'string',
-          label: 'command name',
-        },
-      ],
-    };
-  }
-
+class Describe extends Commando.Command {
   constructor(client) {
-    super(client, Help.options());
+    super(client, client.wrapper.commands.describe);
   }
 
   async run(message, { commandName }) {
-    let command = magi.commands[commandName];
-    if (commandName === 'commands') {
-      command = Commands.options();
-    }
-
+    const command = this.client.wrapper.commands[commandName];
     if (!command) {
-      return message.reply(`This command does not exist. Use "${env.client.prefix} commands" to know all commands`);
+      return message.reply(`This command does not exist. Use "${this.client.config.env.discord.prefix} commands" to know all commands`);
     }
 
-    const reply = embed.create();
+    const reply = this.client.customEmbed.create();
 
     reply
       .setTitle(`The "${command.name}" command`)
@@ -93,4 +62,4 @@ class Help extends Commando.Command {
   }
 }
 
-module.exports = Help;
+module.exports = Describe;

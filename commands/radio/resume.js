@@ -1,25 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
 
 class Resume extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.client.prefix} resume`,
-      name: 'resume',
-      group: 'radio',
-      aliases: ['r', 'restart', 'come back'],
-      memberName: 'resume',
-      description: 'Resume the stream paused. The bot will come back playing',
-      details: 'Restart the fun',
-      examples: [
-        `${env.client.prefix} resume`,
-      ],
-      guildOnly: true,
-    };
-  }
-
   constructor(client) {
-    super(client, Resume.options());
+    super(client, client.wrapper.commands.resume);
   }
 
   async run(message) {
@@ -29,7 +12,7 @@ class Resume extends Commando.Command {
       return message.reply('To execute this command you should be connected to the same voice channel as the bot');
     }
 
-    const streamer = global.Radio.getStream(message.guild.id);
+    const streamer = this.client.Radio.getStream(message.guild.id);
     if (!streamer || (streamer && streamer.isStopped)) {
       return message.reply('Radio is already stopped. There is nothing playing on Magi\'s radio');
     }

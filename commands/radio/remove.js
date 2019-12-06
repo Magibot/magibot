@@ -1,36 +1,8 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
-const embed = require('../../utils/embed');
 
 class Remove extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.client.prefix} remove`,
-      name: 'remove',
-      group: 'radio',
-      aliases: ['r'],
-      memberName: 'remove',
-      description: 'Remove a stream from queue by it\'s index',
-      details: 'Undo mess',
-      examples: [
-        `${env.client.prefix} remove <index>'`,
-        `${env.client.prefix} remove 3`,
-      ],
-      guildOnly: true,
-      args: [
-        {
-          key: 'index',
-          prompt: 'Index of the element in queue to be removed',
-          type: 'integer',
-          validate: () => true,
-          label: 'index in queue',
-        },
-      ],
-    };
-  }
-
   constructor(client) {
-    super(client, Remove.options());
+    super(client, client.wrapper.commands.remove);
   }
 
   async run(message, { index }) {
@@ -44,7 +16,7 @@ class Remove extends Commando.Command {
       return message.reply('To execute this command you should be connected to the same voice channel as the bot');
     }
 
-    const streamer = global.Radio.getStream(message.guild.id);
+    const streamer = this.client.Radio.getStream(message.guild.id);
     if (!streamer || (streamer && streamer.isStopped)) {
       return message.reply('The queue is empty and there\'s nothing to remove');
     }
@@ -54,7 +26,7 @@ class Remove extends Commando.Command {
       return message.reply('Wrong value for index, no element with this index was found');
     }
 
-    const response = embed.create();
+    const response = this.client.customEmbed.create();
     response
       .setTitle('Stream successfully removed from queue')
       .addField('Title', removed.info.title)

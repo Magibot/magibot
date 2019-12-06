@@ -1,12 +1,12 @@
 const superagent = require('../config/superagent');
-const env = require('../config/env');
+const config = require('../config/bot');
 
 const create = async (guild) => {
   try {
     const response = await superagent
       .post('/guilds')
       .send(guild)
-      .set('Authorization', env.backend.api.clientId)
+      .set('Authorization', config.env.backend.api.clientId)
       .set('authorization_type', 'client_id');
 
     return {
@@ -29,7 +29,7 @@ const destroy = async (guildId, query) => {
     const response = await superagent
       .delete(`/guilds/${guildId}`)
       .query(query)
-      .set('Authorization', env.backend.api.clientId)
+      .set('Authorization', config.env.backend.api.clientId)
       .set('authorization_type', 'client_id');
 
     return {

@@ -1,43 +1,25 @@
 const Commando = require('discord.js-commando');
-const env = require('../../config/env');
-const magi = require('../../magi');
-const embed = require('../../utils/embed');
 
 class Commands extends Commando.Command {
-  static options() {
-    return {
-      usage: `${env.client.prefix} commands`,
-      name: 'commands',
-      group: 'simple',
-      memberName: 'commands',
-      description: 'Shows a list of all commands that the bot can do',
-      details: 'Only for noobs',
-      examples: [
-        `${env.client.prefix} commands`,
-      ],
-    };
-  }
-
   constructor(client) {
-    super(client, Commands.options());
+    super(client, client.wrapper.commands.commands);
   }
 
   async run(message) {
-    const reply = embed.create();
+    const reply = this.client.customEmbed.create();
     reply
-      .setTitle('List of all bot commands')
-      .addField('HELP', `\`${env.client.prefix} help <command name>\` => Show how you can use an especific bot command`);
+      .setTitle('List of all bot commands');
 
-    const groups = this.separateCommandsInGroups(magi.commands);
+    const groups = Commands.separateCommandsInGroups(this.client.wrapper.commands);
     Object.keys(groups).sort().forEach((group) => {
-      const groupMessage = this.createCommandsGroupMessage(groups[group]);
+      const groupMessage = Commands.createCommandsGroupMessage(groups[group]);
       reply.addField(group.toUpperCase(), groupMessage);
     });
 
     return message.channel.send(reply);
   }
 
-  separateCommandsInGroups(commands) {
+  static separateCommandsInGroups(commands) {
     const groups = {};
     Object.keys(commands).forEach((name) => {
       const options = commands[name];
@@ -52,7 +34,7 @@ class Commands extends Commando.Command {
     return groups;
   }
 
-  createCommandsGroupMessage(group) {
+  static createCommandsGroupMessage(group) {
     const message = [];
 
     group
@@ -67,6 +49,15 @@ class Commands extends Commando.Command {
         return 0;
       })
       .forEach((command) => {
+        if (command.isWrapper) {
+          Object.keys(command.subCommands).sort().forEach((subCommandName) => {
+            const subCommand = command.subCommands[subCommandName];
+            message.push(`\`${subCommand.usage}\` => ${subCommand.description}`);
+          });
+
+          return;
+        }
+
         message.push(`\`${command.usage}\` => ${command.description}`);
       });
 

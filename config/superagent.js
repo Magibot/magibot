@@ -1,7 +1,7 @@
 const superagent = require('superagent');
 const superagentAbsolute = require('superagent-absolute');
-const env = require('./env');
+const config = require('./bot');
 
 const agent = superagent.agent();
 
-module.exports = superagentAbsolute(agent)(env.backend.api.baseUrl);
+module.exports = superagentAbsolute(agent)(config.env.backend.api.baseUrl);

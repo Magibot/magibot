@@ -1,5 +1,5 @@
 class Queue {
-  constructor({ elementsPerPage = 10 }) {
+  constructor({ elementsPerPage = 10 } = {}) {
     this.q = [];
     this.elementsPerPage = elementsPerPage;
   }
