@@ -107,7 +107,6 @@ class Streamer {
     this.state = 'stopped';
     this.clearQueue();
     this.videoPlaying = null;
-    this.voiceConnection = null;
   }
 
   destroyDispatcher() {
