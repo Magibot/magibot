@@ -27,6 +27,7 @@
     "ffmpeg": "^0.0.4",
     "node-nlp": "^4.0.0-rc.4",
     "ffmpeg-binaries": "3.2.2-3",
+    "parse-time": "^0.1.4",
     "superagent": "^5.1.0",
     "superagent-absolute": "^1.0.1",
     "ytdl-core": "^1.0.0",
