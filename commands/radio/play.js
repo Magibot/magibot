@@ -42,7 +42,7 @@ class Play extends Commando.Command {
       const video = await streamer.play(url, addedBy);
       let answer;
       if (video.status === 'queued') {
-        answer = this.client.custonEmbed.create();
+        answer = this.client.customEmbed.create();
         answer
           .setTitle(`${video.info.title}`)
           .setURL(video.url)
