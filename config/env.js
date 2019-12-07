@@ -7,6 +7,7 @@ const required = [
   'API_BASE_URL',
   'API_CLIENT_ID',
   'CLIENT_COMMAND_PREFIX',
+  'GOOGLE_API_KEY',
 ];
 
 const missingVariables = [];
@@ -42,5 +43,8 @@ module.exports = {
       clientId: process.env.API_CLIENT_ID,
       baseUrl: process.env.API_BASE_URL,
     },
+  },
+  youtube: {
+    apiKey: process.env.GOOGLE_API_KEY,
   },
 };

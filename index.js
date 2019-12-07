@@ -33,7 +33,7 @@ bot.wrapper = wrapper;
 bot.logger = logger;
 bot.customEmbed = embed;
 bot.helpers = helpers;
-bot.Radio = new Radio();
+bot.Radio = new Radio(config.env.youtube.apiKey);
 
 bot.registry
   .registerDefaultTypes()
@@ -67,5 +67,15 @@ bot.on('guildDelete', guildEventHandler.onDelete);
 // bot.on('guildMemberRemove')
 
 // bot.on('disconnect');
+
+process
+  .on('unhandledRejection', (reason, p) => {
+    bot.logger.error('Unhandled Rejection at Promise');
+    console.error(reason, p);
+  })
+  .on('uncaughtException', (err) => {
+    bot.logger.error('Uncaught Exception thrown');
+    console.error(err);
+  });
 
 bot.login(config.env.discord.token);

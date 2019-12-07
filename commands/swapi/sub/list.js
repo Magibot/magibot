@@ -33,6 +33,11 @@ const handle = async (client, message, args) => {
       reply = listCharactersMessage(client, response.payload);
       break;
     }
+    case 'movies': {
+      response = await client.services.swapi.movies();
+      console.log(response.payload);
+      break;
+    }
     default:
       return message.reply('Invalid collection name. Please use <characters>, <planets>, <movies>, <starships>');
   }

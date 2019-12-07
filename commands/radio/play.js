@@ -5,26 +5,18 @@ class Play extends Commando.Command {
     super(client, client.wrapper.commands.play);
   }
 
-  async run(message, { url }) {
-    const { voiceChannel } = message.member;
-
-    if (!voiceChannel) {
-      return message.reply('To execute this command you should connect to a voice channel');
-    }
-
-    const { voiceConnection } = message.guild;
-
-    if (voiceConnection
-      && voiceChannel.id !== voiceConnection.channel.id) {
-      return message.reply('To execute this command you should be connected to the same voice channel as the bot');
+  async run(message, args) {
+    const { ok, reply } = this.client.helpers.command.checkChannelConnection(message);
+    if (!ok) {
+      return message.reply(reply);
     }
 
     try {
       if (!message.guild.voiceConnection) {
         // Bot is not connected to a voice channel
 
-        await voiceChannel.join();
-        message.channel.send(`**Connected to** \`${voiceChannel.name}\` successfully. :yum:`);
+        await message.member.voiceChannel.join();
+        message.channel.send(`**Connected to** \`${message.member.voiceChannel.name}\` successfully. :yum:`);
       }
 
       const { guild, channel } = message;
@@ -39,23 +31,27 @@ class Play extends Commando.Command {
         username: message.author.username,
       };
 
-      const video = await streamer.play(url, addedBy);
-      let answer;
-      if (video.status === 'queued') {
-        answer = this.client.custonEmbed.create();
-        answer
-          .setTitle(`${video.info.title}`)
-          .setURL(video.url)
-          .setAuthor('Added to queue', message.member.user.avatarURL)
-          .addField('Channel', video.info.author.name)
-          .addField('Duration', video.duration, true)
-          .addField('Position in queue', video.positionOnQueue, true);
+      const { stream, errorMessage } = await streamer.play(args, addedBy);
+      if (errorMessage) {
+        return message.reply(errorMessage);
       }
 
-      answer = (answer) || `**Playing** \`${video.info.title}\` now`;
+      let answer;
+      if (stream.status === 'queued') {
+        answer = this.client.customEmbed.create();
+        answer
+          .setTitle(`${stream.info.title}`)
+          .setURL(stream.url)
+          .setAuthor('Added to queue', message.member.user.avatarURL)
+          .addField('Channel', stream.info.author.name)
+          .addField('Duration', stream.duration, true)
+          .addField('Position in queue', stream.positionOnQueue, true);
+      }
+
+      answer = (answer) || `**Playing** \`${stream.info.title}\` now`;
       return message.channel.send(answer);
     } catch (err) {
-      console.log(err);
+      this.client.logger.error(err);
     }
   }
 }

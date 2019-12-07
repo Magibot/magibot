@@ -10,20 +10,20 @@ const options = (prefix) => ({
     `${prefix} play http://youtube.com/link-to-your-favorite-song`,
   ],
   guildOnly: true,
-  args: [
-    {
-      key: 'url',
-      prompt: 'Link (url) of a stream to play the sound of the video',
-      type: 'string',
-      // Validate with a URL Regex
-      validate: (url) => {
-        const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
-        const regex = new RegExp(expression);
-        return url.match(regex);
-      },
-      label: 'url of the stream to play',
-    },
-  ],
+  // args: [
+  //   {
+  //     key: 'url',
+  //     prompt: 'Link (url) of a stream to play the sound of the video',
+  //     type: 'string',
+  //     // Validate with a URL Regex
+  //     validate: (url) => {
+  //       const expression = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/gi;
+  //       const regex = new RegExp(expression);
+  //       return url.match(regex);
+  //     },
+  //     label: 'url of the stream to play',
+  //   },
+  // ],
 });
 
 module.exports = { options };
