@@ -61,9 +61,8 @@ bot.once('ready', async () => {
   bot.logger.success(`Activity set to: ${activity}`);
   bot.user.setActivity(activity);
 
-  await nlp.train();
-  nlp.save();
-  bot.nlp = nlp;
+  await bot.nlp.train();
+  bot.nlp.save();
 });
 
 bot.on('guildCreate', guildEventHandler.onCreate);
