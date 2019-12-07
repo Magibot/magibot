@@ -62,3 +62,6 @@ typings/
 
 # typescript output directory build
 _build
+
+# nlp model file
+model.nlp

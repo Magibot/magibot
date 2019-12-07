@@ -1,7 +1,7 @@
 {
   "name": "magibot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "author": {
     "email": "mellomatheuslima@gmail.com",
     "name": "Matheus Mello de Lima"
