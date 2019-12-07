@@ -1,7 +1,7 @@
 const path = require('path');
 const Commando = require('discord.js-commando');
 
-const nlp = require('./config/nlp');
+const nlp = require('./services/nlp');
 const config = require('./config/bot');
 const wrapper = require('./wrapper');
 const logger = require('./utils/logger');

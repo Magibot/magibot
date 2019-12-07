@@ -1,7 +1,7 @@
 const ytdlStream = require('ytdl-core-discord');
 const events = require('events');
 const Queue = require('./queue');
-const youtube = require('../config/youtube');
+const youtube = require('../services/youtube');
 const helpers = require('../helpers');
 
 class Streamer {

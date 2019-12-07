@@ -1,6 +1,5 @@
 const Streamer = require('./streamer');
-
-const youtube = require('../config/youtube');
+const youtube = require('../services/youtube');
 
 class Radio {
   constructor(googleApiKey) {
