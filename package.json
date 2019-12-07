@@ -33,7 +33,7 @@
     "pm2": "^4.2.0",
     "superagent": "^5.1.0",
     "superagent-absolute": "^1.0.1",
-    "ytdl-core": "^1.0.0",
+    "ytdl-core": "0.24.0",
     "ytdl-core-discord": "^1.0.3"
   },
   "devDependencies": {
