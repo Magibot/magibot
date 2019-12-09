@@ -15,6 +15,31 @@ const checkChannelConnection = (message) => {
   return { ok: true };
 };
 
+const handleCommandWrapperArguments = (args) => {
+  if (!args) {
+    return {
+      ok: false,
+      reply: 'Wrong usage! This command is a Command Wrapper, means that it has subcommands',
+    };
+  }
+
+  const arrayArgs = args.trim().split(/ +/g);
+  if (arrayArgs.length === 0) {
+    return {
+      ok: false,
+      reply: 'Wrong usage! This command is a Command Wrapper, means that it has subcommands',
+    };
+  }
+
+  const subcommand = arrayArgs.shift();
+  return {
+    ok: true,
+    subcommand,
+    subargs: arrayArgs,
+  };
+};
+
 module.exports = {
   checkChannelConnection,
+  handleCommandWrapperArguments,
 };
