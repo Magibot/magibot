@@ -16,6 +16,8 @@ const onCreate = async (guild) => {
     return response.errors;
   }
 
+  client.database.guilds.set(guild.id, response.payload.guild._id);
+
   client.logger.success(`Guild ${guild.name}(${guild.id}) successfully registered`);
   return response.payload;
 };
@@ -31,6 +33,8 @@ const onDelete = async (guild) => {
     client.logger.serviceResponseError(response);
     return response.errors;
   }
+
+  client.database.guilds.delete(guild.id);
 
   client.logger.success(`Guild ${guild.name}(${guild.id}) successfully deleted`);
   return true;
