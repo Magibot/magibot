@@ -65,3 +65,6 @@ _build
 
 # nlp model file
 model.nlp
+
+# sqlite files
+*.sqlite
