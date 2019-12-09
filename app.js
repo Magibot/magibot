@@ -46,6 +46,7 @@ bot.registry
     ['voice', 'Voice'],
     ['swapi', 'Star Wars API'],
     ['help', 'Help'],
+    ['playlist', 'Playlist'],
   ])
   .registerCommandsIn(path.join(__dirname, 'commands'));
 
