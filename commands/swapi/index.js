@@ -12,23 +12,18 @@ class StarWarsAPI extends Commando.Command {
   }
 
   async run(message, args) {
-    if (!args) {
-      // Show possible commands of Star Wars API
-      return;
+    const {
+      ok, reply, subcommand, subargs,
+    } = this.client.helpers.command.handleCommandWrapperArguments(args);
+    if (!ok) {
+      return message.reply(reply);
     }
 
-    const arrayArgs = args.trim().split(/ +/g);
-    if (arrayArgs.length === 0) {
-      // Show possible commands of Star Wars API
-      return message.reply('Wrong usage of command');
-    }
-
-    const subcommand = arrayArgs.shift();
     switch (subcommand) {
       case 'character':
-        return this.subCommands.Character.handle(this.client, message, arrayArgs);
+        return this.subCommands.Character.handle(this.client, message, subargs);
       case 'list':
-        return this.subCommands.List.handle(this.client, message, arrayArgs);
+        return this.subCommands.List.handle(this.client, message, subargs);
       default:
         // Show possible commands of Star Wars API
         return message.reply('Wrong usage of command');
