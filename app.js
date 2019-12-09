@@ -1,5 +1,6 @@
 const path = require('path');
 const Commando = require('discord.js-commando');
+const Keyv = require('keyv');
 
 const nlp = require('./services/nlp');
 const config = require('./config/bot');
@@ -22,6 +23,8 @@ const bot = new Commando.Client({
   retryLimit: config.env.discord.retryLimit,
 });
 
+bot.database = {};
+bot.database.guilds = new Keyv('sqlite://db.sqlite', { namespace: 'guilds' });
 bot.nlp = nlp;
 bot.services = {};
 bot.services.swapi = require('./services/swapi.service');
