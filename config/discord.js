@@ -14,6 +14,7 @@ const guildEventHandler = require('../events/guild');
 
 const swapiService = require('../services/swapi.service');
 const guildService = require('../services/guild.service');
+const playlistService = require('../services/playlist.service');
 
 
 const createClient = () => {
@@ -30,6 +31,7 @@ const createClient = () => {
 
   client.database = {
     guilds: new Keyv('sqlite://db.sqlite', { namespace: 'guilds' }),
+    playlists: new Keyv('sqlite://db.sqlite', { namespace: 'playlists' }),
   };
 
   client.nlp = nlp;
@@ -37,6 +39,7 @@ const createClient = () => {
     swapi: swapiService,
     magi: {
       guild: guildService,
+      playlist: playlistService,
     },
   };
 
