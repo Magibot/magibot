@@ -16,7 +16,7 @@ const handle = async (client, message, args) => {
     allowModify: allowModify === 'true',
   };
 
-  const response = client.services.magi.playlist.create(message.guild.id, playlist);
+  const response = await client.services.magi.playlist.create(message.guild.id, playlist);
   if (response.status === 'error') {
     return message.reply('Something went wrong while creating your playlist. Please talk to the administrator');
   }
