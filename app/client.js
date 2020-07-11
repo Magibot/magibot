@@ -14,7 +14,7 @@ const guildEventHandler = require('./events/guild');
 
 const swapiService = require('./services/swapi/service');
 
-const guildService = require('./services/elis-api//guild');
+const guildService = require('./services/elis-api/guild');
 const playlistService = require('./services/elis-api/playlist');
 
 const createClient = () => {
