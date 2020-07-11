@@ -2,7 +2,7 @@ module.exports = {
   apps: [{
     name: 'elis-discord-bot',
     script: './app/index.js',
-    instances: 'max',
+    instances: 1,
     autorestart: true,
     watch: false,
     max_memory_restart: '512M',
