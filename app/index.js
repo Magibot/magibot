@@ -1,4 +1,4 @@
-const Discord = require('./config/discord');
+const Discord = require('./client');
 
 const client = Discord.createClient();
 

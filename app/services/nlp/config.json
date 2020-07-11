@@ -1,0 +1,28 @@
+{
+    "en": {
+        "greenting.bye": {
+            "messages": [
+                "goodbye for now",
+                "bye bye take care",
+                "okay see you later",
+                "bye for now",
+                "i must go"
+            ],
+            "answers": [
+                "Till next time",
+                "see you soon!"
+            ]
+        },
+        "greetings.hello": {
+            "messages": [
+                "hello",
+                "hi",
+                "howdy"
+            ],
+            "answers": [
+                "Hey there!",
+                "Greetings!"
+            ]
+        }
+    }
+}

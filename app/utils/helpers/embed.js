@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const config = require('../config/bot');
+const config = require('../../config/bot');
 
 const create = () => (
   new Discord.RichEmbed()
@@ -7,7 +7,7 @@ const create = () => (
     // .setURL('https://discord.js.org/')
     // .setAuthor('Magi', env.client.picture, env.client.website)
     .setTimestamp()
-    .setFooter('Magi', config.env.discord.picture)
+    .setFooter('ELIS', config.env.discord.picture)
 );
 
 module.exports = {

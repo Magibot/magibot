@@ -1,7 +1,7 @@
 module.exports = {
   apps: [{
-    name: 'Magibot',
-    script: './app.js',
+    name: 'elis-discord-bot',
+    script: './app/index.js',
     instances: 2,
     autorestart: true,
     watch: false,

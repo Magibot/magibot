@@ -1,17 +1,17 @@
 {
-  "name": "magibot",
+  "name": "elis-discord-bot",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "app/index.js",
   "author": {
     "email": "mellomatheuslima@gmail.com",
     "name": "Matheus Mello de Lima"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Magibot/magibot.git"
+    "url": "git+https://github.com/elis-platform/discord-bot"
   },
   "bugs": {
-    "url": "https://github.com/Magibot/magibot/issues"
+    "url": "https://github.com/elis-platform/discord-bot/issues"
   },
   "maintainers": [
     {

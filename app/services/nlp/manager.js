@@ -1,5 +1,5 @@
 const { NlpManager } = require('node-nlp');
-const config = require('../nlp.config.json');
+const config = require('./config.json');
 
 const languages = Object.keys(config);
 const manager = new NlpManager({ languages });

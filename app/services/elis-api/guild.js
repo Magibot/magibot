@@ -1,6 +1,6 @@
 const superagent = require('superagent');
 const superagentAbsolute = require('superagent-absolute');
-const config = require('../config/bot');
+const config = require('../../config/bot');
 
 const agent = superagent.agent();
 const apiPath = `${config.env.backend.api.baseUrl}/guilds`;

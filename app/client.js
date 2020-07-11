@@ -2,20 +2,20 @@ const path = require('path');
 const Commando = require('discord.js-commando');
 const Keyv = require('keyv');
 
-const nlp = require('../services/nlp');
-const config = require('./bot');
-const wrapper = require('../wrapper');
-const logger = require('../utils/logger');
-const Radio = require('../utils/radio');
-const embed = require('../utils/embed');
-const helpers = require('../helpers');
+const nlp = require('./services/nlp/manager');
+const config = require('./config/bot');
+const wrapper = require('./commands/details');
+const logger = require('./utils/logger');
+const Radio = require('./components/music/radio');
+const embed = require('./utils/helpers/embed');
+const helpers = require('./utils/helpers');
 
-const guildEventHandler = require('../events/guild');
+const guildEventHandler = require('./events/guild');
 
-const swapiService = require('../services/swapi.service');
-const guildService = require('../services/guild.service');
-const playlistService = require('../services/playlist.service');
+const swapiService = require('./services/swapi/service');
 
+const guildService = require('./services/elis-api//guild');
+const playlistService = require('./services/elis-api/playlist');
 
 const createClient = () => {
   const client = new Commando.Client({
@@ -37,7 +37,7 @@ const createClient = () => {
   client.nlp = nlp;
   client.services = {
     swapi: swapiService,
-    magi: {
+    elis: {
       guild: guildService,
       playlist: playlistService,
     },
@@ -61,7 +61,7 @@ const createClient = () => {
       ['help', 'Help'],
       ['playlist', 'Playlist'],
     ])
-    .registerCommandsIn(path.join(__dirname, '..', 'commands'));
+    .registerCommandsIn(path.join(__dirname, 'commands', 'modules'));
 
   client.once('ready', async () => {
     client.logger.success(`${client.user.username} starting`);

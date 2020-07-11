@@ -1,8 +1,8 @@
 const ytdlStream = require('ytdl-core-discord');
 const events = require('events');
-const Queue = require('./queue');
-const youtube = require('../services/youtube');
-const helpers = require('../helpers');
+const Queue = require('../../utils/models/queue');
+const youtube = require('../../services/google-api/youtube');
+const helpers = require('../../utils/helpers');
 
 class Streamer {
   constructor(guildId, channelId, voiceConnection, googleApiKey) {
