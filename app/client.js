@@ -71,7 +71,7 @@ const createClient = () => {
     client.logger.success(
       `Connected to ${guilds} guilds, ${channels} channels and ${users} users`,
     );
-    const activity = "Fo' shizzle my nizzle";
+    const activity = `${config.env.discord.prefix} commands`;
     client.logger.success(`Activity set to: ${activity}`);
     client.user.setActivity(activity);
 
