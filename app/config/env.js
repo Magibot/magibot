@@ -20,7 +20,7 @@ for (let i = 0; i < required.length; i += 1) {
 
 if (missingVariables.length > 0) {
   logger.error(`Missing the following environment variables: ${missingVariables}`);
-  logger.error('Please set them to start Magi');
+  logger.error('Please set them to start ELIS');
   process.exit(1);
 }
 
